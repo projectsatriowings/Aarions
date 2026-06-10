@@ -1,0 +1,375 @@
+import React, { useState, useEffect, useMemo } from "react";
+import { useParams, Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { Star, Heart, ShieldCheck, Check, ShoppingBag, ArrowLeft } from "lucide-react";
+import { products } from "../data/products";
+import { useCart } from "../context/CartContext";
+import { useWishlist } from "../context/WishlistContext";
+import ProductCard from "../components/common/ProductCard";
+
+export default function ProductDetails() {
+  const { id } = useParams();
+  const { addToCart } = useCart();
+  const { toggleWishlist, isInWishlist } = useWishlist();
+
+  const [quantity, setQuantity] = useState(1);
+  const [activeTab, setActiveTab] = useState("story");
+  const [added, setAdded] = useState(false);
+
+  // Find product by URL id
+  const product = useMemo(() => {
+    return products.find((p) => p.id === id);
+  }, [id]);
+
+  // Scroll to top on mount or product id change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setQuantity(1);
+    setActiveTab("story");
+  }, [id]);
+
+  if (!product) {
+    return (
+      <div className="min-h-screen pt-48 pb-24 flex items-center justify-center bg-brand-cream/30 text-center">
+        <div className="max-w-md p-8 bg-white border border-brand-gold/10 rounded-2xl shadow-sm space-y-4">
+          <h2 className="font-playfair text-2xl font-bold text-brand-brown">Product Not Found</h2>
+          <p className="text-xs text-brand-brown/60">
+            The organic product you are looking for does not exist in our registry.
+          </p>
+          <Link
+            to="/shop"
+            className="inline-flex items-center space-x-2 bg-brand-brown text-white text-xs tracking-widest uppercase font-semibold py-3.5 px-6 rounded-lg hover:bg-brand-gold hover:text-brand-brown transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Back to Shop</span>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const isFav = isInWishlist(product.id);
+  const discountPercent = Math.round(
+    ((product.originalPrice - product.price) / product.originalPrice) * 100
+  );
+
+  // Find related products
+  const relatedProducts = products
+    .filter((p) => p.category === product.category && p.id !== product.id)
+    .slice(0, 3);
+
+  const handleAddToCart = () => {
+    addToCart(product, quantity);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 2000);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="min-h-screen pt-40 pb-24 bg-brand-cream/20"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumbs */}
+        <div className="mb-8 flex items-center space-x-2 text-xs uppercase tracking-wider font-semibold text-brand-brown/50">
+          <Link to="/" className="hover:text-brand-gold transition-colors">Home</Link>
+          <span>/</span>
+          <Link to="/shop" className="hover:text-brand-gold transition-colors">Shop</Link>
+          <span>/</span>
+          <span className="text-brand-brown">{product.name}</span>
+        </div>
+
+        {/* Product Visual & Details Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start bg-white border border-brand-gold/10 p-6 sm:p-8 lg:p-12 rounded-3xl shadow-sm">
+          
+          {/* Left Column: Product Image Showcase */}
+          <div className="lg:col-span-6 relative aspect-square rounded-2xl overflow-hidden bg-brand-cream/10 border border-brand-gold/5">
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-full h-full object-cover"
+            />
+            {product.isBestSeller && (
+              <span className="absolute top-4 left-4 bg-brand-brown text-brand-gold text-[10px] tracking-widest uppercase font-semibold px-2.5 py-1 rounded-full">
+                Best Seller
+              </span>
+            )}
+          </div>
+
+          {/* Right Column: Detailed Product Purchase Actions */}
+          <div className="lg:col-span-6 space-y-6">
+            <div>
+              <span className="text-xs tracking-widest uppercase font-bold text-brand-gold">
+                {product.categoryLabel}
+              </span>
+              <h1 className="font-playfair text-3xl sm:text-4xl font-semibold text-brand-brown leading-tight mt-2">
+                {product.name}
+              </h1>
+
+              {/* Stars & Reviews */}
+              <div className="flex items-center space-x-2.5 mt-3">
+                <div className="flex text-amber-400">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`w-4 h-4 ${
+                        i < Math.floor(product.rating)
+                          ? "fill-current"
+                          : "text-gray-200"
+                      }`}
+                    />
+                  ))}
+                </div>
+                <span className="text-xs text-brand-brown/60 font-semibold">
+                  {product.rating} ({product.reviewsCount} customer reviews)
+                </span>
+              </div>
+            </div>
+
+            {/* Price display */}
+            <div className="flex items-baseline space-x-3 pt-2">
+              <span className="text-3xl font-bold text-brand-brown">
+                ₹{product.price}
+              </span>
+              {product.originalPrice && (
+                <>
+                  <span className="text-base text-brand-brown/40 line-through">
+                    ₹{product.originalPrice}
+                  </span>
+                  <span className="text-[10px] text-green-600 font-bold bg-green-50 px-2.5 py-1 rounded">
+                    Save {discountPercent}%
+                  </span>
+                </>
+              )}
+            </div>
+
+            <p className="text-sm text-brand-brown/75 leading-relaxed font-light">
+              {product.description}
+            </p>
+
+            {/* Checklist Highlights */}
+            {product.features && (
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 py-4 border-y border-brand-gold/10">
+                {product.features.map((feature, idx) => (
+                  <li key={idx} className="flex items-center text-xs text-brand-brown/85 font-medium">
+                    <Check className="w-4 h-4 text-brand-gold mr-2.5 flex-shrink-0" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {/* Purchase action block */}
+            <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
+              
+              {/* Quantity selector */}
+              <div className="flex items-center border border-brand-gold/20 bg-brand-cream/10 rounded-lg p-1.5 justify-between sm:justify-start">
+                <button
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  className="w-10 h-10 flex items-center justify-center text-brand-brown/60 hover:text-brand-brown text-lg font-bold"
+                >
+                  -
+                </button>
+                <span className="w-10 text-center text-sm font-semibold text-brand-brown">
+                  {quantity}
+                </span>
+                <button
+                  onClick={() => setQuantity(quantity + 1)}
+                  className="w-10 h-10 flex items-center justify-center text-brand-brown/60 hover:text-brand-brown text-lg font-bold"
+                >
+                  +
+                </button>
+              </div>
+
+              {/* Add to Cart button */}
+              <button
+                onClick={handleAddToCart}
+                className={`flex-grow flex items-center justify-center space-x-2 py-4 px-8 rounded-lg text-xs tracking-widest uppercase font-semibold transition-all duration-300 shadow-md ${
+                  added
+                    ? "bg-green-600 text-white"
+                    : "bg-brand-brown hover:bg-brand-gold hover:text-brand-brown text-white"
+                }`}
+              >
+                {added ? (
+                  <>
+                    <Check className="w-4 h-4 animate-ping-once" />
+                    <span>Added to Cart</span>
+                  </>
+                ) : (
+                  <>
+                    <ShoppingBag className="w-4 h-4" />
+                    <span>Add to Cart - ₹{product.price * quantity}</span>
+                  </>
+                )}
+              </button>
+
+              {/* Wishlist toggle */}
+              <button
+                onClick={() => toggleWishlist(product)}
+                className={`p-4 rounded-lg border transition-all duration-300 flex items-center justify-center ${
+                  isFav
+                    ? "border-red-200 bg-red-50 text-red-500"
+                    : "border-brand-gold/20 hover:border-brand-gold/60 text-brand-brown"
+                }`}
+                aria-label="Add to Wishlist"
+              >
+                <Heart className={`w-5 h-5 ${isFav ? "fill-current" : ""}`} />
+              </button>
+            </div>
+
+            {/* Quick delivery badge */}
+            <div className="flex items-center space-x-2 pt-2 text-[10px] text-brand-brown/50 tracking-wider uppercase font-semibold">
+              <ShieldCheck className="w-4 h-4 text-brand-gold" />
+              <span>Ships next business day • Chennai Store Sourced</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Tab specifications section (Details, Churning method, nutrients) */}
+        <div className="mt-16 bg-white border border-brand-gold/10 rounded-3xl p-6 sm:p-10 shadow-sm max-w-4xl mx-auto">
+          {/* Tab buttons */}
+          <div className="flex border-b border-brand-gold/10 pb-4 overflow-x-auto no-scrollbar gap-6">
+            {[
+              { id: "story", label: "Product Story" },
+              { id: "method", label: "Purity & Processing" },
+              { id: "usage", label: "Usage & Benefits" },
+              { id: "nutrients", label: "Nutritional Value" },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`text-xs sm:text-sm tracking-widest uppercase font-semibold whitespace-nowrap pb-2.5 transition-colors relative ${
+                  activeTab === tab.id
+                    ? "text-brand-brown"
+                    : "text-brand-brown/40 hover:text-brand-gold"
+                }`}
+              >
+                {tab.label}
+                {activeTab === tab.id && (
+                  <motion.span
+                    layoutId="activeTabUnderline"
+                    className="absolute bottom-0 left-0 w-full h-[2px] bg-brand-gold"
+                  />
+                )}
+              </button>
+            ))}
+          </div>
+
+          {/* Tab Content Panels */}
+          <div className="pt-8 min-h-[150px]">
+            <AnimatePresence mode="wait">
+              {activeTab === "story" && (
+                <motion.div
+                  key="story"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-4 text-sm text-brand-brown/70 leading-relaxed font-light"
+                >
+                  <p>{product.details}</p>
+                </motion.div>
+              )}
+
+              {activeTab === "method" && (
+                <motion.div
+                  key="method"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-4"
+                >
+                  <h3 className="font-playfair text-lg font-semibold text-brand-brown">
+                    Pure Craftsmanship
+                  </h3>
+                  <p className="text-sm text-brand-brown/70 leading-relaxed font-light">
+                    Every batch follows strict quality checkups. We believe that modern convenience shouldn't disrupt biological intelligence. Our organic honey remains unpasteurized to maintain live enzymes, and our spices are ground in a cold temperature chamber to preserve flavor oils.
+                  </p>
+                  <div className="flex flex-wrap gap-4 pt-2">
+                    <span className="text-[10px] uppercase font-bold tracking-widest bg-brand-cream border border-brand-gold/10 text-brand-brown px-3 py-1.5 rounded">
+                      Third-Party Lab Checked
+                    </span>
+                    <span className="text-[10px] uppercase font-bold tracking-widest bg-brand-cream border border-brand-gold/10 text-brand-brown px-3 py-1.5 rounded">
+                      Zero Added Preservatives
+                    </span>
+                    <span className="text-[10px] uppercase font-bold tracking-widest bg-brand-cream border border-brand-gold/10 text-brand-brown px-3 py-1.5 rounded">
+                      100% Traceable Sourcing
+                    </span>
+                  </div>
+                </motion.div>
+              )}
+
+              {activeTab === "usage" && (
+                <motion.div
+                  key="usage"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-6"
+                >
+                  <div className="space-y-2">
+                    <h4 className="text-xs uppercase tracking-widest font-semibold text-brand-gold">Suggested Usage</h4>
+                    <p className="text-sm text-brand-brown/70 leading-relaxed font-light">{product.usage}</p>
+                  </div>
+                  <div className="space-y-3">
+                    <h4 className="text-xs uppercase tracking-widest font-semibold text-brand-gold">Health Advantages</h4>
+                    <ul className="space-y-2">
+                      {product.benefits.map((benefit, idx) => (
+                        <li key={idx} className="flex items-center text-xs text-brand-brown/85 font-medium">
+                          <Check className="w-3.5 h-3.5 text-brand-gold mr-2.5 flex-shrink-0" />
+                          <span>{benefit}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </motion.div>
+              )}
+
+              {activeTab === "nutrients" && (
+                <motion.div
+                  key="nutrients"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="max-w-md"
+                >
+                  <h4 className="text-xs uppercase tracking-widest font-semibold text-brand-gold mb-4">
+                    Typical Nutritional Information (Per 100g)
+                  </h4>
+                  <div className="border border-brand-gold/10 rounded-xl overflow-hidden divide-y divide-brand-gold/10 bg-brand-cream/5">
+                    {Object.entries(product.nutrients).map(([nutrient, value]) => (
+                      <div key={nutrient} className="flex justify-between px-4 py-3 text-xs">
+                        <span className="font-semibold text-brand-brown/60">{nutrient}</span>
+                        <span className="font-bold text-brand-brown">{value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Related Products Section */}
+        {relatedProducts.length > 0 && (
+          <div className="mt-24">
+            <h2 className="font-playfair text-2xl sm:text-3xl font-semibold text-brand-brown text-center mb-12">
+              Related Organic Products
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+              {relatedProducts.map((p) => (
+                <ProductCard key={p.id} product={p} onQuickView={() => {}} />
+              ))}
+            </div>
+          </div>
+        )}
+
+      </div>
+    </motion.div>
+  );
+}
