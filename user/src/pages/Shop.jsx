@@ -9,8 +9,12 @@ import api from "../services/api";
 
 export default function Shop() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState(() => {
+    return searchParams.get("category") || "all";
+  });
+  const [searchQuery, setSearchQuery] = useState(() => {
+    return searchParams.get("search") || "";
+  });
   const [priceRange, setPriceRange] = useState(500); // Max product price set to 500
   const [sortBy, setSortBy] = useState("recommended");
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -40,8 +44,9 @@ export default function Shop() {
       try {
         const res = await api.get("/categories");
         if (res.data.success) {
+          const totalCount = res.data.categories.reduce((sum, cat) => sum + (cat.productCount || 0), 0);
           setDbCategories([
-            { name: "All Products", slug: "all" },
+            { name: "All Products", slug: "all", productCount: totalCount },
             ...res.data.categories
           ]);
         }
@@ -60,6 +65,7 @@ export default function Shop() {
 
   // Fetch Products from Backend API dynamically based on filters
   useEffect(() => {
+    let active = true;
     const fetchProducts = async () => {
       setLoading(true);
       try {
@@ -68,9 +74,10 @@ export default function Shop() {
           maxPrice: priceRange,
           search: searchQuery,
           sort: sortBy,
+          limit: 100, // Fetch up to 100 products to ensure all matching items are displayed
         };
         const res = await api.get("/products", { params });
-        if (res.data.success) {
+        if (active && res.data.success) {
           setDbProducts(res.data.products);
         }
       } catch (err) {
@@ -79,7 +86,6 @@ export default function Shop() {
         const filtered = staticProducts.filter((product) => {
           const matchesCategory =
             selectedCategory === "all" ||
-            (selectedCategory === "spices" && (product.category === "spices" || product.category === "masala")) ||
             product.category === selectedCategory;
           const matchesPrice = product.price <= priceRange;
           const searchWords = searchQuery.trim().toLowerCase().split(/\s+/).filter(Boolean);
@@ -92,12 +98,19 @@ export default function Shop() {
           });
           return matchesCategory && matchesPrice && matchesSearch;
         });
-        setDbProducts(filtered);
+        if (active) {
+          setDbProducts(filtered);
+        }
       } finally {
-        setLoading(false);
+        if (active) {
+          setLoading(false);
+        }
       }
     };
     fetchProducts();
+    return () => {
+      active = false;
+    };
   }, [selectedCategory, priceRange, searchQuery, sortBy]);
 
   const handleCategoryChange = (slug) => {
@@ -187,13 +200,16 @@ export default function Shop() {
                   <button
                     key={cat.slug}
                     onClick={() => handleCategoryChange(cat.slug)}
-                    className={`text-left text-xs uppercase tracking-wider py-2 px-3 rounded-lg font-semibold transition-all duration-300 ${
+                    className={`text-left text-xs uppercase tracking-wider py-2 px-3 rounded-lg font-semibold transition-all duration-300 flex justify-between items-center ${
                       selectedCategory === cat.slug
                         ? "bg-brand-brown text-brand-cream"
                         : "text-brand-brown hover:bg-brand-cream hover:text-brand-gold"
                     }`}
                   >
-                    {cat.name}
+                    <span>{cat.name}</span>
+                    {cat.productCount !== undefined && (
+                      <span className="text-[10px] opacity-75 font-mono">({cat.productCount})</span>
+                    )}
                   </button>
                 ))}
               </div>

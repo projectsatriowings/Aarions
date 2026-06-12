@@ -4,10 +4,11 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function Hero() {
   const bgImages = [
-    "https://images.pexels.com/photos/1435904/pexels-photo-1435904.jpeg?w=1920",
-    "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1920&q=80",
-    "https://images.unsplash.com/photo-1464226184884-fa280b87c3a9?auto=format&fit=crop&w=1920&q=80",
-    "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=1920&q=80"
+    "/auth-honey.jpg",
+    "/auth-spices-dark.jpg",
+    "https://aarions.in/img/honey/ghir%20ghee.jpg",
+    "https://aarions.in/img/honey/Forest%20honey%20m.jpg",
+    "https://aarions.in/img/about/Masala/Masala/tumeric.jpg"
   ];
 
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
@@ -16,7 +17,7 @@ export default function Hero() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentBgIndex((prev) => (prev + 1) % bgImages.length);
-    }, 5000);
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
 
@@ -50,10 +51,10 @@ export default function Hero() {
         <AnimatePresence mode="wait">
           <motion.div
             key={currentBgIndex}
-            initial={{ opacity: 0, scale: 1.05 }}
+            initial={{ opacity: 1, scale: 1 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
+            exit={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0 }}
             className="absolute inset-0 w-full h-full"
           >
             <img

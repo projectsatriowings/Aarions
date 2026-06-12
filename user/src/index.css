@@ -2524,4 +2524,59 @@ html {
   }
 }
 
+/* Custom Global Legibility & Animation Overrides */
+
+/* Make all brand-brown opacity classes brighter and more readable */
+.text-brand-brown\/75 {
+  color: rgba(45, 31, 23, 0.95) !important;
+}
+.text-brand-brown\/70 {
+  color: rgba(45, 31, 23, 0.92) !important;
+}
+.text-brand-brown\/65 {
+  color: rgba(45, 31, 23, 0.88) !important;
+}
+.text-brand-brown\/60 {
+  color: rgba(45, 31, 23, 0.85) !important;
+}
+.text-brand-brown\/50 {
+  color: rgba(45, 31, 23, 0.80) !important;
+}
+.text-brand-brown\/40 {
+  color: rgba(45, 31, 23, 0.72) !important;
+}
+.text-brand-brown\/30 {
+  color: rgba(45, 31, 23, 0.60) !important;
+}
+.text-brand-brown\/20 {
+  color: rgba(45, 31, 23, 0.50) !important;
+}
+
+/* Make light font weight thicker/more legible on cream background */
+.font-light {
+  font-weight: 400 !important;
+}
+
+/* Micro-animations and hover scales for all product cards and images */
+.group:hover .group-hover\:scale-110 {
+  transform: scale(1.1) !important;
+}
+
+/* Subtle entrance animations for sections */
+.reveal {
+  animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
 

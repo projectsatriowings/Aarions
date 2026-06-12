@@ -107,6 +107,9 @@ const orderSchema = new mongoose.Schema(
     carrier: {
       type: String,
     },
+    expectedDeliveryDate: {
+      type: Date,
+    },
     trackingHistory: [trackingEventSchema],
     couponApplied: {
       type: String,

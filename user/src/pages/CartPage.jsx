@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Trash2, ShoppingBag, ArrowRight, ArrowLeft, Tag, CheckCircle2, Ticket } from "lucide-react";
 import { useCart } from "../context/CartContext";
 
 export default function CartPage() {
+  const navigate = useNavigate();
   const { cartItems, updateQuantity, removeFromCart, clearCart, cartTotal } = useCart();
   const [couponCode, setCouponCode] = useState("");
   const [appliedDiscount, setAppliedDiscount] = useState(0);
@@ -30,11 +31,7 @@ export default function CartPage() {
   };
 
   const handleCheckout = () => {
-    // Simulate checkout success
-    setCheckoutSuccess(true);
-    setTimeout(() => {
-      clearCart();
-    }, 100);
+    navigate("/checkout");
   };
 
   if (checkoutSuccess) {

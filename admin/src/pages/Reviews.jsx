@@ -87,7 +87,7 @@ export default function Reviews() {
                       <p className="text-[10px] text-zinc-400">{rev.user?.email}</p>
                     </td>
                     <td className="py-3 px-4">
-                      <span className="font-semibold text-zinc-800 dark:text-zinc-200">{rev.product?.name || "Deleted Product"}</span>
+                      <span className="font-semibold text-zinc-900 dark:text-zinc-100">{rev.product?.name || "Deleted Product"}</span>
                     </td>
                     <td className="py-3 px-4">
                       <div className="flex text-amber-400">

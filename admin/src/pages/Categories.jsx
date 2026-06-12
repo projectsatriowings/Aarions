@@ -17,6 +17,8 @@ export default function Categories() {
   });
 
   const [imageFile, setImageFile] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [selectedProductIds, setSelectedProductIds] = useState([]);
 
   const fetchCategories = async () => {
     setLoading(true);
@@ -32,8 +34,20 @@ export default function Categories() {
     }
   };
 
+  const fetchProducts = async () => {
+    try {
+      const res = await api.get("../products?limit=50");
+      if (res.data.success) {
+        setProducts(res.data.products);
+      }
+    } catch (err) {
+      console.error("Failed to fetch products:", err);
+    }
+  };
+
   useEffect(() => {
     fetchCategories();
+    fetchProducts();
   }, []);
 
   const handleDelete = async (id) => {
@@ -42,6 +56,7 @@ export default function Categories() {
       const res = await api.delete(`/categories/${id}`);
       if (res.data.success) {
         fetchCategories();
+        fetchProducts(); // Refresh product associations
       }
     } catch (err) {
       alert("Failed to delete category.");
@@ -57,6 +72,11 @@ export default function Categories() {
         description: category.description || "",
         isActive: category.isActive !== undefined ? category.isActive : true,
       });
+      // Pre-select products in this category
+      const associatedProductIds = products
+        .filter(p => p.category === category.slug || p.categoryRef === category._id)
+        .map(p => p._id);
+      setSelectedProductIds(associatedProductIds);
     } else {
       setEditCategory(null);
       setFormData({
@@ -64,6 +84,7 @@ export default function Categories() {
         description: "",
         isActive: true,
       });
+      setSelectedProductIds([]);
     }
     setImageFile(null);
     setShowModal(true);
@@ -86,6 +107,7 @@ export default function Categories() {
     dataObj.append("name", formData.name);
     dataObj.append("description", formData.description);
     dataObj.append("isActive", formData.isActive);
+    dataObj.append("productIds", JSON.stringify(selectedProductIds));
 
     if (imageFile) {
       dataObj.append("image", imageFile);
@@ -106,6 +128,7 @@ export default function Categories() {
       if (res.data.success) {
         setShowModal(false);
         fetchCategories();
+        fetchProducts(); // Refresh local product states
       }
     } catch (err) {
       setFormError(err.response?.data?.error || "Error processing category settings.");
@@ -166,6 +189,9 @@ export default function Categories() {
               <div className="p-4 space-y-3 flex-grow flex flex-col justify-between">
                 <div>
                   <h3 className="font-bold text-sm text-zinc-900 dark:text-zinc-100 truncate">{cat.name}</h3>
+                  <div className="text-[10px] text-amber-600 font-semibold mt-0.5">
+                    {cat.productCount || 0} Products
+                  </div>
                   <p className="text-[10px] text-zinc-500 dark:text-zinc-400 line-clamp-2 mt-1 leading-normal font-light">{cat.description || "No description set."}</p>
                 </div>
 
@@ -246,6 +272,44 @@ export default function Categories() {
                   onChange={(e) => setImageFile(e.target.files[0])}
                   className="file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-[10px] file:uppercase file:font-bold file:bg-amber-500/10 file:text-amber-500 hover:file:bg-amber-500/20"
                 />
+              </div>
+
+              <div className="flex flex-col space-y-1.5">
+                <label className="text-[10px] uppercase tracking-wider font-semibold text-zinc-500">Associate Products with this Category</label>
+                <div className="border border-zinc-200 dark:border-zinc-800 rounded-xl p-3 max-h-40 overflow-y-auto space-y-2 bg-zinc-50 dark:bg-zinc-800/30">
+                  {products.map((prod) => {
+                    const isChecked = selectedProductIds.includes(prod._id);
+                    return (
+                      <label key={prod._id} className="flex items-center space-x-2.5 cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-850 p-1.5 rounded-lg transition-colors">
+                        <input
+                          type="checkbox"
+                          checked={isChecked}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setSelectedProductIds(prev => [...prev, prod._id]);
+                            } else {
+                              setSelectedProductIds(prev => prev.filter(id => id !== prod._id));
+                            }
+                          }}
+                          className="accent-amber-500"
+                        />
+                        <div className="flex items-center space-x-2">
+                          <img
+                            src={getImageUrl(prod.image) || "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=50&q=80"}
+                            alt={prod.name}
+                            className="w-6 h-6 object-cover rounded-md border border-zinc-200 dark:border-zinc-700"
+                          />
+                          <span className="text-[11px] font-medium text-zinc-750 dark:text-zinc-300">
+                            {prod.name} {prod.category ? `(${prod.categoryLabel})` : "(Uncategorized)"}
+                          </span>
+                        </div>
+                      </label>
+                    );
+                  })}
+                  {products.length === 0 && (
+                    <p className="text-[10px] text-zinc-400 text-center py-2">No products available.</p>
+                  )}
+                </div>
               </div>
 
               <label className="flex items-center space-x-2 pt-2">

@@ -54,7 +54,7 @@ export default function Newsletter() {
               <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/60">
                 {subscribers.map((sub) => (
                   <tr key={sub._id} className="hover:bg-zinc-50/40 dark:hover:bg-zinc-800/5">
-                    <td className="py-3 px-4 flex items-center space-x-2 font-bold text-zinc-800 dark:text-zinc-200">
+                    <td className="py-3 px-4 flex items-center space-x-2 font-bold text-zinc-900 dark:text-zinc-100">
                       <Mail className="w-4 h-4 text-zinc-400" />
                       <span>{sub.email}</span>
                     </td>

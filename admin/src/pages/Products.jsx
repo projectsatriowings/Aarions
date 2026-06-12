@@ -129,11 +129,36 @@ export default function Products() {
   const handleCategorySelect = (e) => {
     const catSlug = e.target.value;
     const catObj = categories.find((cat) => cat.slug === catSlug);
-    setFormData((prev) => ({
-      ...prev,
-      category: catSlug,
-      categoryLabel: catObj ? catObj.name : "",
-    }));
+    
+    const getCategoryAbbr = (slug) => {
+      if (!slug) return "ORG";
+      const lower = slug.toLowerCase();
+      if (lower.includes("honey")) return "HON";
+      if (lower.includes("ghee")) return "GHE";
+      if (lower.includes("masala")) return "MAS";
+      if (lower.includes("spice")) return "SPI";
+      return lower.replace(/[^a-z]/g, "").slice(0, 3).toUpperCase() || "ORG";
+    };
+
+    setFormData((prev) => {
+      let currentNumber = "";
+      const skuParts = (prev.sku || "").split("-");
+      if (skuParts.length >= 3) {
+        currentNumber = skuParts[2];
+      } else {
+        currentNumber = Math.floor(1000 + Math.random() * 9000).toString();
+      }
+      
+      const abbr = getCategoryAbbr(catSlug);
+      const newSku = `AAR-${abbr}-${currentNumber}`;
+
+      return {
+        ...prev,
+        category: catSlug,
+        categoryLabel: catObj ? catObj.name : "",
+        sku: newSku,
+      };
+    });
   };
 
   const handleFormSubmit = async (e) => {
@@ -200,7 +225,7 @@ export default function Products() {
             placeholder="Search by name, SKU, category..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="bg-transparent outline-none w-full text-xs text-zinc-800 dark:text-zinc-200 placeholder-zinc-400"
+            className="bg-transparent outline-none w-full text-xs text-zinc-900 dark:text-zinc-100 placeholder-zinc-400"
           />
         </div>
       </div>

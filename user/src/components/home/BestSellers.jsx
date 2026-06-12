@@ -9,6 +9,7 @@ export default function BestSellers({ onQuickView }) {
   const sectionRef = useRef(null);
   const [bestSellers, setBestSellers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     const fetchBestSellers = async () => {
@@ -32,6 +33,24 @@ export default function BestSellers({ onQuickView }) {
     };
     fetchBestSellers();
   }, []);
+
+  useEffect(() => {
+    if (loading || bestSellers.length <= 1 || isHovered) return;
+
+    const interval = setInterval(() => {
+      const container = carouselRef.current;
+      if (container) {
+        const maxScrollLeft = container.scrollWidth - container.clientWidth;
+        if (container.scrollLeft >= maxScrollLeft - 10) {
+          container.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+          container.scrollBy({ left: 310, behavior: "smooth" });
+        }
+      }
+    }, 3500);
+
+    return () => clearInterval(interval);
+  }, [loading, bestSellers, isHovered]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -127,6 +146,8 @@ export default function BestSellers({ onQuickView }) {
           <div
             ref={carouselRef}
             className="bs-carousel reveal pb-4"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
           >
             {bestSellers.map((product) => (
               <div

@@ -49,11 +49,11 @@ export default function QuickViewModal({ product, onClose }) {
         </button>
 
         {/* Product Image Left */}
-        <div className="w-full md:w-1/2 aspect-square md:aspect-auto md:h-[500px] relative bg-brand-cream/30">
+        <div className="w-full md:w-1/2 aspect-square md:aspect-auto md:h-[500px] relative bg-brand-cream/30 overflow-hidden group">
           <img
             src={getImageUrl(product.image)}
             alt={product.name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 cursor-zoom-in"
           />
         </div>
 

@@ -154,7 +154,7 @@ export default function ContactQueries() {
             {/* Content Body */}
             <form onSubmit={handleUpdate} className="p-6 space-y-4 text-xs">
               <div className="bg-zinc-50 dark:bg-zinc-800/10 border border-zinc-200 dark:border-zinc-800 p-4 rounded-xl leading-relaxed text-zinc-650 dark:text-zinc-400 space-y-2">
-                <p><span className="font-bold text-zinc-800 dark:text-zinc-200">From:</span> {selectedQuery.name} ({selectedQuery.email})</p>
+                <p><span className="font-bold text-zinc-900 dark:text-zinc-100">From:</span> {selectedQuery.name} ({selectedQuery.email})</p>
                 <p className="border-t border-zinc-200/50 dark:border-zinc-850 pt-2 font-light">"{selectedQuery.message}"</p>
               </div>
 

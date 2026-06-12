@@ -3,6 +3,7 @@ import { Star, CheckCircle } from "lucide-react";
 
 export default function Testimonials() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
   const sectionRef = useRef(null);
 
   const reviews = [
@@ -59,6 +60,16 @@ export default function Testimonials() {
   ];
 
   useEffect(() => {
+    if (isHovered) return;
+
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % reviews.length);
+    }, 4500);
+
+    return () => clearInterval(interval);
+  }, [isHovered, reviews.length]);
+
+  useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -113,7 +124,11 @@ export default function Testimonials() {
         </div>
 
         {/* Carousel Grid */}
-        <div className="reveal grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch pt-4">
+        <div
+          className="reveal grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch pt-4"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           {activeReviews.map((rev, idx) => {
             const isActive = idx === 1;
 

@@ -171,6 +171,22 @@ export default function Navbar() {
                         <p className="font-semibold text-brand-brown text-sm capitalize">{user.name}</p>
                         <p className="text-brand-brown/50 text-xs truncate">{user.email}</p>
                       </div>
+                      <Link
+                        to="/orders"
+                        onClick={() => setIsUserMenuOpen(false)}
+                        className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-brand-brown hover:text-brand-gold transition-colors"
+                      >
+                        <ShoppingBag className="w-4 h-4" />
+                        My Orders
+                      </Link>
+                      <Link
+                        to="/profile"
+                        onClick={() => setIsUserMenuOpen(false)}
+                        className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-brand-brown hover:text-brand-gold transition-colors border-b border-brand-gold/10"
+                      >
+                        <User className="w-4 h-4" />
+                        Profile Settings
+                      </Link>
                       <button
                         onClick={() => { logout(); setIsUserMenuOpen(false); }}
                         className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-brand-brown hover:text-red-500 hover:bg-red-50 transition-colors"
@@ -284,17 +300,38 @@ export default function Navbar() {
 
             <div className="border-t border-brand-gold/10 pt-6 mt-auto space-y-4">
               {user ? (
-                <div className="flex items-center gap-3">
-                  <img src={user.avatar} alt={user.name} className="w-9 h-9 rounded-full border-2 border-brand-gold" />
-                  <div>
-                    <p className="text-sm font-semibold text-brand-brown capitalize">{user.name}</p>
-                    <button
-                      onClick={() => { logout(); setIsMobileMenuOpen(false); }}
-                      className="text-xs text-red-500 flex items-center gap-1 mt-0.5"
-                    >
-                      <LogOut className="w-3 h-3" /> Sign out
-                    </button>
+                <div className="space-y-4 w-full">
+                  <div className="flex items-center gap-3">
+                    <img src={user.avatar} alt={user.name} className="w-9 h-9 rounded-full border-2 border-brand-gold object-cover" />
+                    <div>
+                      <p className="text-sm font-semibold text-brand-brown capitalize">{user.name}</p>
+                      <p className="text-xs text-brand-brown/50 truncate max-w-[150px]">{user.email}</p>
+                    </div>
                   </div>
+                  <div className="flex flex-col space-y-3 border-y border-brand-gold/10 py-3">
+                    <Link
+                      to="/orders"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="text-sm font-medium text-brand-brown hover:text-brand-gold flex items-center gap-2"
+                    >
+                      <ShoppingBag className="w-4 h-4" />
+                      <span>My Orders</span>
+                    </Link>
+                    <Link
+                      to="/profile"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="text-sm font-medium text-brand-brown hover:text-brand-gold flex items-center gap-2"
+                    >
+                      <User className="w-4 h-4" />
+                      <span>Profile Settings</span>
+                    </Link>
+                  </div>
+                  <button
+                    onClick={() => { logout(); setIsMobileMenuOpen(false); }}
+                    className="text-xs text-red-500 flex items-center gap-1"
+                  >
+                    <LogOut className="w-3.5 h-3.5" /> Sign out
+                  </button>
                 </div>
               ) : (
                 <div className="flex gap-3">

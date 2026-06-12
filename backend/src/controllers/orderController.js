@@ -3,6 +3,7 @@ import Cart from "../models/Cart.js";
 import Product from "../models/Product.js";
 import AuditLog from "../models/AuditLog.js";
 import { ErrorResponse } from "../middleware/errorHandler.js";
+import { sendOrderConfirmationEmail, sendOrderStatusUpdateEmail } from "../utils/emailHelper.js";
 
 // @desc    Place new order (Customer)
 // @route   POST /api/orders
@@ -26,7 +27,7 @@ export const placeOrder = async (req, res, next) => {
       return next(new ErrorResponse("No order items provided", 400));
     }
 
-    // 1. Verify and reduce stock levels for each item
+    // 1. Verify stock levels for each item
     for (const item of items) {
       const product = await Product.findById(item.product);
       if (!product) {
@@ -35,11 +36,20 @@ export const placeOrder = async (req, res, next) => {
       if (product.inventory < item.quantity) {
         return next(new ErrorResponse(`Insufficient stock for "${item.name}". Available: ${product.inventory}`, 400));
       }
-      product.inventory -= item.quantity;
-      if (product.inventory === 0) {
-        product.inStock = false;
+    }
+
+    // 2. Reduce stock ONLY if the order is confirmed immediately (COD)
+    if (paymentMethod === "cod") {
+      for (const item of items) {
+        const product = await Product.findById(item.product);
+        if (product) {
+          product.inventory -= item.quantity;
+          if (product.inventory === 0) {
+            product.inStock = false;
+          }
+          await product.save();
+        }
       }
-      await product.save();
     }
 
     // 2. Create the order
@@ -60,6 +70,10 @@ export const placeOrder = async (req, res, next) => {
 
     // 3. Clear user's cart
     await Cart.findOneAndUpdate({ user: req.user.id }, { $set: { items: [] } });
+
+    if (paymentMethod === "cod") {
+      sendOrderConfirmationEmail(order, req.user);
+    }
 
     res.status(201).json({
       success: true,
@@ -112,7 +126,7 @@ export const cancelOrder = async (req, res, next) => {
 // @access  Private
 export const getMyOrders = async (req, res, next) => {
   try {
-    const orders = await Order.find({ user: req.user.id }).sort("-createdAt");
+    const orders = await Order.find({ user: req.user.id, status: { $ne: "Pending" } }).sort("-createdAt");
 
     res.status(200).json({
       success: true,
@@ -150,7 +164,7 @@ export const getAdminOrders = async (req, res, next) => {
   try {
     const { status, search, page = 1, limit = 10 } = req.query;
 
-    const query = {};
+    const query = { status: { $ne: "Pending" } };
 
     if (status) {
       query.status = status;
@@ -197,7 +211,7 @@ export const getAdminOrders = async (req, res, next) => {
 // @route   PUT /api/admin/orders/:id/status
 // @access  Private/Admin
 export const updateOrderStatus = async (req, res, next) => {
-  const { status, trackingNumber, carrier, comment } = req.body;
+  const { status, trackingNumber, carrier, expectedDeliveryDate, comment } = req.body;
 
   try {
     const order = await Order.findById(req.params.id);
@@ -210,11 +224,24 @@ export const updateOrderStatus = async (req, res, next) => {
       order.status = status;
     }
 
-    if (trackingNumber) order.trackingNumber = trackingNumber;
-    if (carrier) order.carrier = carrier;
+    if (trackingNumber !== undefined) order.trackingNumber = trackingNumber;
+    if (carrier !== undefined) order.carrier = carrier;
+    if (expectedDeliveryDate !== undefined) order.expectedDeliveryDate = expectedDeliveryDate;
 
     // Save triggers status tracking history push in order model
     await order.save();
+
+    // Send status update email to customer
+    try {
+      await order.populate("user", "name email");
+      if (order.user) {
+        await sendOrderStatusUpdateEmail(order, order.user);
+      } else {
+        console.warn(`Cannot send status update email: no user reference found for order #${order._id}`);
+      }
+    } catch (emailErr) {
+      console.error("Failed to send status update email:", emailErr.message);
+    }
 
     // Audit Log
     await AuditLog.create({

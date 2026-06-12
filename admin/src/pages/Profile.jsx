@@ -56,7 +56,7 @@ export default function Profile() {
           </div>
 
           <div className="border-t border-zinc-100 dark:border-zinc-800/40 pt-4 space-y-2">
-            <h4 className="font-bold text-zinc-800 dark:text-zinc-200 uppercase text-[9px] tracking-wider">Account Information</h4>
+            <h4 className="font-bold text-zinc-900 dark:text-zinc-100 uppercase text-[9px] tracking-wider">Account Information</h4>
             <div className="space-y-1.5 text-zinc-500 dark:text-zinc-400 font-light">
               <p>Status: <span className="text-green-500 font-semibold uppercase">{admin?.status}</span></p>
             </div>
@@ -105,7 +105,7 @@ export default function Profile() {
                       <Activity className="w-4 h-4" />
                     </div>
                     <div className="space-y-0.5">
-                      <p className="font-semibold text-zinc-850 dark:text-zinc-200 uppercase tracking-wide text-[10px]">
+                      <p className="font-semibold text-zinc-850 dark:text-zinc-100 uppercase tracking-wide text-[10px]">
                         {log.action.replace("_", " ")}
                       </p>
                       <p className="text-[10px] text-zinc-500 font-light leading-relaxed">{log.details}</p>

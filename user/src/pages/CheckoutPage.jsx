@@ -171,7 +171,7 @@ export default function CheckoutPage() {
           prefill: {
             name: user?.name || "",
             email: user?.email || "",
-            contact: address.phone,
+            contact: address.phone ? address.phone.replace(/\D/g, "") : "",
           },
           theme: {
             color: "#5c3d2e",

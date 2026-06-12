@@ -103,15 +103,15 @@ export default function Dashboard() {
       {/* Analytics Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Sales Chart (2/3 width) */}
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-5 rounded-2xl shadow-sm lg:col-span-2 space-y-4">
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-5 rounded-2xl shadow-sm lg:col-span-2 min-w-0 space-y-4">
           <div className="flex justify-between items-center border-b border-zinc-100 dark:border-zinc-800 pb-3">
             <h3 className="font-semibold text-sm">Monthly Sales Timeline</h3>
           </div>
-          <div className="h-[280px]">
+          <div className="h-[280px] w-full min-w-0">
             {salesChart.length === 0 ? (
               <div className="flex justify-center items-center h-full text-xs text-zinc-400 font-light">No timelines recorded. Start checkout.</div>
             ) : (
-              <ResponsiveContainer width="100%" height="100%">
+              <ResponsiveContainer width="100%" height={280}>
                 <AreaChart data={salesChart}>
                   <defs>
                     <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
@@ -131,17 +131,17 @@ export default function Dashboard() {
         </div>
 
         {/* Category Share Chart (1/3 width) */}
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-5 rounded-2xl shadow-sm space-y-4">
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-5 rounded-2xl shadow-sm min-w-0 space-y-4">
           <div className="border-b border-zinc-100 dark:border-zinc-800 pb-3">
             <h3 className="font-semibold text-sm">Category Revenue Distribution</h3>
           </div>
-          <div className="h-[280px] flex flex-col justify-center items-center">
+          <div className="h-[280px] w-full min-w-0 flex flex-col justify-center items-center">
             {categoryChart.length === 0 ? (
               <div className="text-xs text-zinc-400 font-light">No category transactions mapped.</div>
             ) : (
               <>
-                <div className="w-full h-[200px]">
-                  <ResponsiveContainer width="100%" height="100%">
+                <div className="w-full h-[200px] min-w-0">
+                  <ResponsiveContainer width="100%" height={200}>
                     <PieChart>
                       <Pie
                         data={categoryChart}

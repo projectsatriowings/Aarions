@@ -1,4 +1,5 @@
 import Category from "../models/Category.js";
+import Product from "../models/Product.js";
 import AuditLog from "../models/AuditLog.js";
 import { ErrorResponse } from "../middleware/errorHandler.js";
 import { uploadImage } from "../middleware/upload.js";
@@ -9,9 +10,22 @@ import { uploadImage } from "../middleware/upload.js";
 export const getCategories = async (req, res, next) => {
   try {
     const categories = await Category.find({ isActive: true });
+    const categoriesWithCount = await Promise.all(
+      categories.map(async (cat) => {
+        const productCount = await Product.countDocuments({
+          $or: [{ categoryRef: cat._id }, { category: cat.slug }],
+          status: "active",
+        });
+        return {
+          ...cat.toObject(),
+          productCount,
+        };
+      })
+    );
+
     res.status(200).json({
       success: true,
-      categories,
+      categories: categoriesWithCount,
     });
   } catch (error) {
     next(error);
@@ -24,9 +38,21 @@ export const getCategories = async (req, res, next) => {
 export const getAdminCategories = async (req, res, next) => {
   try {
     const categories = await Category.find();
+    const categoriesWithCount = await Promise.all(
+      categories.map(async (cat) => {
+        const productCount = await Product.countDocuments({
+          $or: [{ categoryRef: cat._id }, { category: cat.slug }],
+        });
+        return {
+          ...cat.toObject(),
+          productCount,
+        };
+      })
+    );
+
     res.status(200).json({
       success: true,
-      categories,
+      categories: categoriesWithCount,
     });
   } catch (error) {
     next(error);
@@ -58,6 +84,26 @@ export const createCategory = async (req, res, next) => {
       description,
       image: imageUrl,
     });
+
+    // Handle product associations if provided
+    const { productIds } = req.body;
+    if (productIds) {
+      try {
+        const ids = JSON.parse(productIds);
+        if (Array.isArray(ids) && ids.length > 0) {
+          await Product.updateMany(
+            { _id: { $in: ids } },
+            {
+              category: slug,
+              categoryLabel: name,
+              categoryRef: category._id,
+            }
+          );
+        }
+      } catch (parseErr) {
+        console.error("Failed to parse productIds in createCategory:", parseErr);
+      }
+    }
 
     // Audit Log
     await AuditLog.create({
@@ -108,6 +154,49 @@ export const updateCategory = async (req, res, next) => {
       runValidators: true,
     });
 
+    // If name/slug updated, propagate the changes to all associated products
+    if (updateData.name || updateData.slug) {
+      await Product.updateMany(
+        { categoryRef: category._id },
+        {
+          category: category.slug,
+          categoryLabel: category.name,
+        }
+      );
+    }
+
+    // Handle product associations if provided
+    const { productIds } = req.body;
+    if (productIds) {
+      try {
+        const ids = JSON.parse(productIds);
+        if (Array.isArray(ids)) {
+          // Remove category reference from products that were previously in this category but are no longer selected.
+          await Product.updateMany(
+            { categoryRef: category._id, _id: { $nin: ids } },
+            {
+              category: "",
+              categoryLabel: "",
+              categoryRef: null,
+            }
+          );
+          // Add category reference to all products in the selected list.
+          if (ids.length > 0) {
+            await Product.updateMany(
+              { _id: { $in: ids } },
+              {
+                category: category.slug,
+                categoryLabel: category.name,
+                categoryRef: category._id,
+              }
+            );
+          }
+        }
+      } catch (parseErr) {
+        console.error("Failed to parse productIds in updateCategory:", parseErr);
+      }
+    }
+
     // Audit Log
     await AuditLog.create({
       adminUser: req.admin._id,
@@ -139,6 +228,16 @@ export const deleteCategory = async (req, res, next) => {
     }
 
     await Category.findByIdAndDelete(req.params.id);
+
+    // Clear category references from associated products
+    await Product.updateMany(
+      { $or: [{ categoryRef: category._id }, { category: category.slug }] },
+      {
+        category: "",
+        categoryLabel: "",
+        categoryRef: null,
+      }
+    );
 
     // Audit Log
     await AuditLog.create({

@@ -14,8 +14,6 @@ import {
   Settings,
   User,
   LogOut,
-  Sun,
-  Moon,
   Menu,
   X,
   Search,
@@ -28,29 +26,13 @@ export default function Layout({ children }) {
   const location = useLocation();
 
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
 
-  // Sync dark theme class
+  // Enforce light theme
   useEffect(() => {
-    const isDark = localStorage.getItem("aarions_admin_dark") === "true";
-    setDarkMode(isDark);
-    if (isDark) {
-      document.body.classList.add("dark-theme", "dark");
-    } else {
-      document.body.classList.remove("dark-theme", "dark");
-    }
+    localStorage.removeItem("aarions_admin_dark");
+    document.body.classList.remove("dark-theme", "dark");
+    document.documentElement.classList.remove("dark-theme", "dark");
   }, []);
-
-  const toggleDarkMode = () => {
-    const nextDark = !darkMode;
-    setDarkMode(nextDark);
-    localStorage.setItem("aarions_admin_dark", String(nextDark));
-    if (nextDark) {
-      document.body.classList.add("dark-theme", "dark");
-    } else {
-      document.body.classList.remove("dark-theme", "dark");
-    }
-  };
 
   useEffect(() => {
     if (!isLoading && !admin) {
@@ -136,23 +118,6 @@ export default function Layout({ children }) {
 
         {/* Footer Actions */}
         <div className="p-2 border-t border-zinc-200 dark:border-zinc-800 space-y-1">
-          <button
-            onClick={toggleDarkMode}
-            className="w-full flex items-center space-x-3 py-3 px-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-850 hover:text-zinc-900 transition-colors"
-          >
-            {darkMode ? (
-              <>
-                <Sun className="w-4 h-4 flex-shrink-0 text-amber-500" />
-                {sidebarOpen && <span>Light Mode</span>}
-              </>
-            ) : (
-              <>
-                <Moon className="w-4 h-4 flex-shrink-0 text-indigo-500" />
-                {sidebarOpen && <span>Dark Mode</span>}
-              </>
-            )}
-          </button>
-
           <button
             onClick={handleLogout}
             className="w-full flex items-center space-x-3 py-3 px-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors"

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { User, MapPin, Plus, Trash2, ShieldCheck, Camera, Edit2 } from "lucide-react";
+import { User, MapPin, Plus, Trash2, ShieldCheck, Camera, Edit2, ShoppingBag, ArrowRight } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import api from "../services/api";
 
@@ -166,58 +167,79 @@ export default function AccountSettings() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           
-          {/* Profile Details Form (Left Column) */}
-          <div className="lg:col-span-6 bg-white border border-brand-gold/10 p-6 sm:p-8 rounded-2xl shadow-sm space-y-6">
-            <h2 className="font-playfair text-lg font-semibold text-brand-brown flex items-center border-b border-brand-gold/10 pb-4">
-              <User className="w-5 h-5 text-brand-gold mr-2" />
-              Personal Profile
-            </h2>
-            
-            <form onSubmit={handleProfileSubmit} className="space-y-5">
-              {/* Avatar Selector */}
-              <div className="flex items-center space-x-6">
-                <div className="relative w-20 h-20 rounded-full border border-brand-gold/25 overflow-hidden bg-brand-cream/10">
-                  <img src={avatarPreview || "https://api.dicebear.com/7.x/initials/svg?seed=User"} alt="Avatar" className="w-full h-full object-cover" />
-                  <label htmlFor="avatar-upload" className="absolute inset-0 bg-black/40 flex items-center justify-center text-white opacity-0 hover:opacity-100 transition-opacity cursor-pointer">
-                    <Camera className="w-5 h-5" />
-                  </label>
-                  <input id="avatar-upload" type="file" accept="image/*" onChange={handleAvatarChange} className="hidden" />
+          {/* Left Column (Profile & Orders) */}
+          <div className="lg:col-span-6 space-y-6">
+            {/* Profile Details Form */}
+            <div className="bg-white border border-brand-gold/10 p-6 sm:p-8 rounded-2xl shadow-sm space-y-6">
+              <h2 className="font-playfair text-lg font-semibold text-brand-brown flex items-center border-b border-brand-gold/10 pb-4">
+                <User className="w-5 h-5 text-brand-gold mr-2" />
+                Personal Profile
+              </h2>
+              
+              <form onSubmit={handleProfileSubmit} className="space-y-5">
+                {/* Avatar Selector */}
+                <div className="flex items-center space-x-6">
+                  <div className="relative w-20 h-20 rounded-full border border-brand-gold/25 overflow-hidden bg-brand-cream/10">
+                    <img src={avatarPreview || "https://api.dicebear.com/7.x/initials/svg?seed=User"} alt="Avatar" className="w-full h-full object-cover" />
+                    <label htmlFor="avatar-upload" className="absolute inset-0 bg-black/40 flex items-center justify-center text-white opacity-0 hover:opacity-100 transition-opacity cursor-pointer">
+                      <Camera className="w-5 h-5" />
+                    </label>
+                    <input id="avatar-upload" type="file" accept="image/*" onChange={handleAvatarChange} className="hidden" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs uppercase tracking-wider font-semibold text-brand-brown/50">Profile Picture</h4>
+                    <p className="text-[10px] text-brand-brown/40">Upload JPG, PNG or WebP. Max 2MB.</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-xs uppercase tracking-wider font-semibold text-brand-brown/50">Profile Picture</h4>
-                  <p className="text-[10px] text-brand-brown/40">Upload JPG, PNG or WebP. Max 2MB.</p>
+
+                {/* Text Fields */}
+                <div className="flex flex-col space-y-1">
+                  <label className="text-[10px] uppercase tracking-wider font-semibold text-brand-brown/50">Full Name</label>
+                  <input
+                    type="text"
+                    value={profileForm.name}
+                    onChange={(e) => setProfileForm(prev => ({ ...prev, name: e.target.value }))}
+                    className="bg-brand-cream/20 border border-brand-gold/10 rounded-xl px-4 py-3 text-xs text-brand-brown outline-none focus:border-brand-gold/60"
+                    required
+                  />
                 </div>
-              </div>
 
-              {/* Text Fields */}
-              <div className="flex flex-col space-y-1">
-                <label className="text-[10px] uppercase tracking-wider font-semibold text-brand-brown/50">Full Name</label>
-                <input
-                  type="text"
-                  value={profileForm.name}
-                  onChange={(e) => setProfileForm(prev => ({ ...prev, name: e.target.value }))}
-                  className="bg-brand-cream/20 border border-brand-gold/10 rounded-xl px-4 py-3 text-xs text-brand-brown outline-none focus:border-brand-gold/60"
-                  required
-                />
-              </div>
+                <div className="flex flex-col space-y-1">
+                  <label className="text-[10px] uppercase tracking-wider font-semibold text-brand-brown/50">Primary Contact Phone</label>
+                  <input
+                    type="tel"
+                    value={profileForm.phone}
+                    onChange={(e) => setProfileForm(prev => ({ ...prev, phone: e.target.value }))}
+                    className="bg-brand-cream/20 border border-brand-gold/10 rounded-xl px-4 py-3 text-xs text-brand-brown outline-none focus:border-brand-gold/60"
+                  />
+                </div>
 
-              <div className="flex flex-col space-y-1">
-                <label className="text-[10px] uppercase tracking-wider font-semibold text-brand-brown/50">Primary Contact Phone</label>
-                <input
-                  type="tel"
-                  value={profileForm.phone}
-                  onChange={(e) => setProfileForm(prev => ({ ...prev, phone: e.target.value }))}
-                  className="bg-brand-cream/20 border border-brand-gold/10 rounded-xl px-4 py-3 text-xs text-brand-brown outline-none focus:border-brand-gold/60"
-                />
-              </div>
+                <button
+                  type="submit"
+                  className="bg-brand-brown hover:bg-brand-gold hover:text-brand-brown text-white text-xs font-semibold uppercase tracking-widest py-3.5 px-6 rounded-xl transition-all shadow-sm flex items-center justify-center"
+                >
+                  Save Profile Changes
+                </button>
+              </form>
+            </div>
 
-              <button
-                type="submit"
-                className="bg-brand-brown hover:bg-brand-gold hover:text-brand-brown text-white text-xs font-semibold uppercase tracking-widest py-3.5 px-6 rounded-xl transition-all shadow-sm flex items-center justify-center"
+            {/* Your Orders Tracking Card */}
+            <div className="bg-white border border-brand-gold/10 p-6 sm:p-8 rounded-2xl shadow-sm space-y-4">
+              <h2 className="font-playfair text-lg font-semibold text-brand-brown flex items-center border-b border-brand-gold/10 pb-4">
+                <ShoppingBag className="w-5 h-5 text-brand-gold mr-2" />
+                Your Orders
+              </h2>
+              <p className="text-xs text-brand-brown/60 leading-relaxed font-light">
+                Check active deliveries, courier status, and full tracking logs for your traditionally sourced purchases.
+              </p>
+              <Link
+                to="/orders"
+                className="inline-flex items-center space-x-2 bg-brand-gold hover:bg-brand-brown text-brand-brown hover:text-white text-xs font-bold uppercase tracking-widest py-3.5 px-6 rounded-xl transition-all shadow-sm border border-brand-gold/25"
               >
-                Save Profile Changes
-              </button>
-            </form>
+                <span>Track & View Orders</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
           </div>
 
           {/* Address Book Settings (Right Column) */}

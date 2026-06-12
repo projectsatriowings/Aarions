@@ -60,7 +60,7 @@ export default function CustomCursor() {
     <>
       {/* Outer Spring Ring */}
       <motion.div
-        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-brand-gold pointer-events-none z-50 hidden md:block -translate-x-1/2 -translate-y-1/2"
+        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-brand-gold pointer-events-none z-[9999] hidden md:block -translate-x-1/2 -translate-y-1/2"
         style={{
           x: ringX,
           y: ringY,
@@ -74,7 +74,7 @@ export default function CustomCursor() {
       />
       {/* Inner Dot */}
       <motion.div
-        className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-brand-gold pointer-events-none z-50 hidden md:block -translate-x-1/2 -translate-y-1/2"
+        className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-brand-gold pointer-events-none z-[9999] hidden md:block -translate-x-1/2 -translate-y-1/2"
         style={{
           x: mouseX,
           y: mouseY,

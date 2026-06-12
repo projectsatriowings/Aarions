@@ -15,12 +15,7 @@ export const getProducts = async (req, res, next) => {
 
     // Apply filters
     if (category && category !== "all") {
-      // Support subcategory matches like spices mapping to masalas
-      if (category === "spices") {
-        query.category = { $in: ["spices", "masala"] };
-      } else {
-        query.category = category;
-      }
+      query.category = category;
     }
 
     if (minPrice || maxPrice) {
@@ -68,6 +63,12 @@ export const getProducts = async (req, res, next) => {
       sortObj.isBestSeller = -1;
       sortObj.rating = -1;
     }
+
+    // Log query info
+    import("fs").then((fs) => {
+      const logMsg = `[LOG] req.query: ${JSON.stringify(req.query)} | constructed query: ${JSON.stringify(query)}\n`;
+      fs.appendFileSync("logs/query_log.txt", logMsg);
+    }).catch(err => console.error("Logger err:", err));
 
     const products = await Product.find(query)
       .sort(sortObj)
@@ -173,6 +174,16 @@ export const createProduct = async (req, res, next) => {
       productData.slug = productData.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
     }
 
+    // Set categoryRef if category slug is provided
+    if (productData.category) {
+      const categoryObj = await Category.findOne({ slug: productData.category });
+      if (categoryObj) {
+        productData.categoryRef = categoryObj._id;
+      } else {
+        productData.categoryRef = null;
+      }
+    }
+
     // Handle Uploaded Files
     if (req.files && req.files.image) {
       productData.image = await uploadImage(req.files.image[0]);
@@ -226,6 +237,18 @@ export const updateProduct = async (req, res, next) => {
     if (typeof updateData.variants === "string") updateData.variants = JSON.parse(updateData.variants);
     if (typeof updateData.variantPrices === "string") updateData.variantPrices = JSON.parse(updateData.variantPrices);
     if (typeof updateData.nutrients === "string") updateData.nutrients = JSON.parse(updateData.nutrients);
+
+    // Set categoryRef if category slug is provided
+    if (updateData.category) {
+      const categoryObj = await Category.findOne({ slug: updateData.category });
+      if (categoryObj) {
+        updateData.categoryRef = categoryObj._id;
+      } else {
+        updateData.categoryRef = null;
+      }
+    } else if (updateData.category === "") {
+      updateData.categoryRef = null;
+    }
 
     // Handle Uploaded Files
     if (req.files && req.files.image) {

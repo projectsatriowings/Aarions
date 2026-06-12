@@ -1,17 +1,26 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, Mail, MapPin, Send, Check, ChevronDown, HelpCircle } from "lucide-react";
+import api from "../services/api";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setForm({ name: "", email: "", phone: "", message: "" });
-    setTimeout(() => setSubmitted(false), 3000);
+    try {
+      const res = await api.post("/contact", form);
+      if (res.data.success) {
+        setSubmitted(true);
+        setForm({ name: "", email: "", phone: "", message: "" });
+        setTimeout(() => setSubmitted(false), 3000);
+      }
+    } catch (err) {
+      console.error("Contact form submission failed:", err);
+      alert(err.response?.data?.error || "Failed to submit message. Please try again.");
+    }
   };
 
   const handleInputChange = (e) => {

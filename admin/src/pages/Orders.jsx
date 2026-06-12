@@ -19,6 +19,7 @@ export default function Orders() {
   const [statusInput, setStatusInput] = useState("");
   const [trackingNumber, setTrackingNumber] = useState("");
   const [carrier, setCarrier] = useState("");
+  const [expectedDeliveryDate, setExpectedDeliveryDate] = useState("");
 
   const fetchOrders = async () => {
     setLoading(true);
@@ -44,6 +45,15 @@ export default function Orders() {
     setStatusInput(order.status);
     setTrackingNumber(order.trackingNumber || "");
     setCarrier(order.carrier || "");
+    if (order.expectedDeliveryDate) {
+      const dateObj = new Date(order.expectedDeliveryDate);
+      const yyyy = dateObj.getFullYear();
+      const mm = String(dateObj.getMonth() + 1).padStart(2, "0");
+      const dd = String(dateObj.getDate()).padStart(2, "0");
+      setExpectedDeliveryDate(`${yyyy}-${mm}-${dd}`);
+    } else {
+      setExpectedDeliveryDate("");
+    }
     setShowModal(true);
   };
 
@@ -55,6 +65,7 @@ export default function Orders() {
         status: statusInput,
         trackingNumber: trackingNumber || undefined,
         carrier: carrier || undefined,
+        expectedDeliveryDate: expectedDeliveryDate || undefined,
       });
 
       if (res.data.success) {
@@ -105,7 +116,7 @@ export default function Orders() {
             placeholder="Search by Order ID, Tracking Code..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="bg-transparent outline-none w-full text-xs text-zinc-800 dark:text-zinc-200 placeholder-zinc-400"
+            className="bg-transparent outline-none w-full text-xs text-zinc-900 dark:text-zinc-100 placeholder-zinc-400"
           />
         </div>
 
@@ -115,7 +126,6 @@ export default function Orders() {
           className="bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 outline-none text-xs"
         >
           <option value="">All Statuses</option>
-          <option value="Pending">Pending</option>
           <option value="Confirmed">Confirmed</option>
           <option value="Packed">Packed</option>
           <option value="Shipped">Shipped</option>
@@ -152,7 +162,7 @@ export default function Orders() {
               <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/60">
                 {orders.map((ord) => (
                   <tr key={ord._id} className="hover:bg-zinc-50/40 dark:hover:bg-zinc-800/5">
-                    <td className="py-3 px-4 font-bold text-zinc-800 dark:text-zinc-200">
+                    <td className="py-3 px-4 font-bold text-zinc-900 dark:text-zinc-100">
                       #{ord._id.substring(18).toUpperCase()}
                     </td>
                     <td className="py-3 px-4">
@@ -232,15 +242,14 @@ export default function Orders() {
                   Override Delivery Status
                 </h4>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="flex flex-col space-y-1">
                     <label className="text-[9px] uppercase font-semibold text-zinc-500">Order State</label>
                     <select
                       value={statusInput}
                       onChange={(e) => setStatusInput(e.target.value)}
-                      className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 outline-none"
+                      className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 outline-none text-zinc-900 dark:text-zinc-100"
                     >
-                      <option value="Pending">Pending</option>
                       <option value="Confirmed">Confirmed</option>
                       <option value="Packed">Packed</option>
                       <option value="Shipped">Shipped</option>
@@ -257,7 +266,7 @@ export default function Orders() {
                       value={trackingNumber}
                       onChange={(e) => setTrackingNumber(e.target.value)}
                       placeholder="e.g. AAR-983427"
-                      className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 outline-none"
+                      className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 outline-none text-zinc-900 dark:text-zinc-100"
                     />
                   </div>
 
@@ -268,7 +277,17 @@ export default function Orders() {
                       value={carrier}
                       onChange={(e) => setCarrier(e.target.value)}
                       placeholder="e.g. Delhivery, Bluedart"
-                      className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 outline-none"
+                      className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 outline-none text-zinc-900 dark:text-zinc-100"
+                    />
+                  </div>
+
+                  <div className="flex flex-col space-y-1">
+                    <label className="text-[9px] uppercase font-semibold text-zinc-500">Expected Delivery</label>
+                    <input
+                      type="date"
+                      value={expectedDeliveryDate}
+                      onChange={(e) => setExpectedDeliveryDate(e.target.value)}
+                      className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 outline-none text-zinc-900 dark:text-zinc-100"
                     />
                   </div>
                 </div>
@@ -292,10 +311,10 @@ export default function Orders() {
                 <div className="space-y-4 bg-zinc-50/50 dark:bg-zinc-800/10 border border-zinc-200/60 dark:border-zinc-800 p-4 rounded-xl">
                   <h4 className="font-semibold text-zinc-900 dark:text-zinc-100 border-b border-zinc-200 dark:border-zinc-800 pb-2">Customer Info</h4>
                   <div className="space-y-2 text-zinc-600 dark:text-zinc-400 font-light">
-                    <p><span className="font-semibold text-zinc-800 dark:text-zinc-200">Deliver to:</span> {selectedOrder.shippingAddress.street}</p>
+                    <p><span className="font-semibold text-zinc-900 dark:text-zinc-100">Deliver to:</span> {selectedOrder.shippingAddress.street}</p>
                     <p>{selectedOrder.shippingAddress.city}, {selectedOrder.shippingAddress.state} - {selectedOrder.shippingAddress.postalCode}</p>
                     <p>Phone Contact: {selectedOrder.shippingAddress.phone}</p>
-                    <p className="pt-2 border-t border-zinc-200/50 dark:border-zinc-850"><span className="font-semibold text-zinc-800 dark:text-zinc-200">Gateway:</span> {selectedOrder.paymentMethod.toUpperCase()}</p>
+                    <p className="pt-2 border-t border-zinc-200/50 dark:border-zinc-850"><span className="font-semibold text-zinc-900 dark:text-zinc-100">Gateway:</span> {selectedOrder.paymentMethod.toUpperCase()}</p>
                     <p>Transaction ID: <span className="font-mono">{selectedOrder.paymentInfo?.id || "N/A"}</span></p>
                   </div>
                 </div>
@@ -311,7 +330,7 @@ export default function Orders() {
                           <h5 className="font-bold text-zinc-900 dark:text-zinc-100 truncate max-w-[150px]">{item.name}</h5>
                           <p className="text-[10px] text-zinc-500 font-medium">{item.selectedVariant} x {item.quantity}</p>
                         </div>
-                        <span className="font-bold text-zinc-800 dark:text-zinc-200">₹{item.price * item.quantity}</span>
+                        <span className="font-bold text-zinc-900 dark:text-zinc-100">₹{item.price * item.quantity}</span>
                       </div>
                     ))}
                   </div>

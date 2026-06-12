@@ -55,7 +55,7 @@ export default function FeaturedCategories() {
             id: cat._id || idx,
             name: cat.name,
             slug: cat.slug,
-            count: cat.slug === "honey" ? 6 : cat.slug === "ghee" ? 3 : 6,
+            count: cat.productCount !== undefined ? cat.productCount : 0,
             description: cat.description || `Premium organic ${cat.name.toLowerCase()} sourced traditionally.`,
             image: cat.image || "https://aarions.in/img/honey/logo.jpg",
           }));

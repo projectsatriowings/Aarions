@@ -1,20 +1,28 @@
 import React, { useState } from "react";
 import { Mail, Sparkles, CheckCircle } from "lucide-react";
+import api from "../../services/api";
 
 export default function Newsletter() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (email.trim()) {
       setLoading(true);
-      setTimeout(() => {
+      try {
+        const res = await api.post("/newsletter/subscribe", { email });
+        if (res.data.success) {
+          setSubmitted(true);
+          setEmail("");
+        }
+      } catch (err) {
+        console.error("Newsletter subscription failed:", err);
+        alert(err.response?.data?.error || "Subscription failed. Please try again.");
+      } finally {
         setLoading(false);
-        setSubmitted(true);
-        setEmail("");
-      }, 1200);
+      }
     }
   };
 

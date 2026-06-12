@@ -141,7 +141,7 @@ export default function Coupons() {
 
                 {/* Details list */}
                 <div className="space-y-2 text-xs">
-                  <p className="font-semibold text-zinc-800 dark:text-zinc-200 text-sm">
+                  <p className="font-semibold text-zinc-900 dark:text-zinc-100 text-sm">
                     {c.discountType === "percentage" ? `${c.discountValue}% Off` : `₹${c.discountValue} Flat Discount`}
                   </p>
                   <div className="text-zinc-500 dark:text-zinc-400 space-y-1 font-light">

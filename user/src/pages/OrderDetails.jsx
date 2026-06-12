@@ -96,7 +96,7 @@ export default function OrderDetails() {
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            {order.status !== "Cancelled" && order.status !== "Delivered" && (
+            {!["Shipped", "Out For Delivery", "Delivered", "Cancelled"].includes(order.status) && (
               <button
                 onClick={handleCancelOrder}
                 disabled={cancelling}
@@ -212,6 +212,27 @@ export default function OrderDetails() {
           {/* Delivery & Carrier Info (Right Column) */}
           <div className="lg:col-span-4 space-y-6">
             
+            {/* Expected Delivery Card */}
+            {order.expectedDeliveryDate && (
+              <div className="bg-white border border-brand-gold/10 p-6 rounded-2xl shadow-sm space-y-4">
+                <h3 className="text-xs uppercase tracking-wider font-semibold text-brand-brown/60 flex items-center border-b border-brand-gold/10 pb-3">
+                  <Truck className="w-4 h-4 text-brand-gold mr-2" />
+                  Estimated Delivery
+                </h3>
+                <div className="text-xs text-brand-brown/70 leading-relaxed font-light space-y-2">
+                  <p className="text-lg font-extrabold text-brand-gold">
+                    {new Date(order.expectedDeliveryDate).toLocaleDateString('en-IN', {
+                      weekday: 'long',
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </p>
+                  <p className="text-[10px] text-brand-brown/50">Our delivery partner will make attempts to deliver on or before this date.</p>
+                </div>
+              </div>
+            )}
+
             {/* Delivery address */}
             <div className="bg-white border border-brand-gold/10 p-6 rounded-2xl shadow-sm space-y-4">
               <h3 className="text-xs uppercase tracking-wider font-semibold text-brand-brown/60 flex items-center border-b border-brand-gold/10 pb-3">

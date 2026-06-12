@@ -16,15 +16,18 @@ const productSchema = new mongoose.Schema(
     },
     category: {
       type: String, // Stored as category slug for easy frontend query matching
-      required: [true, "Category slug is required"],
+      required: false,
+      default: "",
     },
     categoryRef: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
+      default: null,
     },
     categoryLabel: {
       type: String,
-      required: [true, "Category label is required"],
+      required: false,
+      default: "",
     },
     price: {
       type: Number,

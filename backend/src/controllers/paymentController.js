@@ -1,9 +1,11 @@
 import { razorpayInstance, isRazorpayConfigured } from "../config/razorpay.js";
 import Payment from "../models/Payment.js";
 import Order from "../models/Order.js";
+import Product from "../models/Product.js";
 import AuditLog from "../models/AuditLog.js";
 import { ErrorResponse } from "../middleware/errorHandler.js";
 import crypto from "crypto";
+import { sendOrderConfirmationEmail } from "../utils/emailHelper.js";
 
 // @desc    Create Razorpay Order
 // @route   POST /api/payments/create-order
@@ -27,6 +29,7 @@ export const createRazorpayOrder = async (req, res, next) => {
         orderId: order.id,
         amount: order.amount,
         currency: order.currency,
+        key: process.env.RAZORPAY_KEY_ID,
         mock: false,
       });
     } else {
@@ -82,6 +85,18 @@ export const verifyPaymentSignature = async (req, res, next) => {
       return next(new ErrorResponse("Associated order not found", 404));
     }
 
+    // Reduce stock levels since the online order is now "Confirmed" (Paid)
+    for (const item of dbOrder.items) {
+      const product = await Product.findById(item.product);
+      if (product) {
+        product.inventory = Math.max(0, product.inventory - item.quantity);
+        if (product.inventory === 0) {
+          product.inStock = false;
+        }
+        await product.save();
+      }
+    }
+
     dbOrder.paymentInfo = {
       id: razorpay_payment_id || `mock_pay_${Date.now()}`,
       orderId: razorpay_order_id,
@@ -89,6 +104,9 @@ export const verifyPaymentSignature = async (req, res, next) => {
     };
     dbOrder.status = "Confirmed";
     await dbOrder.save();
+
+    // Send order placement email to customer
+    sendOrderConfirmationEmail(dbOrder, req.user);
 
     // Save transaction
     const payment = await Payment.create({
