@@ -19,6 +19,7 @@ import {
   Search,
 } from "lucide-react";
 import { useAdminAuth } from "../context/AdminAuthContext";
+import { getImageUrl } from "../services/api";
 
 export default function Layout({ children }) {
   const { admin, logout, hasPermission, isLoading } = useAdminAuth();
@@ -26,6 +27,11 @@ export default function Layout({ children }) {
   const location = useLocation();
 
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [avatarError, setAvatarError] = useState(false);
+
+  useEffect(() => {
+    setAvatarError(false);
+  }, [admin?.avatar]);
 
   // Enforce light theme
   useEffect(() => {
@@ -151,8 +157,20 @@ export default function Layout({ children }) {
             <span className="hidden sm:inline text-xs text-zinc-500 dark:text-zinc-400 font-semibold tracking-wide">
               Logged as: <span className="font-bold text-zinc-700 dark:text-zinc-350">{admin?.name}</span> ({admin?.role})
             </span>
-            <Link to="/profile" className="w-9 h-9 rounded-full overflow-hidden border border-amber-500/30">
-              <img src={admin?.avatar || "https://api.dicebear.com/7.x/initials/svg?seed=Admin"} alt="Avatar" className="w-full h-full object-cover" />
+            <Link to="/profile" className="w-9 h-9 rounded-full overflow-hidden border border-amber-500/30 flex items-center justify-center bg-amber-500/10">
+              {admin?.avatar && !avatarError ? (
+                <img
+                  src={getImageUrl(admin.avatar)}
+                  alt="Avatar"
+                  referrerPolicy="no-referrer"
+                  onError={() => setAvatarError(true)}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <span className="text-amber-500 text-sm font-bold uppercase leading-none">
+                  {admin?.name ? admin.name.split(" ").map(n => n[0]).join("").slice(0, 2) : "A"}
+                </span>
+              )}
             </Link>
           </div>
         </header>

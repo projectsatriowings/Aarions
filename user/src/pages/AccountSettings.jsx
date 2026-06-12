@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { User, MapPin, Plus, Trash2, ShieldCheck, Camera, Edit2, ShoppingBag, ArrowRight } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
-import api from "../services/api";
+import api, { getImageUrl } from "../services/api";
 
 export default function AccountSettings() {
   const { user, updateProfile } = useAuth();
@@ -11,6 +11,7 @@ export default function AccountSettings() {
   const [profileForm, setProfileForm] = useState({ name: "", phone: "" });
   const [avatarFile, setAvatarFile] = useState(null);
   const [avatarPreview, setAvatarPreview] = useState("");
+  const [avatarError, setAvatarError] = useState(false);
   
   const [addresses, setAddresses] = useState([]);
   const [loadingAddresses, setLoadingAddresses] = useState(true);
@@ -61,6 +62,7 @@ export default function AccountSettings() {
         phone: user.phoneNumber || "",
       });
       setAvatarPreview(user.avatar || "");
+      setAvatarError(false);
     }
     fetchAddresses();
   }, [user]);
@@ -90,6 +92,7 @@ export default function AccountSettings() {
     if (file) {
       setAvatarFile(file);
       setAvatarPreview(URL.createObjectURL(file));
+      setAvatarError(false);
     }
   };
 
@@ -144,7 +147,13 @@ export default function AccountSettings() {
   };
 
   return (
-    <div className="min-h-screen pt-40 pb-24 bg-brand-cream/10">
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -15 }}
+      transition={{ duration: 0.4 }}
+      className="min-h-screen pt-40 pb-24 bg-brand-cream/10"
+    >
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
@@ -180,7 +189,21 @@ export default function AccountSettings() {
                 {/* Avatar Selector */}
                 <div className="flex items-center space-x-6">
                   <div className="relative w-20 h-20 rounded-full border border-brand-gold/25 overflow-hidden bg-brand-cream/10">
-                    <img src={avatarPreview || "https://api.dicebear.com/7.x/initials/svg?seed=User"} alt="Avatar" className="w-full h-full object-cover" />
+                    {avatarPreview && !avatarError ? (
+                      <img
+                        src={avatarPreview.startsWith("blob:") ? avatarPreview : getImageUrl(avatarPreview)}
+                        alt="Avatar"
+                        referrerPolicy="no-referrer"
+                        onError={() => setAvatarError(true)}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-brand-brown flex items-center justify-center">
+                        <span className="text-white text-lg font-bold uppercase leading-none">
+                          {user?.name ? user.name.split(" ").map(n => n[0]).join("").slice(0, 2) : "U"}
+                        </span>
+                      </div>
+                    )}
                     <label htmlFor="avatar-upload" className="absolute inset-0 bg-black/40 flex items-center justify-center text-white opacity-0 hover:opacity-100 transition-opacity cursor-pointer">
                       <Camera className="w-5 h-5" />
                     </label>
@@ -407,6 +430,6 @@ export default function AccountSettings() {
         </div>
 
       </div>
-    </div>
+    </motion.div>
   );
 }

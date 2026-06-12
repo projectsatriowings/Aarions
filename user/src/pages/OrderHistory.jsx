@@ -45,7 +45,13 @@ export default function OrderHistory() {
   };
 
   return (
-    <div className="min-h-screen pt-40 pb-24 bg-brand-cream/10">
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -15 }}
+      transition={{ duration: 0.4 }}
+      className="min-h-screen pt-40 pb-24 bg-brand-cream/10"
+    >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
@@ -145,6 +151,6 @@ export default function OrderHistory() {
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }

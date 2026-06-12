@@ -50,6 +50,10 @@ const websiteSettingsSchema = new mongoose.Schema(
         bgColor: "#fcf8f2",
       },
     },
+    shippingFee: {
+      type: Number,
+      default: 60,
+    },
   },
   {
     timestamps: true,

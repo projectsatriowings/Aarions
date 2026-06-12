@@ -23,6 +23,15 @@ export default function Shop() {
   const [dbCategories, setDbCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = Math.ceil(dbProducts.length / 9);
+
+  const displayedProducts = useMemo(() => {
+    const startIndex = (currentPage - 1) * 9;
+    return dbProducts.slice(startIndex, startIndex + 9);
+  }, [dbProducts, currentPage]);
+
   // Read category and search query from URL params on load/change
   useEffect(() => {
     const cat = searchParams.get("category");
@@ -113,6 +122,11 @@ export default function Shop() {
     };
   }, [selectedCategory, priceRange, searchQuery, sortBy]);
 
+  // Reset page to 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory, priceRange, searchQuery, sortBy]);
+
   const handleCategoryChange = (slug) => {
     if (slug === "all") {
       searchParams.delete("category");
@@ -193,7 +207,7 @@ export default function Shop() {
             </div>
 
             {/* Category Selector */}
-            <div className="space-y-3">
+            <div id="categories" className="space-y-3">
               <label className="text-xs uppercase tracking-wider font-semibold text-brand-brown/50 block">Categories</label>
               <div className="flex flex-col space-y-1">
                 {dbCategories.map((cat) => (
@@ -266,23 +280,60 @@ export default function Shop() {
               <div className="flex justify-center items-center py-24">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-gold" />
               </div>
-            ) : dbProducts.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {dbProducts.map((product) => (
-                  <motion.div
-                    key={product._id || product.id}
-                    layout
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    <ProductCard
-                      product={product}
-                      onQuickView={(p) => setSelectedProduct(p)}
-                    />
-                  </motion.div>
-                ))}
+            ) : displayedProducts.length > 0 ? (
+              <div className="space-y-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {displayedProducts.map((product) => (
+                    <motion.div
+                      key={product._id || product.id}
+                      layout
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      <ProductCard
+                        product={product}
+                        onQuickView={(p) => setSelectedProduct(p)}
+                      />
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Pagination Controls */}
+                {totalPages > 1 && (
+                  <div className="flex justify-center items-center gap-2 pt-10 border-t border-brand-gold/10">
+                    <button
+                      onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                      disabled={currentPage === 1}
+                      className="w-10 h-10 rounded-xl border border-brand-gold/15 bg-white flex items-center justify-center text-brand-brown hover:border-brand-gold hover:text-brand-gold disabled:opacity-35 disabled:hover:border-brand-gold/15 disabled:hover:text-brand-brown transition-all duration-300 font-bold"
+                    >
+                      &larr;
+                    </button>
+
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                      <button
+                        key={page}
+                        onClick={() => setCurrentPage(page)}
+                        className={`w-10 h-10 rounded-xl text-xs font-bold font-mono transition-all duration-300 ${
+                          currentPage === page
+                            ? "bg-brand-brown border border-brand-brown text-brand-cream shadow-md"
+                            : "bg-white border border-brand-gold/15 text-brand-brown hover:border-brand-gold hover:text-brand-gold"
+                        }`}
+                      >
+                        {page}
+                      </button>
+                    ))}
+
+                    <button
+                      onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                      disabled={currentPage === totalPages}
+                      className="w-10 h-10 rounded-xl border border-brand-gold/15 bg-white flex items-center justify-center text-brand-brown hover:border-brand-gold hover:text-brand-gold disabled:opacity-35 disabled:hover:border-brand-gold/15 disabled:hover:text-brand-brown transition-all duration-300 font-bold"
+                    >
+                      &rarr;
+                    </button>
+                  </div>
+                )}
               </div>
             ) : (
               // Empty State

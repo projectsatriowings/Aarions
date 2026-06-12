@@ -12,6 +12,7 @@ export default function SettingsPage() {
   const [formData, setFormData] = useState({
     brandName: "",
     announcementText: "",
+    shippingFee: 60,
     contactEmail: "",
     contactPhone: "",
     address: "",
@@ -33,6 +34,7 @@ export default function SettingsPage() {
         setFormData({
           brandName: s.brandName || "Aarions",
           announcementText: s.announcementText || "",
+          shippingFee: s.shippingFee !== undefined ? s.shippingFee : 60,
           contactEmail: s.contactEmail || "",
           contactPhone: s.contactPhone || "",
           address: s.address || "",
@@ -69,6 +71,7 @@ export default function SettingsPage() {
     const payload = {
       brandName: formData.brandName,
       announcementText: formData.announcementText,
+      shippingFee: Number(formData.shippingFee),
       contactEmail: formData.contactEmail,
       contactPhone: formData.contactPhone,
       address: formData.address,
@@ -152,6 +155,20 @@ export default function SettingsPage() {
                   name="announcementText"
                   value={formData.announcementText}
                   onChange={handleInputChange}
+                  className="bg-zinc-50 dark:bg-zinc-800/30 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 outline-none"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="flex flex-col space-y-1">
+                <label className="text-[10px] uppercase font-semibold text-zinc-500">Shipping Fee (₹)</label>
+                <input
+                  type="number"
+                  name="shippingFee"
+                  value={formData.shippingFee}
+                  onChange={handleInputChange}
+                  min="0"
                   className="bg-zinc-50 dark:bg-zinc-800/30 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 outline-none"
                 />
               </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, ArrowRight, ArrowLeft, Check } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import { motion } from "framer-motion";
 
 const pwScore = pwd => {
   let s = 0;
@@ -24,7 +25,7 @@ export default function SignupPage() {
   const { signup, loginWithGoogle, user } = useAuth();
 
   const [step, setStep] = useState(1);
-  const [form, setForm] = useState({ name:"", email:"", phone:"", password:"", confirm:"", agreed:false });
+  const [form, setForm] = useState({ name:"", email:"", phone:"", password:"", confirm:"" });
   const [errors, setErrors] = useState({});
   const [showPw,  setShowPw]  = useState(false);
   const [showCpw, setShowCpw] = useState(false);
@@ -56,13 +57,16 @@ export default function SignupPage() {
         prompt: "select_account",
         callback: async (tokenResponse) => {
           if (tokenResponse && tokenResponse.access_token) {
-            const result = await loginWithGoogle(tokenResponse.access_token);
+            const result = await loginWithGoogle(tokenResponse.access_token, true);
             if (result.success) {
               setSuccess(true);
               setLoading(false);
               setTimeout(() => navigate("/", { replace: true }), 900);
             } else {
               setErrors({ form: result.message });
+              if (result.email) {
+                setForm(p => ({ ...p, email: result.email }));
+              }
               setLoading(false);
             }
           } else {
@@ -103,7 +107,6 @@ export default function SignupPage() {
     if (!form.password || form.password.length < 6) e.password = "At least 6 characters";
     if (!form.confirm) e.confirm = "Please confirm your password";
     else if (form.password !== form.confirm) e.confirm = "Passwords do not match";
-    if (!form.agreed) e.agreed = "Please accept the terms";
     return e;
   };
 
@@ -136,7 +139,13 @@ export default function SignupPage() {
   ];
 
   return (
-    <div className="auth-root">
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -15 }}
+      transition={{ duration: 0.4 }}
+      className="auth-root"
+    >
 
       {/* ───────── LEFT HERO ───────── */}
       <div className="auth-hero">
@@ -325,16 +334,7 @@ export default function SignupPage() {
                     {errors.confirm && <span className="auth-err">{errors.confirm}</span>}
                   </div>
 
-                  {/* Terms */}
-                  <label className="auth-terms">
-                    <input type="checkbox" name="agreed" id="su-terms"
-                      checked={form.agreed} onChange={handleChange} className="auth-check"/>
-                    <span>
-                      I agree to the <Link to="/terms">Terms of Service</Link> &amp;{" "}
-                      <Link to="/privacy">Privacy Policy</Link>
-                    </span>
-                  </label>
-                  {errors.agreed && <span className="auth-err" style={{marginTop:"-.4rem"}}>{errors.agreed}</span>}
+
 
                   <div className="auth-row">
                     <button type="button" onClick={() => setStep(1)} className="auth-back-btn" id="signup-back-btn">
@@ -354,6 +354,6 @@ export default function SignupPage() {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

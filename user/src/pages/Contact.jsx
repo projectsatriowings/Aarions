@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, Mail, MapPin, Send, Check, ChevronDown, HelpCircle } from "lucide-react";
 import api from "../services/api";
+import { useSettings } from "../context/SettingsContext";
 
 export default function Contact() {
+  const { settings } = useSettings();
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
@@ -86,7 +88,7 @@ export default function Contact() {
                 <Phone className="w-5 h-5 text-brand-gold mr-4 mt-1 flex-shrink-0" />
                 <div>
                   <h4 className="text-xs uppercase tracking-wider font-semibold text-brand-brown/50">Call Support</h4>
-                  <p className="text-sm font-semibold text-brand-brown mt-0.5">+91 98432 70810</p>
+                  <p className="text-sm font-semibold text-brand-brown mt-0.5">{settings?.contactPhone || "+91 98432 70810"}</p>
                 </div>
               </div>
 
@@ -94,7 +96,7 @@ export default function Contact() {
                 <Mail className="w-5 h-5 text-brand-gold mr-4 mt-1 flex-shrink-0" />
                 <div>
                   <h4 className="text-xs uppercase tracking-wider font-semibold text-brand-brown/50">Email Inquiries</h4>
-                  <p className="text-sm font-semibold text-brand-brown mt-0.5">info@aarions.in</p>
+                  <p className="text-sm font-semibold text-brand-brown mt-0.5">{settings?.contactEmail || "info@aarions.in"}</p>
                 </div>
               </div>
             </div>
@@ -108,7 +110,7 @@ export default function Contact() {
                 <div>
                   <h4 className="text-xs uppercase tracking-widest font-bold text-brand-gold">Head Office & Store</h4>
                   <p className="text-xs sm:text-sm text-brand-brown/85 mt-1 leading-relaxed font-light">
-                    No.1A, G1, Ground Floor, Gurudev Complex, 57th St, Venkatraman Nagar, Korattur, Chennai, Tamil Nadu 600080
+                    {settings?.address || "No.1A, G1, Ground Floor, Gurudev Complex, 57th St, Venkatraman Nagar, Korattur, Chennai, Tamil Nadu 600080"}
                   </p>
                 </div>
               </div>

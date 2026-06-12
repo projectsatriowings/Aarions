@@ -49,15 +49,25 @@ export default function OrderDetails() {
 
   if (loading) {
     return (
-      <div className="min-h-screen pt-48 flex justify-center bg-brand-cream/10">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="min-h-screen pt-48 flex justify-center bg-brand-cream/10"
+      >
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-brown" />
-      </div>
+      </motion.div>
     );
   }
 
   if (error || !order) {
     return (
-      <div className="min-h-screen pt-48 pb-24 bg-brand-cream/10 flex items-center justify-center text-center">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        className="min-h-screen pt-48 pb-24 bg-brand-cream/10 flex items-center justify-center text-center"
+      >
         <div className="max-w-md p-8 bg-white border border-brand-gold/10 rounded-2xl shadow-sm space-y-4">
           <AlertTriangle className="w-12 h-12 text-brand-gold mx-auto" />
           <h2 className="font-playfair text-xl font-bold text-brand-brown">Details Not Found</h2>
@@ -71,14 +81,20 @@ export default function OrderDetails() {
             <span>Back to Orders</span>
           </Link>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
   const discountPercent = order.discountPrice ? Math.round((order.discountPrice / order.itemsPrice) * 100) : 0;
 
   return (
-    <div className="min-h-screen pt-40 pb-24 bg-brand-cream/10">
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -15 }}
+      transition={{ duration: 0.4 }}
+      className="min-h-screen pt-40 pb-24 bg-brand-cream/10"
+    >
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Back Link */}
@@ -267,6 +283,6 @@ export default function OrderDetails() {
 
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

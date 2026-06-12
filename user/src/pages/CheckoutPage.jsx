@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ShieldCheck, Tag, CreditCard, Loader2, ArrowLeft, CheckCircle2 } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
+import { useSettings } from "../context/SettingsContext";
 import api from "../services/api";
 
 export default function CheckoutPage() {
   const { cartItems, cartTotal, clearCart } = useCart();
   const { user } = useAuth();
+  const { settings } = useSettings();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [address, setAddress] = useState({
     street: "",
@@ -37,6 +40,27 @@ export default function CheckoutPage() {
     }
   }, [cartItems, user, navigate, success]);
 
+  useEffect(() => {
+    if (location.state?.couponCode) {
+      setCouponCode(location.state.couponCode);
+      const autoApply = async () => {
+        try {
+          const res = await api.post("/coupons/apply", {
+            code: location.state.couponCode,
+            orderAmount: cartTotal,
+          });
+          if (res.data.success) {
+            setAppliedCoupon(res.data.code);
+            setDiscount(res.data.discount);
+          }
+        } catch (err) {
+          console.warn("Failed to auto-apply checkout coupon:", err.message);
+        }
+      };
+      autoApply();
+    }
+  }, [location.state, cartTotal]);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setAddress((prev) => ({ ...prev, [name]: value }));
@@ -59,7 +83,8 @@ export default function CheckoutPage() {
     }
   };
 
-  const shippingPrice = cartTotal > 499 ? 0 : 50;
+  const shippingPriceSetting = settings?.shippingFee !== undefined ? Number(settings.shippingFee) : 60;
+  const shippingPrice = cartTotal === 0 ? 0 : shippingPriceSetting;
   const taxPrice = Math.round(cartTotal * 0.05); // 5% GST
   const finalAmount = cartTotal + shippingPrice + taxPrice - discount;
 
@@ -194,7 +219,12 @@ export default function CheckoutPage() {
 
   if (success) {
     return (
-      <div className="min-h-screen pt-48 pb-24 bg-brand-cream/10 flex items-center justify-center">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="min-h-screen pt-48 pb-24 bg-brand-cream/10 flex items-center justify-center"
+      >
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -238,12 +268,18 @@ export default function CheckoutPage() {
             </Link>
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <div className="min-h-screen pt-40 pb-24 bg-brand-cream/10">
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -15 }}
+      transition={{ duration: 0.4 }}
+      className="min-h-screen pt-40 pb-24 bg-brand-cream/10"
+    >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Back Link */}
@@ -443,6 +479,6 @@ export default function CheckoutPage() {
 
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

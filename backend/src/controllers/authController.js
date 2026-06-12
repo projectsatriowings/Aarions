@@ -272,7 +272,7 @@ export const resetPassword = async (req, res, next) => {
 // @route   POST /api/auth/google
 // @access  Public
 export const googleLogin = async (req, res, next) => {
-  const { token } = req.body;
+  const { token, isSignup } = req.body;
 
   if (!token) {
     return next(new ErrorResponse("Google access token is required", 400));
@@ -331,6 +331,15 @@ export const googleLogin = async (req, res, next) => {
       }
       await user.save();
     } else {
+      // Check if this is a signup request, else reject
+      if (!isSignup) {
+        return res.status(404).json({
+          success: false,
+          error: "Account not found. Please sign up first.",
+          email: email.toLowerCase(),
+        });
+      }
+
       // Register a new customer
       const randomPassword = crypto.randomBytes(16).toString("hex");
       user = await User.create({

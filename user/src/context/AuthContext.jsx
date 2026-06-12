@@ -49,9 +49,9 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const loginWithGoogle = async (googleToken) => {
+  const loginWithGoogle = async (googleToken, isSignup = false) => {
     try {
-      const response = await api.post("/auth/google", { token: googleToken });
+      const response = await api.post("/auth/google", { token: googleToken, isSignup });
       if (response.data.success) {
         const { accessToken, user: userData } = response.data;
         setUser(userData);
@@ -63,6 +63,7 @@ export function AuthProvider({ children }) {
       return {
         success: false,
         message: error.response?.data?.error || "Google sign-in failed. Please try again.",
+        email: error.response?.data?.email,
       };
     }
   };

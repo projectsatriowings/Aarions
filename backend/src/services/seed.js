@@ -10,6 +10,16 @@ import AdminUser from "../models/AdminUser.js";
 import WebsiteSettings from "../models/WebsiteSettings.js";
 import Coupon from "../models/Coupon.js";
 import Blog from "../models/Blog.js";
+import Order from "../models/Order.js";
+import Cart from "../models/Cart.js";
+import Review from "../models/Review.js";
+import Wishlist from "../models/Wishlist.js";
+import Address from "../models/Address.js";
+import Notification from "../models/Notification.js";
+import Payment from "../models/Payment.js";
+import AuditLog from "../models/AuditLog.js";
+import ContactQuery from "../models/ContactQuery.js";
+import NewsletterSubscriber from "../models/NewsletterSubscriber.js";
 
 dotenv.config();
 
@@ -35,6 +45,16 @@ const seedDB = async () => {
     await WebsiteSettings.deleteMany();
     await Coupon.deleteMany();
     await Blog.deleteMany();
+    await Order.deleteMany();
+    await Cart.deleteMany();
+    await Review.deleteMany();
+    await Wishlist.deleteMany();
+    await Address.deleteMany();
+    await Notification.deleteMany();
+    await Payment.deleteMany();
+    await AuditLog.deleteMany();
+    await ContactQuery.deleteMany();
+    await NewsletterSubscriber.deleteMany();
 
     // 2. Extract and create Categories
     console.log("Extracting categories...");
@@ -157,6 +177,7 @@ const seedDB = async () => {
     await WebsiteSettings.create({
       brandName: "Aarions",
       announcementText: "Welcome to Aarions! Pure organic honey, ghee, and stone-ground masalas.",
+      shippingFee: 60,
     });
 
     // 7. Create a couple default Coupons

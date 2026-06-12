@@ -4,8 +4,12 @@ import { ShoppingBag, Heart, Menu, X, Search, ChevronRight, User, LogOut, LogIn 
 import { useCart } from "../../context/CartContext";
 import { useWishlist } from "../../context/WishlistContext";
 import { useAuth } from "../../context/AuthContext";
+import { useSettings } from "../../context/SettingsContext";
+import { getImageUrl } from "../../services/api";
+
 
 export default function Navbar() {
+  const { settings } = useSettings();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -17,6 +21,11 @@ export default function Navbar() {
   const userMenuRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
+  const [avatarError, setAvatarError] = useState(false);
+
+  useEffect(() => {
+    setAvatarError(false);
+  }, [user?.avatar]);
 
   // Close user menu when clicking outside
   useEffect(() => {
@@ -158,11 +167,21 @@ export default function Navbar() {
                     className="flex items-center gap-1.5 p-1 transition-colors duration-300"
                     aria-label="User menu"
                   >
-                    <img
-                      src={user.avatar}
-                      alt={user.name}
-                      className="w-7 h-7 rounded-full border-2 border-brand-gold object-cover"
-                    />
+                    {user.avatar && !avatarError ? (
+                      <img
+                        src={getImageUrl(user.avatar)}
+                        alt={user.name}
+                        referrerPolicy="no-referrer"
+                        onError={() => setAvatarError(true)}
+                        className="w-8 h-8 rounded-full border-2 border-brand-gold object-cover"
+                      />
+                    ) : (
+                      <div className="w-8 h-8 rounded-full border-2 border-brand-gold bg-brand-brown flex items-center justify-center flex-shrink-0">
+                        <span className="text-white text-xs font-bold uppercase leading-none">
+                          {user.name ? user.name.split(" ").map(n => n[0]).join("").slice(0, 2) : "U"}
+                        </span>
+                      </div>
+                    )}
                   </button>
 
                   {isUserMenuOpen && (
@@ -302,7 +321,21 @@ export default function Navbar() {
               {user ? (
                 <div className="space-y-4 w-full">
                   <div className="flex items-center gap-3">
-                    <img src={user.avatar} alt={user.name} className="w-9 h-9 rounded-full border-2 border-brand-gold object-cover" />
+                    {user.avatar && !avatarError ? (
+                      <img
+                        src={getImageUrl(user.avatar)}
+                        alt={user.name}
+                        referrerPolicy="no-referrer"
+                        onError={() => setAvatarError(true)}
+                        className="w-9 h-9 rounded-full border-2 border-brand-gold object-cover flex-shrink-0"
+                      />
+                    ) : (
+                      <div className="w-9 h-9 rounded-full border-2 border-brand-gold bg-brand-brown flex items-center justify-center flex-shrink-0">
+                        <span className="text-white text-sm font-bold uppercase leading-none">
+                          {user.name ? user.name.split(" ").map(n => n[0]).join("").slice(0, 2) : "U"}
+                        </span>
+                      </div>
+                    )}
                     <div>
                       <p className="text-sm font-semibold text-brand-brown capitalize">{user.name}</p>
                       <p className="text-xs text-brand-brown/50 truncate max-w-[150px]">{user.email}</p>
@@ -353,8 +386,8 @@ export default function Navbar() {
               )}
               <div className="text-xs text-brand-brown/50 uppercase tracking-widest">Support & Contact</div>
               <p className="text-sm text-brand-brown">
-                +91 98432 70810 <br />
-                info@aarions.in
+                {settings?.contactPhone || "+91 98432 70810"} <br />
+                {settings?.contactEmail || "info@aarions.in"}
               </p>
             </div>
           </div>

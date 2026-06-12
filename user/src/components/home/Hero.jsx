@@ -4,11 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function Hero() {
   const bgImages = [
+    "/bg-ghee.png",
+    "/bg-honey.png",
+    "/bg-spices.png",
+    "/bg-masala.png",
     "/auth-honey.jpg",
-    "/auth-spices-dark.jpg",
-    "https://aarions.in/img/honey/ghir%20ghee.jpg",
-    "https://aarions.in/img/honey/Forest%20honey%20m.jpg",
-    "https://aarions.in/img/about/Masala/Masala/tumeric.jpg"
+    "/auth-spices-dark.jpg"
   ];
 
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
@@ -158,9 +159,7 @@ export default function Hero() {
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </Link>
-              <Link to="/shop" className="btn-outline-white">
-                Explore Categories
-              </Link>
+
             </div>
 
           </div>
@@ -176,7 +175,7 @@ export default function Hero() {
                   style={{ width: "8.5rem", height: "8.5rem", borderColor: "rgba(232, 163, 23, 0.2)", boxShadow: "0 10px 30px rgba(232,163,23,0.15)" }}
                 >
                   <img 
-                    src="https://aarions.in/img/honey/ghir%20ghee.jpg" 
+                    src="/ghee-hero.png" 
                     alt="Gir Cow Ghee" 
                     className="w-full h-full object-cover"
                   />
@@ -198,7 +197,7 @@ export default function Hero() {
                   style={{ width: "10rem", height: "10rem", borderColor: "rgba(232, 163, 23, 0.2)", boxShadow: "0 10px 30px rgba(232,163,23,0.15)" }}
                 >
                   <img 
-                    src="https://aarions.in/img/honey/Forest%20honey%20m.jpg" 
+                    src="/honey-hero.png" 
                     alt="Forest Honey" 
                     className="w-full h-full object-cover"
                   />
@@ -221,7 +220,7 @@ export default function Hero() {
                   style={{ width: "7rem", height: "7rem", borderColor: "rgba(178,58,46,0.25)", boxShadow: "0 10px 30px rgba(178,58,46,0.15)" }}
                 >
                   <img 
-                    src="https://aarions.in/img/about/Masala/Masala/tumeric.jpg" 
+                    src="/spices-hero.png" 
                     alt="Organic Spices" 
                     className="w-full h-full object-cover"
                   />

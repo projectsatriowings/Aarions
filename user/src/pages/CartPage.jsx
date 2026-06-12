@@ -3,35 +3,54 @@ import { useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Trash2, ShoppingBag, ArrowRight, ArrowLeft, Tag, CheckCircle2, Ticket } from "lucide-react";
 import { useCart } from "../context/CartContext";
+import { useSettings } from "../context/SettingsContext";
+import { useAuth } from "../context/AuthContext";
+import api from "../services/api";
 
 export default function CartPage() {
   const navigate = useNavigate();
   const { cartItems, updateQuantity, removeFromCart, clearCart, cartTotal } = useCart();
+  const { settings } = useSettings();
+  const { user } = useAuth();
   const [couponCode, setCouponCode] = useState("");
   const [appliedDiscount, setAppliedDiscount] = useState(0);
   const [couponApplied, setCouponApplied] = useState(false);
-  const [couponError, setCouponError] = useState(false);
+  const [couponError, setCouponError] = useState("");
   const [checkoutSuccess, setCheckoutSuccess] = useState(false);
 
-  const shippingThreshold = 999;
-  const shippingFee = cartTotal >= shippingThreshold || cartTotal === 0 ? 0 : 60;
+  const shippingFeeSetting = settings?.shippingFee !== undefined ? Number(settings.shippingFee) : 60;
+  const shippingFee = cartTotal === 0 ? 0 : shippingFeeSetting;
   const grandTotal = cartTotal + shippingFee - appliedDiscount;
 
-  const handleApplyCoupon = (e) => {
+  const handleApplyCoupon = async (e) => {
     e.preventDefault();
-    if (couponCode.toUpperCase() === "ORGANIC10") {
-      setAppliedDiscount(Math.round(cartTotal * 0.1));
-      setCouponApplied(true);
-      setCouponError(false);
-    } else {
-      setCouponError(true);
+    if (!user) {
+      setCouponError("Please sign in to apply a coupon code.");
+      setCouponApplied(false);
+      setAppliedDiscount(0);
+      return;
+    }
+
+    setCouponError("");
+    try {
+      const res = await api.post("/coupons/apply", {
+        code: couponCode,
+        orderAmount: cartTotal,
+      });
+      if (res.data.success) {
+        setAppliedDiscount(res.data.discount);
+        setCouponApplied(true);
+        setCouponError("");
+      }
+    } catch (err) {
+      setCouponError(err.response?.data?.error || "Invalid coupon code");
       setCouponApplied(false);
       setAppliedDiscount(0);
     }
   };
 
   const handleCheckout = () => {
-    navigate("/checkout");
+    navigate("/checkout", { state: { couponCode: couponApplied ? couponCode : "" } });
   };
 
   if (checkoutSuccess) {
@@ -198,12 +217,12 @@ export default function CartPage() {
                 {couponApplied && (
                   <div className="text-xs text-green-600 font-semibold flex items-center space-x-1 animate-fade-in">
                     <Tag className="w-3.5 h-3.5 mr-1" />
-                    <span>Promo Applied: 10% Discount (Save ₹{appliedDiscount})</span>
+                    <span>Promo Applied: Saved ₹{appliedDiscount}</span>
                   </div>
                 )}
                 {couponError && (
                   <div className="text-xs text-red-500 font-semibold animate-fade-in">
-                    Invalid promo code. Try "ORGANIC10" (10% off).
+                    {couponError}
                   </div>
                 )}
               </div>
@@ -228,15 +247,9 @@ export default function CartPage() {
                   <div className="flex justify-between">
                     <span className="text-brand-brown/60">Shipping</span>
                     <span className="font-bold text-brand-brown">
-                      {shippingFee === 0 ? "FREE" : `₹${shippingFee}`}
+                      ₹{shippingFee}
                     </span>
                   </div>
-
-                  {shippingFee > 0 && (
-                    <div className="text-[10px] text-brand-gold italic font-medium pt-1">
-                      Add ₹{shippingThreshold - cartTotal} more for FREE shipping.
-                    </div>
-                  )}
 
                   <div className="border-t border-brand-gold/10 pt-4 flex justify-between text-sm sm:text-base">
                     <span className="font-semibold text-brand-brown">Estimated Total</span>

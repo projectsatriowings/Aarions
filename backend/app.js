@@ -78,6 +78,7 @@ app.use("/api", limiter);
 // ---------------- STATIC UPLOADS DIRECTORY ----------------
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/spices", express.static(path.join(__dirname, "../user/public/spices")));
+app.use("/", express.static(path.join(__dirname, "../user/public")));
 
 // ---------------- ROUTE MOUNTING ----------------
 app.use("/api", customerRoutes);

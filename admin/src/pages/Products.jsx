@@ -29,6 +29,13 @@ export default function Products() {
     badge: "",
     isBestSeller: false,
     isNew: false,
+    // Product detail tab fields
+    details: "",         // Product Story tab
+    features: "",        // Comma-separated highlight features
+    usage: "",           // Purity & Processing tab
+    ingredients: "",     // Ingredients / sourcing info
+    benefits: "",        // Comma-separated health benefits
+    nutrients: "",       // JSON key:value nutritional table
   });
 
   const [imageFile, setImageFile] = useState(null);
@@ -79,6 +86,12 @@ export default function Products() {
     }
   };
 
+  // Helper to serialize nutrients map to editable string "Energy: 897 kcal\nFat: 99g"
+  const nutrientsToString = (nutrientsMap) => {
+    if (!nutrientsMap || typeof nutrientsMap !== "object") return "";
+    return Object.entries(nutrientsMap).map(([k, v]) => `${k}: ${v}`).join("\n");
+  };
+
   const handleOpenModal = (product = null) => {
     setFormError("");
     if (product) {
@@ -96,6 +109,12 @@ export default function Products() {
         badge: product.badge || "",
         isBestSeller: !!product.isBestSeller,
         isNew: !!product.isNew,
+        details: product.details || "",
+        features: Array.isArray(product.features) ? product.features.join(", ") : "",
+        usage: product.usage || "",
+        ingredients: product.ingredients || "",
+        benefits: Array.isArray(product.benefits) ? product.benefits.join(", ") : "",
+        nutrients: nutrientsToString(product.nutrients),
       });
     } else {
       setEditProduct(null);
@@ -112,6 +131,12 @@ export default function Products() {
         badge: "",
         isBestSeller: false,
         isNew: false,
+        details: "",
+        features: "",
+        usage: "",
+        ingredients: "",
+        benefits: "",
+        nutrients: "",
       });
     }
     setImageFile(null);
@@ -167,9 +192,38 @@ export default function Products() {
     setFormError("");
 
     const dataObj = new FormData();
+
+    // Serialize simple fields
     Object.entries(formData).forEach(([key, val]) => {
+      if (["features", "benefits", "nutrients"].includes(key)) return; // handle separately
       dataObj.append(key, val);
     });
+
+    // features: comma-separated → JSON array
+    const featuresArr = formData.features
+      ? formData.features.split(",").map((s) => s.trim()).filter(Boolean)
+      : [];
+    dataObj.append("features", JSON.stringify(featuresArr));
+
+    // benefits: comma-separated → JSON array
+    const benefitsArr = formData.benefits
+      ? formData.benefits.split(",").map((s) => s.trim()).filter(Boolean)
+      : [];
+    dataObj.append("benefits", JSON.stringify(benefitsArr));
+
+    // nutrients: "Key: Value" lines → JSON object
+    const nutrientsObj = {};
+    if (formData.nutrients) {
+      formData.nutrients.split("\n").forEach((line) => {
+        const colonIdx = line.indexOf(":");
+        if (colonIdx > -1) {
+          const k = line.slice(0, colonIdx).trim();
+          const v = line.slice(colonIdx + 1).trim();
+          if (k) nutrientsObj[k] = v;
+        }
+      });
+    }
+    dataObj.append("nutrients", JSON.stringify(nutrientsObj));
 
     if (imageFile) {
       dataObj.append("image", imageFile);
@@ -443,7 +497,7 @@ export default function Products() {
               </div>
 
               <div className="flex flex-col space-y-1">
-                <label className="text-[10px] uppercase tracking-wider font-semibold text-zinc-500">Product Description</label>
+                <label className="text-[10px] uppercase tracking-wider font-semibold text-zinc-500">Product Description (shown on product card)</label>
                 <textarea
                   required
                   name="description"
@@ -452,6 +506,85 @@ export default function Products() {
                   rows={3}
                   className="bg-zinc-50 dark:bg-zinc-800/30 border border-zinc-250 dark:border-zinc-800 rounded-xl px-4 py-2.5 outline-none text-xs"
                 />
+              </div>
+
+              {/* ── PRODUCT DETAIL TABS CONTENT ── */}
+              <div className="border-t border-zinc-200 dark:border-zinc-800 pt-4">
+                <p className="text-[10px] uppercase tracking-wider font-bold text-amber-500 mb-3">📋 Product Detail Tabs (shown on product page)</p>
+
+                <div className="space-y-4">
+                  <div className="flex flex-col space-y-1">
+                    <label className="text-[10px] uppercase tracking-wider font-semibold text-zinc-500">Product Story (shown in "Product Story" tab)</label>
+                    <textarea
+                      name="details"
+                      value={formData.details}
+                      onChange={handleFormChange}
+                      rows={4}
+                      placeholder="Describe the origin, tradition, and unique story of this product..."
+                      className="bg-zinc-50 dark:bg-zinc-800/30 border border-zinc-250 dark:border-zinc-800 rounded-xl px-4 py-2.5 outline-none text-xs"
+                    />
+                  </div>
+
+                  <div className="flex flex-col space-y-1">
+                    <label className="text-[10px] uppercase tracking-wider font-semibold text-zinc-500">Key Features / Highlights (comma-separated, shown as checklist)</label>
+                    <input
+                      type="text"
+                      name="features"
+                      value={formData.features}
+                      onChange={handleFormChange}
+                      placeholder="e.g. Traditionally churned (Bilona), A2 Gir Cow Milk, Rich in vitamins"
+                      className="bg-zinc-50 dark:bg-zinc-800/30 border border-zinc-250 dark:border-zinc-800 rounded-xl px-4 py-2.5 outline-none text-xs"
+                    />
+                  </div>
+
+                  <div className="flex flex-col space-y-1">
+                    <label className="text-[10px] uppercase tracking-wider font-semibold text-zinc-500">Purity &amp; Processing / Sourcing Details ("Purity &amp; Processing" tab)</label>
+                    <textarea
+                      name="usage"
+                      value={formData.usage}
+                      onChange={handleFormChange}
+                      rows={3}
+                      placeholder="Describe how the product is made, sourced, and quality-tested..."
+                      className="bg-zinc-50 dark:bg-zinc-800/30 border border-zinc-250 dark:border-zinc-800 rounded-xl px-4 py-2.5 outline-none text-xs"
+                    />
+                  </div>
+
+                  <div className="flex flex-col space-y-1">
+                    <label className="text-[10px] uppercase tracking-wider font-semibold text-zinc-500">Ingredients / Sourcing Labels (comma-separated quality tags)</label>
+                    <input
+                      type="text"
+                      name="ingredients"
+                      value={formData.ingredients}
+                      onChange={handleFormChange}
+                      placeholder="e.g. Third-Party Lab Checked, Zero Added Preservatives, 100% Traceable"
+                      className="bg-zinc-50 dark:bg-zinc-800/30 border border-zinc-250 dark:border-zinc-800 rounded-xl px-4 py-2.5 outline-none text-xs"
+                    />
+                  </div>
+
+                  <div className="flex flex-col space-y-1">
+                    <label className="text-[10px] uppercase tracking-wider font-semibold text-zinc-500">Health Benefits (comma-separated, shown in "Usage &amp; Benefits" tab)</label>
+                    <input
+                      type="text"
+                      name="benefits"
+                      value={formData.benefits}
+                      onChange={handleFormChange}
+                      placeholder="e.g. Boosts immunity, Improves digestion, Rich in antioxidants"
+                      className="bg-zinc-50 dark:bg-zinc-800/30 border border-zinc-250 dark:border-zinc-800 rounded-xl px-4 py-2.5 outline-none text-xs"
+                    />
+                  </div>
+
+                  <div className="flex flex-col space-y-1">
+                    <label className="text-[10px] uppercase tracking-wider font-semibold text-zinc-500">Nutritional Value (one per line: "Label: Value", shown in "Nutritional Value" tab)</label>
+                    <textarea
+                      name="nutrients"
+                      value={formData.nutrients}
+                      onChange={handleFormChange}
+                      rows={5}
+                      placeholder={`Energy: 897 kcal\nTotal Fat: 99.7g\nSaturated Fat: 61.9g\nProtein: 0.5g\nCarbohydrates: 0.5g`}
+                      className="bg-zinc-50 dark:bg-zinc-800/30 border border-zinc-250 dark:border-zinc-800 rounded-xl px-4 py-2.5 outline-none text-xs font-mono"
+                    />
+                  </div>
+                </div>
               </div>
 
               {/* Upload image */}

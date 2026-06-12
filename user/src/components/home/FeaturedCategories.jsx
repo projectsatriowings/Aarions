@@ -23,7 +23,7 @@ export default function FeaturedCategories() {
       slug: "honey",
       count: 6,
       description: "Pure raw honey sourced from forests and mountains",
-      image: "https://aarions.in/img/honey/Forest%20honey%20m.jpg",
+      image: "/aarions-raw-honey.png",
       color: "#E8A317"
     },
     {

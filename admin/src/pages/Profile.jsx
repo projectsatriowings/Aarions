@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { User, ShieldCheck, Key, Eye, Clock, Activity } from "lucide-react";
 import { useAdminAuth } from "../context/AdminAuthContext";
-import api from "../services/api";
+import api, { getImageUrl } from "../services/api";
 
 export default function Profile() {
   const { admin } = useAdminAuth();
   const [logs, setLogs] = useState([]);
   const [loadingLogs, setLoadingLogs] = useState(true);
+  const [avatarError, setAvatarError] = useState(false);
+
+  useEffect(() => {
+    setAvatarError(false);
+  }, [admin?.avatar]);
 
   useEffect(() => {
     const fetchMyLogs = async () => {
@@ -42,8 +47,20 @@ export default function Profile() {
         {/* Profile Card (1/3 width) */}
         <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-6 rounded-2xl shadow-sm space-y-6">
           <div className="text-center space-y-3">
-            <div className="relative w-24 h-24 rounded-full border border-amber-500/35 overflow-hidden mx-auto bg-zinc-50 dark:bg-zinc-850">
-              <img src={admin?.avatar || "https://api.dicebear.com/7.x/initials/svg?seed=Admin"} alt="Avatar" className="w-full h-full object-cover" />
+            <div className="relative w-24 h-24 rounded-full border border-amber-500/35 overflow-hidden mx-auto bg-zinc-50 dark:bg-zinc-850 flex items-center justify-center bg-amber-500/10">
+              {admin?.avatar && !avatarError ? (
+                <img
+                  src={getImageUrl(admin.avatar)}
+                  alt="Avatar"
+                  referrerPolicy="no-referrer"
+                  onError={() => setAvatarError(true)}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <span className="text-amber-500 text-lg font-bold uppercase leading-none">
+                  {admin?.name ? admin.name.split(" ").map(n => n[0]).join("").slice(0, 2) : "A"}
+                </span>
+              )}
             </div>
             <div>
               <h3 className="font-bold text-base text-zinc-900 dark:text-zinc-100">{admin?.name}</h3>

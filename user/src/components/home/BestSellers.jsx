@@ -10,6 +10,7 @@ export default function BestSellers({ onQuickView }) {
   const [bestSellers, setBestSellers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
+  const [isIntersecting, setIsIntersecting] = useState(false);
 
   useEffect(() => {
     const fetchBestSellers = async () => {
@@ -35,7 +36,7 @@ export default function BestSellers({ onQuickView }) {
   }, []);
 
   useEffect(() => {
-    if (loading || bestSellers.length <= 1 || isHovered) return;
+    if (loading || bestSellers.length <= 1 || isHovered || !isIntersecting) return;
 
     const interval = setInterval(() => {
       const container = carouselRef.current;
@@ -50,12 +51,13 @@ export default function BestSellers({ onQuickView }) {
     }, 3500);
 
     return () => clearInterval(interval);
-  }, [loading, bestSellers, isHovered]);
+  }, [loading, bestSellers, isHovered, isIntersecting]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          setIsIntersecting(entry.isIntersecting);
           if (entry.isIntersecting) {
             entry.target.querySelectorAll(".reveal").forEach((el, index) => {
               setTimeout(() => el.classList.add("visible"), index * 70);

@@ -4,10 +4,6 @@ import { Sparkles, Truck, ShieldCheck } from "lucide-react";
 export default function AnnouncementBar() {
   const announcements = [
     {
-      text: "Free shipping across India on orders above ₹999",
-      icon: <Truck className="w-4 h-4 mr-2 text-brand-gold inline" />,
-    },
-    {
       text: "Authentic Bilona Churned A2 Gir Cow Ghee now back in stock",
       icon: <Sparkles className="w-4 h-4 mr-2 text-brand-gold inline" />,
     },

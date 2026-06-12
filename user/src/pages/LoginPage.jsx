@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Eye, EyeOff, ArrowRight, ArrowLeft } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import { motion } from "framer-motion";
 
 export default function LoginPage() {
   const navigate  = useNavigate();
@@ -10,7 +11,7 @@ export default function LoginPage() {
 
   const [form, setForm]           = useState({ email: "", password: "" });
   const [errors, setErrors]       = useState({});
-  const [showPw, setShowPw]       = useState(false);
+  const [showPw,       setShowPw]       = useState(false);
   const [loading, setLoading]     = useState(false);
   const [success, setSuccess]     = useState(false);
 
@@ -38,13 +39,16 @@ export default function LoginPage() {
         prompt: "select_account",
         callback: async (tokenResponse) => {
           if (tokenResponse && tokenResponse.access_token) {
-            const result = await loginWithGoogle(tokenResponse.access_token);
+            const result = await loginWithGoogle(tokenResponse.access_token, false);
             if (result.success) {
               setSuccess(true);
               setLoading(false);
               setTimeout(() => navigate(from, { replace: true }), 900);
             } else {
               setErrors({ form: result.message });
+              if (result.email) {
+                setForm(p => ({ ...p, email: result.email, password: "" }));
+              }
               setLoading(false);
             }
           } else {
@@ -97,7 +101,13 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="auth-root">
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -15 }}
+      transition={{ duration: 0.4 }}
+      className="auth-root"
+    >
 
       {/* ───────── LEFT HERO ───────── */}
       <div className="auth-hero">
@@ -199,7 +209,6 @@ export default function LoginPage() {
                 <div className="auth-field">
                   <div className="auth-label-row">
                     <label htmlFor="login-pw" className="auth-label">Password</label>
-                    <button type="button" className="auth-forgot">Forgot password?</button>
                   </div>
                   <div className={`auth-pw${errors.password ? " auth-inp--err" : ""}`}>
                     <input
@@ -232,6 +241,6 @@ export default function LoginPage() {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

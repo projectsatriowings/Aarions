@@ -6,6 +6,7 @@ import { AnimatePresence } from "framer-motion";
 import { CartProvider } from "./context/CartContext";
 import { WishlistProvider } from "./context/WishlistContext";
 import { AuthProvider } from "./context/AuthContext";
+import { SettingsProvider } from "./context/SettingsContext";
 
 // Layout & Common Components
 import AnnouncementBar from "./components/common/AnnouncementBar";
@@ -86,11 +87,13 @@ export default function App() {
   return (
     <Router>
       <AuthProvider>
-        <CartProvider>
-          <WishlistProvider>
-            <AppShell />
-          </WishlistProvider>
-        </CartProvider>
+        <SettingsProvider>
+          <CartProvider>
+            <WishlistProvider>
+              <AppShell />
+            </WishlistProvider>
+          </CartProvider>
+        </SettingsProvider>
       </AuthProvider>
     </Router>
   );

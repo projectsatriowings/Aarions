@@ -246,9 +246,9 @@ export const products = [
     ],
     "ingredients": "100% Raw Wild Forest Honey",
     "weight": "100g",
-    "image": "https://aarions.in/img/honey/Forest%20honey%20m.jpg",
+    "image": "/aarions-raw-honey.png",
     "images": [
-      "https://aarions.in/img/honey/Forest%20honey%20m.jpg"
+      "/aarions-raw-honey.png"
     ],
     "inStock": true,
     "variants": [
@@ -584,9 +584,9 @@ export const products = [
     ],
     "ingredients": "Coriander, Cumin, Chilli, Black Pepper, Turmeric, Ginger, Garlic, Cloves, Cinnamon, Cardamom",
     "weight": "100g",
-    "image": "/spices/spice_4.jpg",
+    "image": "/spices/chicken_masala.jpg",
     "images": [
-      "/spices/spice_4.jpg"
+      "/spices/chicken_masala.jpg"
     ],
     "inStock": true,
     "variants": [
@@ -798,9 +798,9 @@ export const products = [
     ],
     "ingredients": "100% Ground Red Chillies",
     "weight": "100g",
-    "image": "/spices/spice_1.jpg",
+    "image": "/spices/chilli_powder.jpg",
     "images": [
-      "/spices/spice_1.jpg"
+      "/spices/chilli_powder.jpg"
     ],
     "inStock": true,
     "variants": [

@@ -357,7 +357,11 @@ export default function ProductDetails() {
                   transition={{ duration: 0.3 }}
                   className="space-y-4 text-sm text-brand-brown/70 leading-relaxed font-light"
                 >
-                  <p>{product.details}</p>
+                  <p>
+                    {product.details || (
+                      <span className="italic text-brand-brown/40">No product story added yet.</span>
+                    )}
+                  </p>
                 </motion.div>
               )}
 
@@ -374,19 +378,20 @@ export default function ProductDetails() {
                     Pure Craftsmanship
                   </h3>
                   <p className="text-sm text-brand-brown/70 leading-relaxed font-light">
-                    Every batch follows strict quality checkups. We believe that modern convenience shouldn't disrupt biological intelligence. Our organic honey remains unpasteurized to maintain live enzymes, and our spices are ground in a cold temperature chamber to preserve flavor oils.
+                    {product.usage || "Every batch follows strict quality standards to maintain live enzymes and preserve natural goodness."}
                   </p>
-                  <div className="flex flex-wrap gap-4 pt-2">
-                    <span className="text-[10px] uppercase font-bold tracking-widest bg-brand-cream border border-brand-gold/10 text-brand-brown px-3 py-1.5 rounded">
-                      Third-Party Lab Checked
-                    </span>
-                    <span className="text-[10px] uppercase font-bold tracking-widest bg-brand-cream border border-brand-gold/10 text-brand-brown px-3 py-1.5 rounded">
-                      Zero Added Preservatives
-                    </span>
-                    <span className="text-[10px] uppercase font-bold tracking-widest bg-brand-cream border border-brand-gold/10 text-brand-brown px-3 py-1.5 rounded">
-                      100% Traceable Sourcing
-                    </span>
-                  </div>
+                  {product.ingredients && (
+                    <div className="flex flex-wrap gap-4 pt-2">
+                      {product.ingredients.split(",").map((tag, idx) => (
+                        <span
+                          key={idx}
+                          className="text-[10px] uppercase font-bold tracking-widest bg-brand-cream border border-brand-gold/10 text-brand-brown px-3 py-1.5 rounded"
+                        >
+                          {tag.trim()}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </motion.div>
               )}
 
@@ -401,19 +406,27 @@ export default function ProductDetails() {
                 >
                   <div className="space-y-2">
                     <h4 className="text-xs uppercase tracking-widest font-semibold text-brand-gold">Suggested Usage</h4>
-                    <p className="text-sm text-brand-brown/70 leading-relaxed font-light">{product.usage}</p>
+                    <p className="text-sm text-brand-brown/70 leading-relaxed font-light">
+                      {product.usage || (
+                        <span className="italic text-brand-brown/40">No usage instructions added yet.</span>
+                      )}
+                    </p>
                   </div>
-                  <div className="space-y-3">
-                    <h4 className="text-xs uppercase tracking-widest font-semibold text-brand-gold">Health Advantages</h4>
-                    <ul className="space-y-2">
-                      {product.benefits.map((benefit, idx) => (
-                        <li key={idx} className="flex items-center text-xs text-brand-brown/85 font-medium">
-                          <Check className="w-3.5 h-3.5 text-brand-gold mr-2.5 flex-shrink-0" />
-                          <span>{benefit}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  {product.benefits && product.benefits.length > 0 ? (
+                    <div className="space-y-3">
+                      <h4 className="text-xs uppercase tracking-widest font-semibold text-brand-gold">Health Advantages</h4>
+                      <ul className="space-y-2">
+                        {product.benefits.map((benefit, idx) => (
+                          <li key={idx} className="flex items-center text-xs text-brand-brown/85 font-medium">
+                            <Check className="w-3.5 h-3.5 text-brand-gold mr-2.5 flex-shrink-0" />
+                            <span>{benefit}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : (
+                    <p className="italic text-xs text-brand-brown/40">No health benefits listed yet.</p>
+                  )}
                 </motion.div>
               )}
 
@@ -429,14 +442,18 @@ export default function ProductDetails() {
                   <h4 className="text-xs uppercase tracking-widest font-semibold text-brand-gold mb-4">
                     Typical Nutritional Information (Per 100g)
                   </h4>
-                  <div className="border border-brand-gold/10 rounded-xl overflow-hidden divide-y divide-brand-gold/10 bg-brand-cream/5">
-                    {Object.entries(product.nutrients).map(([nutrient, value]) => (
-                      <div key={nutrient} className="flex justify-between px-4 py-3 text-xs">
-                        <span className="font-semibold text-brand-brown/60">{nutrient}</span>
-                        <span className="font-bold text-brand-brown">{value}</span>
-                      </div>
-                    ))}
-                  </div>
+                  {product.nutrients && Object.keys(product.nutrients).length > 0 ? (
+                    <div className="border border-brand-gold/10 rounded-xl overflow-hidden divide-y divide-brand-gold/10 bg-brand-cream/5">
+                      {Object.entries(product.nutrients).map(([nutrient, value]) => (
+                        <div key={nutrient} className="flex justify-between px-4 py-3 text-xs">
+                          <span className="font-semibold text-brand-brown/60">{nutrient}</span>
+                          <span className="font-bold text-brand-brown">{value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="italic text-xs text-brand-brown/40">No nutritional information added yet.</p>
+                  )}
                 </motion.div>
               )}
 
@@ -576,14 +593,65 @@ export default function ProductDetails() {
 
         {/* Related Products Section */}
         {relatedProducts.length > 0 && (
-          <div className="mt-24">
-            <h2 className="font-playfair text-2xl sm:text-3xl font-semibold text-brand-brown text-center mb-12">
+          <div className="mt-24 border-t border-brand-gold/10 pt-16">
+            <h2 className="font-playfair text-2xl font-bold text-brand-brown text-center mb-10">
               Related Organic Products
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-              {relatedProducts.map((p) => (
-                <ProductCard key={p._id || p.id} product={p} onQuickView={() => {}} />
-              ))}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto px-4">
+              {relatedProducts.map((p) => {
+                const discountPercent = p.originalPrice
+                  ? Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100)
+                  : 0;
+                return (
+                  <Link
+                    key={p._id || p.id}
+                    to={`/product/${p._id}`}
+                    className="group flex flex-col space-y-3 cursor-pointer"
+                  >
+                    {/* Image Box */}
+                    <div className="aspect-square w-full rounded-2xl overflow-hidden bg-brand-cream/10 border border-brand-gold/15 relative flex items-center justify-center">
+                      <img
+                        src={p.image}
+                        alt={p.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                      />
+                      
+                      {/* Luxury Gold Hover Overlay */}
+                      <div className="absolute inset-0 bg-brand-brown/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <span className="text-[10px] tracking-widest uppercase font-bold text-brand-gold bg-brand-brown border border-brand-gold/30 px-4 py-2 rounded-lg transform translate-y-2 group-hover:translate-y-0 transition-transform duration-350">
+                          View details
+                        </span>
+                      </div>
+
+                      {discountPercent > 0 && (
+                        <span className="absolute top-3 left-3 bg-brand-gold text-brand-brown text-[9px] font-extrabold px-2 py-1 rounded-md shadow-sm">
+                          {discountPercent}% OFF
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Meta Details */}
+                    <div className="space-y-1">
+                      <div className="flex justify-between items-center text-[9px] uppercase tracking-widest font-bold text-brand-gold/80">
+                        <span>{p.categoryLabel || p.category}</span>
+                      </div>
+                      
+                      <h3 className="font-playfair text-base font-bold text-brand-brown group-hover:text-brand-gold transition-colors duration-305">
+                        {p.name}
+                      </h3>
+
+                      <div className="flex items-baseline gap-2 pt-0.5">
+                        <span className="text-sm font-extrabold text-brand-brown">₹{p.price}</span>
+                        {p.originalPrice > p.price && (
+                          <span className="text-xs line-through text-brand-brown/40 font-light">
+                            ₹{p.originalPrice}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         )}

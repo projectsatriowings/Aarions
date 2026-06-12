@@ -60,7 +60,7 @@ export default function Benefits() {
       step: "Step 5",
       title: "Swift Delivery",
       desc: "Orders processed same-day and delivered across India. Temperature-controlled for delicate products.",
-      image: "https://images.pexels.com/photos/6546024/pexels-photo-6546024.jpeg?w=600",
+      image: "/delivery.png",
       color: "#4A3428",
       icon: TruckIcon
     },
