@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "./AuthContext";
-import api from "../services/api";
+import api, { getImageUrl } from "../services/api";
+import { motion, AnimatePresence } from "framer-motion";
 
 const CartContext = createContext();
 
@@ -19,6 +20,17 @@ export const CartProvider = ({ children }) => {
   const location = useLocation();
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [toast, setToast] = useState(null);
+
+  // Auto-dismiss toast after 3 seconds
+  useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => {
+        setToast(null);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
 
   // Helper: map API cart item array to the flat frontend format
   const mapApiCart = (apiCart) => {
@@ -80,6 +92,12 @@ export const CartProvider = ({ children }) => {
       });
       if (res.data.success) {
         setCartItems(mapApiCart(res.data.cart));
+        // Show success toast popup
+        setToast({
+          show: true,
+          product,
+          quantity,
+        });
       }
     } catch (error) {
       console.error("API error adding to cart:", error.message);
@@ -167,6 +185,43 @@ export const CartProvider = ({ children }) => {
       }}
     >
       {children}
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            className="fixed bottom-6 right-6 z-50 flex items-center gap-4 bg-zinc-950/95 border border-brand-gold/20 text-white pl-4 pr-5 py-3.5 rounded-2xl shadow-xl max-w-sm backdrop-blur-md"
+          >
+            {toast.product?.image && (
+              <img
+                src={getImageUrl(toast.product.image)}
+                alt={toast.product.name}
+                className="w-12 h-12 rounded-xl object-cover border border-white/10 flex-shrink-0"
+              />
+            )}
+            <div className="flex-1 min-w-0 pr-2">
+              <div className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-brand-gold animate-pulse" />
+                <p className="text-[10px] tracking-widest uppercase font-semibold text-brand-gold font-display">Added to Cart</p>
+              </div>
+              <p className="text-xs text-white/90 truncate font-medium mt-1">{toast.product.name}</p>
+              <p className="text-[10px] text-white/60 mt-0.5 font-light">
+                Qty: {toast.quantity} • {toast.product.weight || "100g"}
+              </p>
+            </div>
+            <button
+              onClick={() => setToast(null)}
+              className="text-white/40 hover:text-white p-1.5 rounded-lg hover:bg-white/5 transition-colors cursor-pointer"
+            >
+              <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </CartContext.Provider>
   );
 };
