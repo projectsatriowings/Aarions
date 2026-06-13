@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Calendar, Clock, User, Share2 } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowLeft, Calendar, Clock, User } from "lucide-react";
 import { blogs as staticBlogs } from "../data/blogs";
 import Newsletter from "../components/home/Newsletter";
 import api, { getImageUrl } from "../services/api";
@@ -11,73 +11,6 @@ export default function BlogDetails() {
 
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [shareMessage, setShareMessage] = useState("");
-
-  const fallbackCopyText = (text, successMsg) => {
-    const textArea = document.createElement("textarea");
-    textArea.value = text;
-    textArea.style.position = "fixed"; // avoid scrolling to bottom
-    textArea.style.left = "-9999px";
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    try {
-      document.execCommand("copy");
-      setShareMessage(successMsg);
-    } catch (err) {
-      setShareMessage("Failed to copy link.");
-    }
-    document.body.removeChild(textArea);
-    setTimeout(() => setShareMessage(""), successMsg.includes("Instagram") ? 3500 : 2500);
-  };
-
-  const copyToClipboard = (text, successMsg) => {
-    let resolved = false;
-
-    // Timeout fallback after 150ms
-    const timer = setTimeout(() => {
-      if (!resolved) {
-        resolved = true;
-        fallbackCopyText(text, successMsg);
-      }
-    }, 150);
-
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text)
-        .then(() => {
-          if (!resolved) {
-            resolved = true;
-            clearTimeout(timer);
-            setShareMessage(successMsg);
-            setTimeout(() => setShareMessage(""), successMsg.includes("Instagram") ? 3500 : 2500);
-          }
-        })
-        .catch((err) => {
-          if (!resolved) {
-            resolved = true;
-            clearTimeout(timer);
-            fallbackCopyText(text, successMsg);
-          }
-        });
-    } else {
-      resolved = true;
-      clearTimeout(timer);
-      fallbackCopyText(text, successMsg);
-    }
-  };
-
-  const handleShareLink = () => {
-    copyToClipboard(window.location.href, "Link copied to clipboard!");
-  };
-
-  const handleShareInstagram = () => {
-    copyToClipboard(window.location.href, "Link copied! Share it on your Instagram story.");
-  };
-
-  const handleShareFacebook = () => {
-    const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
-    window.open(shareUrl, "_blank", "width=600,height=400,noopener,noreferrer");
-  };
 
   useEffect(() => {
     const fetchBlogDetails = async () => {
@@ -188,55 +121,7 @@ export default function BlogDetails() {
           dangerouslySetInnerHTML={{ __html: blog.content }}
         />
 
-        {/* Sharing footer */}
-        <div className="border-t border-brand-gold/10 pt-8 mt-12 flex flex-col sm:flex-row items-center justify-between gap-4 relative">
-          <span className="text-xs uppercase tracking-widest font-bold text-brand-brown/50">
-            Share this Article
-          </span>
-          <div className="flex flex-col sm:items-end gap-2">
-            <AnimatePresence>
-              {shareMessage && (
-                <motion.span
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  className="absolute bottom-16 sm:right-0 bg-brand-brown text-brand-gold text-[11px] tracking-wide font-semibold px-3.5 py-1.5 rounded-xl border border-brand-gold/25 shadow-lg z-10"
-                >
-                  {shareMessage}
-                </motion.span>
-              )}
-            </AnimatePresence>
-            <div className="flex space-x-3">
-              <button
-                onClick={handleShareLink}
-                className="p-2 border border-brand-gold/20 rounded-full hover:bg-brand-gold hover:text-brand-brown transition-all duration-300 text-brand-brown cursor-pointer"
-                aria-label="Share Link"
-              >
-                <Share2 className="w-4 h-4" />
-              </button>
-              <button
-                onClick={handleShareInstagram}
-                className="p-2 border border-brand-gold/20 rounded-full hover:bg-brand-gold hover:text-brand-brown transition-all duration-300 text-brand-brown cursor-pointer"
-                aria-label="Instagram"
-              >
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
-                </svg>
-              </button>
-              <button
-                onClick={handleShareFacebook}
-                className="p-2 border border-brand-gold/20 rounded-full hover:bg-brand-gold hover:text-brand-brown transition-all duration-300 text-brand-brown cursor-pointer"
-                aria-label="Facebook"
-              >
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
+
 
       </div>
 
