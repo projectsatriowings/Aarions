@@ -178,6 +178,7 @@ const seedDB = async () => {
       brandName: "Aarions",
       announcementText: "Welcome to Aarions! Pure organic honey, ghee, and stone-ground masalas.",
       shippingFee: 60,
+      gstPercentage: 5,
     });
 
     // 7. Create a couple default Coupons

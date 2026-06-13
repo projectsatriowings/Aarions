@@ -95,7 +95,7 @@ export const sendOrderConfirmationEmail = async (order, user) => {
               <td style="padding: 4px 0; text-align: right; color: #2D1F17;">₹${order.shippingPrice}</td>
             </tr>
             <tr>
-              <td style="padding: 4px 0;">GST (5%):</td>
+              <td style="padding: 4px 0;">GST (${order.itemsPrice ? Math.round((order.taxPrice / order.itemsPrice) * 100) : 5}%):</td>
               <td style="padding: 4px 0; text-align: right; color: #2D1F17;">₹${order.taxPrice}</td>
             </tr>
             ${

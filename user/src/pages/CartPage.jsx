@@ -20,7 +20,9 @@ export default function CartPage() {
 
   const shippingFeeSetting = settings?.shippingFee !== undefined ? Number(settings.shippingFee) : 60;
   const shippingFee = cartTotal === 0 ? 0 : shippingFeeSetting;
-  const grandTotal = cartTotal + shippingFee - appliedDiscount;
+  const gstPercentage = settings?.gstPercentage !== undefined ? Number(settings.gstPercentage) : 5;
+  const taxPrice = cartTotal === 0 ? 0 : Math.round(cartTotal * (gstPercentage / 100));
+  const grandTotal = cartTotal + shippingFee + taxPrice - appliedDiscount;
 
   const handleApplyCoupon = async (e) => {
     e.preventDefault();
@@ -247,9 +249,16 @@ export default function CartPage() {
                   <div className="flex justify-between">
                     <span className="text-brand-brown/60">Shipping</span>
                     <span className="font-bold text-brand-brown">
-                      ₹{shippingFee}
+                      {shippingFee === 0 ? "Free" : `₹${shippingFee}`}
                     </span>
                   </div>
+
+                  {cartTotal > 0 && (
+                    <div className="flex justify-between">
+                      <span className="text-brand-brown/60">GST ({gstPercentage}%)</span>
+                      <span className="font-bold text-brand-brown">₹{taxPrice}</span>
+                    </div>
+                  )}
 
                   <div className="border-t border-brand-gold/10 pt-4 flex justify-between text-sm sm:text-base">
                     <span className="font-semibold text-brand-brown">Estimated Total</span>

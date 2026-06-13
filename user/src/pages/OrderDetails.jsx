@@ -86,6 +86,7 @@ export default function OrderDetails() {
   }
 
   const discountPercent = order.discountPrice ? Math.round((order.discountPrice / order.itemsPrice) * 100) : 0;
+  const gstPercentage = order.itemsPrice ? Math.round((order.taxPrice / order.itemsPrice) * 100) : 5;
 
   return (
     <motion.div
@@ -205,7 +206,7 @@ export default function OrderDetails() {
                 <span>₹{order.itemsPrice}</span>
               </div>
               <div className="flex justify-between text-brand-brown/65">
-                <span>GST (5%)</span>
+                <span>GST ({gstPercentage}%)</span>
                 <span>₹{order.taxPrice}</span>
               </div>
               <div className="flex justify-between text-brand-brown/65">

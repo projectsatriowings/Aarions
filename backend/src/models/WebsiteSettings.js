@@ -54,6 +54,10 @@ const websiteSettingsSchema = new mongoose.Schema(
       type: Number,
       default: 60,
     },
+    gstPercentage: {
+      type: Number,
+      default: 5,
+    },
   },
   {
     timestamps: true,

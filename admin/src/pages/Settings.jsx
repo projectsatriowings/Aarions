@@ -13,6 +13,7 @@ export default function SettingsPage() {
     brandName: "",
     announcementText: "",
     shippingFee: 60,
+    gstPercentage: 5,
     contactEmail: "",
     contactPhone: "",
     address: "",
@@ -35,6 +36,7 @@ export default function SettingsPage() {
           brandName: s.brandName || "Aarions",
           announcementText: s.announcementText || "",
           shippingFee: s.shippingFee !== undefined ? s.shippingFee : 60,
+          gstPercentage: s.gstPercentage !== undefined ? s.gstPercentage : 5,
           contactEmail: s.contactEmail || "",
           contactPhone: s.contactPhone || "",
           address: s.address || "",
@@ -72,6 +74,7 @@ export default function SettingsPage() {
       brandName: formData.brandName,
       announcementText: formData.announcementText,
       shippingFee: Number(formData.shippingFee),
+      gstPercentage: Number(formData.gstPercentage),
       contactEmail: formData.contactEmail,
       contactPhone: formData.contactPhone,
       address: formData.address,
@@ -169,6 +172,18 @@ export default function SettingsPage() {
                   value={formData.shippingFee}
                   onChange={handleInputChange}
                   min="0"
+                  className="bg-zinc-50 dark:bg-zinc-800/30 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 outline-none"
+                />
+              </div>
+              <div className="flex flex-col space-y-1">
+                <label className="text-[10px] uppercase font-semibold text-zinc-500">GST Percentage (%)</label>
+                <input
+                  type="number"
+                  name="gstPercentage"
+                  value={formData.gstPercentage}
+                  onChange={handleInputChange}
+                  min="0"
+                  max="100"
                   className="bg-zinc-50 dark:bg-zinc-800/30 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 outline-none"
                 />
               </div>

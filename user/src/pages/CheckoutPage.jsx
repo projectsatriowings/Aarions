@@ -85,7 +85,8 @@ export default function CheckoutPage() {
 
   const shippingPriceSetting = settings?.shippingFee !== undefined ? Number(settings.shippingFee) : 60;
   const shippingPrice = cartTotal === 0 ? 0 : shippingPriceSetting;
-  const taxPrice = Math.round(cartTotal * 0.05); // 5% GST
+  const gstPercentage = settings?.gstPercentage !== undefined ? Number(settings.gstPercentage) : 5;
+  const taxPrice = cartTotal === 0 ? 0 : Math.round(cartTotal * (gstPercentage / 100));
   const finalAmount = cartTotal + shippingPrice + taxPrice - discount;
 
   // Dynamically load Razorpay SDK script
@@ -435,7 +436,7 @@ export default function CheckoutPage() {
                   <span>{shippingPrice === 0 ? "Free" : `₹${shippingPrice}`}</span>
                 </div>
                 <div className="flex justify-between text-brand-brown/60">
-                  <span>GST (5%)</span>
+                  <span>GST ({gstPercentage}%)</span>
                   <span>₹{taxPrice}</span>
                 </div>
                 {discount > 0 && (
