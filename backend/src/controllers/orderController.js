@@ -231,17 +231,20 @@ export const updateOrderStatus = async (req, res, next) => {
     // Save triggers status tracking history push in order model
     await order.save();
 
-    // Send status update email to customer
-    try {
-      await order.populate("user", "name email");
-      if (order.user) {
-        await sendOrderStatusUpdateEmail(order, order.user);
-      } else {
-        console.warn(`Cannot send status update email: no user reference found for order #${order._id}`);
-      }
-    } catch (emailErr) {
-      console.error("Failed to send status update email:", emailErr.message);
-    }
+    // Send status update email to customer asynchronously in the background
+    order.populate("user", "name email")
+      .then((populatedOrder) => {
+        if (populatedOrder.user) {
+          sendOrderStatusUpdateEmail(populatedOrder, populatedOrder.user).catch((emailErr) => {
+            console.error("Failed to send status update email:", emailErr.message);
+          });
+        } else {
+          console.warn(`Cannot send status update email: no user reference found for order #${order._id}`);
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to populate user for email:", err.message);
+      });
 
     // Audit Log
     await AuditLog.create({

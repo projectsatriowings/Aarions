@@ -20,6 +20,16 @@ if (isConfigured) {
       pass: process.env.SMTP_PASS,
     },
   });
+
+  // Verify connection configuration on startup
+  transporter.verify((error, success) => {
+    if (error) {
+      console.error("Nodemailer SMTP Verification Error:", error.message);
+      console.error("Please double-check your SMTP_USER and SMTP_PASS App Password in your environment variables.");
+    } else {
+      console.log("Nodemailer SMTP Connection verified successfully! Ready to send emails.");
+    }
+  });
 } else {
   // Fallback to mock console transporter in development
   transporter = {
