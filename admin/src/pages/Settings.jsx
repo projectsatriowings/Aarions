@@ -20,6 +20,7 @@ export default function SettingsPage() {
     facebook: "",
     instagram: "",
     twitter: "",
+    youtube: "",
     seoTitle: "",
     seoDescription: "",
     seoKeywords: "",
@@ -43,6 +44,7 @@ export default function SettingsPage() {
           facebook: s.socialLinks?.facebook || "",
           instagram: s.socialLinks?.instagram || "",
           twitter: s.socialLinks?.twitter || "",
+          youtube: s.socialLinks?.youtube || "",
           seoTitle: s.seoTitle || "",
           seoDescription: s.seoDescription || "",
           seoKeywords: s.seoKeywords || "",
@@ -82,6 +84,7 @@ export default function SettingsPage() {
         facebook: formData.facebook,
         instagram: formData.instagram,
         twitter: formData.twitter,
+        youtube: formData.youtube,
       },
       seoTitle: formData.seoTitle,
       seoDescription: formData.seoDescription,
@@ -292,12 +295,22 @@ export default function SettingsPage() {
                 className="bg-zinc-50 dark:bg-zinc-800/30 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 outline-none"
               />
             </div>
-            <div className="flex flex-col space-y-1">
+             <div className="flex flex-col space-y-1">
               <label className="text-[10px] uppercase font-semibold text-zinc-500">Twitter URL</label>
               <input
                 type="text"
                 name="twitter"
                 value={formData.twitter}
+                onChange={handleInputChange}
+                className="bg-zinc-50 dark:bg-zinc-800/30 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 outline-none"
+              />
+            </div>
+            <div className="flex flex-col space-y-1">
+              <label className="text-[10px] uppercase font-semibold text-zinc-500">YouTube URL</label>
+              <input
+                type="text"
+                name="youtube"
+                value={formData.youtube}
                 onChange={handleInputChange}
                 className="bg-zinc-50 dark:bg-zinc-800/30 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 outline-none"
               />

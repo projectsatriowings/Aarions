@@ -42,7 +42,7 @@ export default function Footer() {
     },
     {
       label: "YouTube",
-      href: "#",
+      href: settings?.socialLinks?.youtube || "#",
       icon: (
         <svg className="w-4.5 h-4.5 fill-current" viewBox="0 0 24 24">
           <path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.87.508 9.388.508 9.388.508s7.518 0 9.388-.508a3.002 3.002 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12z" />
@@ -50,6 +50,8 @@ export default function Footer() {
       )
     }
   ];
+
+  const activeSocialLinks = socialLinks.filter(s => s.href && s.href !== "#" && s.href.trim() !== "");
 
   const certifications = ["FSSAI", "ISO 22000", "Organic India", "Non-GMO"];
   const paymentMethods = ["Visa", "Mastercard", "UPI", "Razorpay", "PhonePe"];
@@ -79,10 +81,12 @@ export default function Footer() {
 
             {/* Socials */}
             <div className="flex items-center gap-3">
-              {socialLinks.map((s) => (
+              {activeSocialLinks.map((s) => (
                 <a
                   key={s.label}
                   href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={s.label}
                   className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-brand-gold hover:border-brand-gold/40 hover:bg-brand-gold/10 transition-all duration-300"
                 >
