@@ -52,6 +52,10 @@ export default function CartPage() {
   };
 
   const handleCheckout = () => {
+    if (!user) {
+      navigate("/login", { state: { from: { pathname: "/checkout" } } });
+      return;
+    }
     navigate("/checkout", { state: { couponCode: couponApplied ? couponCode : "" } });
   };
 

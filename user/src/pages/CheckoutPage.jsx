@@ -9,7 +9,7 @@ import api from "../services/api";
 
 export default function CheckoutPage() {
   const { cartItems, cartTotal, clearCart } = useCart();
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const { settings } = useSettings();
   const navigate = useNavigate();
   const location = useLocation();
@@ -32,13 +32,18 @@ export default function CheckoutPage() {
   const [createdOrder, setCreatedOrder] = useState(null);
 
   useEffect(() => {
+    if (isLoading) return;
+    if (!user) {
+      navigate("/login", { state: { from: location } });
+      return;
+    }
     if (cartItems.length === 0 && !success) {
       navigate("/cart");
     }
     if (user && user.phoneNumber) {
       setAddress((prev) => ({ ...prev, phone: user.phoneNumber }));
     }
-  }, [cartItems, user, navigate, success]);
+  }, [cartItems, user, isLoading, navigate, success, location]);
 
   useEffect(() => {
     if (location.state?.couponCode) {

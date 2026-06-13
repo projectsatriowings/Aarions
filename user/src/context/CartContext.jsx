@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import api from "../services/api";
 
@@ -14,6 +15,8 @@ export const useCart = () => {
 
 export const CartProvider = ({ children }) => {
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -62,35 +65,24 @@ export const CartProvider = ({ children }) => {
   }, [cartItems, user]);
 
   const addToCart = async (product, quantity = 1) => {
+    if (!user) {
+      navigate("/login", { state: { from: location } });
+      return;
+    }
+
     const defaultWeight = product.weight || "100g";
 
-    if (user) {
-      try {
-        const res = await api.post("/cart", {
-          productId: product._id || product.id,
-          quantity,
-          selectedVariant: defaultWeight,
-        });
-        if (res.data.success) {
-          setCartItems(mapApiCart(res.data.cart));
-        }
-      } catch (error) {
-        console.error("API error adding to cart:", error.message);
-      }
-    } else {
-      // Local storage cart update
-      setCartItems((prevItems) => {
-        const prodId = product._id || product.id;
-        const existingItem = prevItems.find((item) => item.id === prodId || item._id === prodId);
-        if (existingItem) {
-          return prevItems.map((item) =>
-            (item.id === prodId || item._id === prodId)
-              ? { ...item, quantity: item.quantity + quantity }
-              : item
-          );
-        }
-        return [...prevItems, { ...product, id: prodId, quantity }];
+    try {
+      const res = await api.post("/cart", {
+        productId: product._id || product.id,
+        quantity,
+        selectedVariant: defaultWeight,
       });
+      if (res.data.success) {
+        setCartItems(mapApiCart(res.data.cart));
+      }
+    } catch (error) {
+      console.error("API error adding to cart:", error.message);
     }
   };
 
