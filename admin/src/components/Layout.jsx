@@ -82,19 +82,23 @@ export default function Layout({ children }) {
       
       {/* ───────── SIDEBAR ───────── */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 bg-white dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-800 transition-all duration-300 z-30 flex flex-col justify-between ${
+        className={`fixed top-0 bottom-0 left-0 bg-zinc-900 border-r border-zinc-800 transition-all duration-300 z-30 flex flex-col justify-between ${
           sidebarOpen ? "w-64" : "w-16"
         }`}
       >
         <div className="flex flex-col flex-grow">
           {/* Logo Section */}
-          <div className="h-16 flex items-center justify-between px-4 border-b border-zinc-200 dark:border-zinc-800">
+          <div className="h-16 flex items-center justify-between px-4 border-b border-zinc-800">
             <Link to="/" className="flex items-center space-x-2.5 overflow-hidden">
-              <div className="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center font-bold text-zinc-950 flex-shrink-0">
-                A
+              <div className="w-8 h-8 rounded-full border border-amber-500/25 overflow-hidden relative flex items-center justify-center bg-white flex-shrink-0">
+                <img 
+                  src="https://aarions.in/img/honey/logo.jpg" 
+                  alt="Aarions Logo" 
+                  className="w-full h-full object-cover scale-[1.85] translate-y-[16%]"
+                />
               </div>
               {sidebarOpen && (
-                <span className="font-playfair font-bold text-lg text-brand-brown dark:text-zinc-100 uppercase tracking-wider whitespace-nowrap">
+                <span className="font-playfair font-bold text-base text-zinc-100 uppercase tracking-wider whitespace-nowrap">
                   Aarions Admin
                 </span>
               )}
@@ -111,7 +115,7 @@ export default function Layout({ children }) {
                   `flex items-center space-x-3 py-3 px-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all duration-200 ${
                     isActive
                       ? "bg-amber-500 text-zinc-950 shadow-md font-bold"
-                      : "text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-850 hover:text-zinc-900 dark:hover:text-zinc-150"
+                      : "text-zinc-400 hover:bg-zinc-850 hover:text-zinc-100"
                   }`
                 }
               >
@@ -123,10 +127,10 @@ export default function Layout({ children }) {
         </div>
 
         {/* Footer Actions */}
-        <div className="p-2 border-t border-zinc-200 dark:border-zinc-800 space-y-1">
+        <div className="p-2 border-t border-zinc-800 space-y-1">
           <button
             onClick={handleLogout}
-            className="w-full flex items-center space-x-3 py-3 px-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors"
+            className="w-full flex items-center space-x-3 py-3 px-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider text-red-400 hover:bg-red-950/20 transition-colors"
           >
             <LogOut className="w-4 h-4 flex-shrink-0" />
             {sidebarOpen && <span>Logout</span>}
@@ -141,7 +145,7 @@ export default function Layout({ children }) {
         }`}
       >
         {/* Top Navbar */}
-        <header className="h-16 fixed top-0 right-0 left-0 bg-white/85 dark:bg-zinc-900/85 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between px-6 z-20 transition-all duration-300"
+        <header className="h-16 fixed top-0 right-0 left-0 bg-zinc-50/85 backdrop-blur-md border-b border-zinc-200/50 flex items-center justify-between px-6 z-20 transition-all duration-300"
                 style={{ paddingLeft: sidebarOpen ? "272px" : "80px" }}>
           
           {/* Collapse Toggle */}

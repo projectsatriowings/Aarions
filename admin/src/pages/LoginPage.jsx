@@ -454,8 +454,12 @@ export default function LoginPage() {
 
           {/* Logo */}
           <div className="left-logo">
-            <div className="left-logo-icon">
-              <Leaf size={20} color="#0d1117" strokeWidth={2.5} />
+            <div className="w-[34px] h-[34px] rounded-full border border-[#e8a317]/30 overflow-hidden relative shadow-[0_4px_20px_rgba(232,163,23,0.25)] flex items-center justify-center bg-white flex-shrink-0">
+              <img
+                src="https://aarions.in/img/honey/logo.jpg"
+                alt="Aarions Logo"
+                className="w-full h-full object-cover scale-[1.85] translate-y-[16%]"
+              />
             </div>
             <div className="left-logo-text">Aarions<span>.</span></div>
           </div>

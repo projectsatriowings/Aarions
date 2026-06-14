@@ -157,7 +157,13 @@ export default function SignupPage() {
         <div className="auth-hero-grad" />
 
         <div className="auth-hero-badge">
-          <img src="https://aarions.in/img/honey/logo.jpg" alt="Aarions" />
+          <div className="w-9 h-9 rounded-full overflow-hidden relative border-2 border-brand-gold/55 flex items-center justify-center bg-white flex-shrink-0">
+            <img 
+              src="https://aarions.in/img/honey/logo.jpg" 
+              alt="Aarions Logo" 
+              className="w-full h-full object-cover scale-[1.85] translate-y-[16%]"
+            />
+          </div>
           <span className="auth-hero-badge-name">AARIONS</span>
         </div>
 

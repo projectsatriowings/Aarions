@@ -65,12 +65,14 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="md:col-span-5 space-y-6">
             <Link to="/" className="inline-flex items-center">
-              <img 
-                src="https://aarions.in/img/honey/logo.jpg" 
-                alt="Aarions Logo" 
-                className="w-11 h-11 rounded-full border border-brand-gold/25 object-cover"
-              />
-              <span className="font-display font-bold text-2xl text-brand-gold tracking-widest ml-3">
+              <div className="w-9 h-9 rounded-full border border-brand-gold/25 overflow-hidden relative flex items-center justify-center bg-white flex-shrink-0">
+                <img 
+                  src="https://aarions.in/img/honey/logo.jpg" 
+                  alt="Aarions Logo" 
+                  className="w-full h-full object-cover scale-[1.85] translate-y-[16%]"
+                />
+              </div>
+              <span className="font-display font-bold text-xl text-brand-gold tracking-widest ml-3.5">
                 Aarions
               </span>
             </Link>

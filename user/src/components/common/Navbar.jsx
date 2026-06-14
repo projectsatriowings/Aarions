@@ -87,12 +87,14 @@ export default function Navbar() {
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center">
               <Link to="/" className="flex items-center">
-                <img 
-                  src="https://aarions.in/img/honey/logo.jpg" 
-                  alt="Aarions Logo" 
-                  className="h-10 w-10 rounded-full border border-brand-gold/20 object-cover shadow-sm"
-                />
-                <span className={`font-playfair text-xl sm:text-2xl font-bold tracking-widest ml-2.5 transition-colors duration-300 ${textColorClass}`}>
+                <div className="h-8 w-8 rounded-full border border-brand-gold/20 overflow-hidden relative shadow-sm flex items-center justify-center bg-white flex-shrink-0">
+                  <img 
+                    src="https://aarions.in/img/honey/logo.jpg" 
+                    alt="Aarions Logo" 
+                    className="w-full h-full object-cover scale-[1.85] translate-y-[16%]"
+                  />
+                </div>
+                <span className={`font-playfair text-lg sm:text-xl font-bold tracking-widest ml-2 transition-colors duration-300 ${textColorClass}`}>
                   AARIONS
                 </span>
               </Link>
