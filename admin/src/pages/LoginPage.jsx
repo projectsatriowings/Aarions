@@ -452,14 +452,7 @@ export default function LoginPage() {
         <div className="login-left">
           <div className="grid-lines" />
 
-          {/* Logo */}
-          <div className="left-logo">
-            <img
-              src="/logo.png?v=3"
-              alt="Aarions Logo"
-              className="h-20 w-auto object-contain"
-            />
-          </div>
+
 
           {/* Hero content */}
           <div className="left-hero">
@@ -503,9 +496,13 @@ export default function LoginPage() {
         {/* ── RIGHT PANEL ── */}
         <div className="login-right">
           <div className="login-card">
-            {/* Icon */}
-            <div className="card-icon-wrap">
-              <ShieldCheck size={26} color="#e8a317" strokeWidth={2} />
+            {/* Logo */}
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: "24px" }}>
+              <img
+                src="/logo.png?v=3"
+                alt="Aarions Logo"
+                style={{ height: "64px", width: "auto", objectFit: "contain" }}
+              />
             </div>
 
             <h2 className="card-title">Welcome back</h2>
