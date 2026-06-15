@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { useAdminAuth } from "../context/AdminAuthContext";
 import { getImageUrl } from "../services/api";
+import Loader from "./Loader";
 
 export default function Layout({ children }) {
   const { admin, logout, hasPermission, isLoading } = useAdminAuth();
@@ -47,11 +48,7 @@ export default function Layout({ children }) {
   }, [admin, isLoading, navigate]);
 
   if (isLoading || !admin) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-zinc-50 dark:bg-zinc-950">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-500" />
-      </div>
-    );
+    return <Loader fullPage />;
   }
 
   // Sidebar Links config
@@ -82,26 +79,21 @@ export default function Layout({ children }) {
       
       {/* ───────── SIDEBAR ───────── */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 bg-zinc-900 border-r border-zinc-800 transition-all duration-300 z-30 flex flex-col justify-between ${
+        className={`fixed top-0 bottom-0 left-0 bg-white border-r border-zinc-200 transition-all duration-300 z-30 flex flex-col justify-between ${
           sidebarOpen ? "w-64" : "w-16"
         }`}
       >
         <div className="flex flex-col flex-grow">
           {/* Logo Section */}
-          <div className="h-16 flex items-center justify-between px-4 border-b border-zinc-800">
+          <div className="h-16 flex items-center justify-between px-4 border-b border-zinc-200">
             <Link to="/" className="flex items-center space-x-2.5 overflow-hidden">
-              <div className="w-8 h-8 rounded-full border border-amber-500/25 overflow-hidden relative flex items-center justify-center bg-white flex-shrink-0">
-                <img 
-                  src="https://aarions.in/img/honey/logo.jpg" 
-                  alt="Aarions Logo" 
-                  className="w-full h-full object-cover scale-[1.85] translate-y-[16%]"
-                />
-              </div>
-              {sidebarOpen && (
-                <span className="font-playfair font-bold text-base text-zinc-100 uppercase tracking-wider whitespace-nowrap">
-                  Aarions Admin
-                </span>
-              )}
+              <img 
+                src="/logo.png?v=3" 
+                alt="Aarions Logo" 
+                className={`w-auto object-contain transition-all duration-300 ${
+                  sidebarOpen ? "h-11 px-2" : "h-8 px-1"
+                }`}
+              />
             </Link>
           </div>
 
@@ -114,8 +106,8 @@ export default function Layout({ children }) {
                 className={({ isActive }) =>
                   `flex items-center space-x-3 py-3 px-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all duration-200 ${
                     isActive
-                      ? "bg-amber-500 text-zinc-950 shadow-md font-bold"
-                      : "text-zinc-400 hover:bg-zinc-850 hover:text-zinc-100"
+                      ? "bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-md font-bold"
+                      : "text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900"
                   }`
                 }
               >
@@ -127,10 +119,10 @@ export default function Layout({ children }) {
         </div>
 
         {/* Footer Actions */}
-        <div className="p-2 border-t border-zinc-800 space-y-1">
+        <div className="p-2 border-t border-zinc-200 space-y-1">
           <button
             onClick={handleLogout}
-            className="w-full flex items-center space-x-3 py-3 px-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider text-red-400 hover:bg-red-950/20 transition-colors"
+            className="w-full flex items-center space-x-3 py-3 px-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider text-red-650 hover:bg-red-500/10 transition-colors"
           >
             <LogOut className="w-4 h-4 flex-shrink-0" />
             {sidebarOpen && <span>Logout</span>}
@@ -145,16 +137,19 @@ export default function Layout({ children }) {
         }`}
       >
         {/* Top Navbar */}
-        <header className="h-16 fixed top-0 right-0 left-0 bg-zinc-50/85 backdrop-blur-md border-b border-zinc-200/50 flex items-center justify-between px-6 z-20 transition-all duration-300"
-                style={{ paddingLeft: sidebarOpen ? "272px" : "80px" }}>
+        <header className={`h-16 fixed top-0 right-0 bg-zinc-50/85 backdrop-blur-md border-b border-zinc-200/50 flex items-center justify-between px-6 z-20 transition-all duration-300 ${
+          sidebarOpen ? "left-64" : "left-16"
+        }`}>
           
-          {/* Collapse Toggle */}
-          <button
-            onClick={() => setSidebarOpen((prev) => !prev)}
-            className="p-2 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-500 transition-colors"
-          >
-            <Menu className="w-4 h-4" />
-          </button>
+          {/* Left section: Toggle + Brand Title & ADMIN badge */}
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={() => setSidebarOpen((prev) => !prev)}
+              className="p-2 border border-zinc-200 rounded-xl hover:bg-zinc-100 text-zinc-500 transition-colors cursor-pointer"
+            >
+              <Menu className="w-4 h-4" />
+            </button>
+          </div>
 
           {/* User Profile Summary */}
           <div className="flex items-center space-x-4">

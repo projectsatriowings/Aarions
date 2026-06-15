@@ -179,7 +179,7 @@ export default function AccountSettings() {
           {/* Left Column (Profile & Orders) */}
           <div className="lg:col-span-6 space-y-6">
             {/* Profile Details Form */}
-            <div className="bg-white border border-brand-gold/10 p-6 sm:p-8 rounded-2xl shadow-sm space-y-6">
+            <div className="p-6 sm:p-8 space-y-6 premium-card">
               <h2 className="font-playfair text-lg font-semibold text-brand-brown flex items-center border-b border-brand-gold/10 pb-4">
                 <User className="w-5 h-5 text-brand-gold mr-2" />
                 Personal Profile
@@ -247,7 +247,7 @@ export default function AccountSettings() {
             </div>
 
             {/* Your Orders Tracking Card */}
-            <div className="bg-white border border-brand-gold/10 p-6 sm:p-8 rounded-2xl shadow-sm space-y-4">
+            <div className="p-6 sm:p-8 space-y-4 premium-card">
               <h2 className="font-playfair text-lg font-semibold text-brand-brown flex items-center border-b border-brand-gold/10 pb-4">
                 <ShoppingBag className="w-5 h-5 text-brand-gold mr-2" />
                 Your Orders
@@ -266,7 +266,7 @@ export default function AccountSettings() {
           </div>
 
           {/* Address Book Settings (Right Column) */}
-          <div className="lg:col-span-6 bg-white border border-brand-gold/10 p-6 sm:p-8 rounded-2xl shadow-sm space-y-6">
+          <div className="lg:col-span-6 p-6 sm:p-8 space-y-6 premium-card">
             <div className="flex items-center justify-between border-b border-brand-gold/10 pb-4">
               <h2 className="font-playfair text-lg font-semibold text-brand-brown flex items-center">
                 <MapPin className="w-5 h-5 text-brand-gold mr-2" />

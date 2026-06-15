@@ -87,16 +87,13 @@ export default function Navbar() {
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center">
               <Link to="/" className="flex items-center">
-                <div className="h-8 w-8 rounded-full border border-brand-gold/20 overflow-hidden relative shadow-sm flex items-center justify-center bg-white flex-shrink-0">
-                  <img 
-                    src="https://aarions.in/img/honey/logo.jpg" 
-                    alt="Aarions Logo" 
-                    className="w-full h-full object-cover scale-[1.85] translate-y-[16%]"
-                  />
-                </div>
-                <span className={`font-playfair text-lg sm:text-xl font-bold tracking-widest ml-2 transition-colors duration-300 ${textColorClass}`}>
-                  AARIONS
-                </span>
+                <img 
+                  src="/logo.png?v=3" 
+                  alt="Aarions Logo" 
+                  className={`h-14 w-auto object-contain transition-all duration-300 ${
+                    showGlass ? "" : "brightness-0 invert"
+                  }`}
+                />
               </Link>
             </div>
 
@@ -287,7 +284,7 @@ export default function Navbar() {
 
       {/* Mobile Menu Drawer Overlay */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-50 md:hidden bg-brand-brown/40 backdrop-blur-sm">
+        <div className="fixed inset-0 z-[150] md:hidden bg-brand-brown/40 backdrop-blur-sm">
           <div className="fixed right-0 top-0 w-80 h-full bg-brand-cream shadow-2xl flex flex-col p-6 animate-slide-in">
             <div className="flex items-center justify-between border-b border-brand-gold/10 pb-4 mb-6">
               <span className="font-playfair text-xl font-bold tracking-wider text-brand-brown">

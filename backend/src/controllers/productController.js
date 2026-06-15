@@ -9,11 +9,15 @@ import { uploadImage } from "../middleware/upload.js";
 // @access  Public
 export const getProducts = async (req, res, next) => {
   try {
-    const { category, minPrice, maxPrice, rating, inStock, search, sort, page = 1, limit = 12 } = req.query;
+    const { category, minPrice, maxPrice, rating, inStock, search, sort, page = 1, limit = 12, isFeatured } = req.query;
 
     const query = { status: "active" };
 
     // Apply filters
+    if (isFeatured === "true") {
+      query.isFeatured = true;
+    }
+
     if (category && category !== "all") {
       query.category = category;
     }

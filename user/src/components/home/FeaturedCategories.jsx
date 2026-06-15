@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api, { getImageUrl } from "../../services/api";
+import Loader from "../common/Loader";
 
 export default function FeaturedCategories() {
   const sectionRef = useRef(null);
@@ -57,7 +58,7 @@ export default function FeaturedCategories() {
             slug: cat.slug,
             count: cat.productCount !== undefined ? cat.productCount : 0,
             description: cat.description || `Premium organic ${cat.name.toLowerCase()} sourced traditionally.`,
-            image: cat.image || "https://aarions.in/img/honey/logo.jpg",
+            image: cat.image || "/logo.png?v=3",
           }));
           setCategories(mapped);
         }
@@ -93,7 +94,7 @@ export default function FeaturedCategories() {
   return (
     <section
       ref={sectionRef}
-      className="py-24 bg-[#FFF8EC] overflow-hidden"
+      className="py-16 md:py-20 bg-[#FFF8EC] overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -112,16 +113,14 @@ export default function FeaturedCategories() {
 
         {/* Categories Grid */}
         {loading ? (
-          <div className="flex justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-gold" />
-          </div>
+          <Loader />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {categories.map((cat) => (
               <Link
                 key={cat.id || cat.slug}
                 to={`/shop?category=${cat.slug}`}
-                className="reveal group relative overflow-hidden rounded-2xl cursor-pointer shadow-md hover:shadow-xl transition-all duration-500 h-96 w-full block"
+                className="reveal group relative overflow-hidden rounded-2xl cursor-pointer shadow-md hover:shadow-xl hover:-translate-y-2.5 transition-all duration-500 h-96 w-full block"
               >
                 {/* Background Image & Overlay */}
                 <div className="absolute inset-0">

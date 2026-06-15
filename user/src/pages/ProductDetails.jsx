@@ -8,6 +8,7 @@ import { useWishlist } from "../context/WishlistContext";
 import { useAuth } from "../context/AuthContext";
 import ProductCard from "../components/common/ProductCard";
 import api, { getImageUrl } from "../services/api";
+import Loader from "../components/common/Loader";
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -113,11 +114,7 @@ export default function ProductDetails() {
   }, [id]);
 
   if (loading) {
-    return (
-      <div className="min-h-screen pt-48 pb-24 flex items-center justify-center bg-brand-cream/30 text-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-gold" />
-      </div>
-    );
+    return <Loader fullPage />;
   }
 
   if (!product) {
@@ -169,7 +166,7 @@ export default function ProductDetails() {
         </div>
 
         {/* Product Visual & Details Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start bg-white border border-brand-gold/10 p-6 sm:p-8 lg:p-12 rounded-3xl shadow-sm">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start p-6 sm:p-8 lg:p-12 premium-card">
           
           {/* Left Column: Product Image Showcase */}
           <div className="lg:col-span-6 relative aspect-square rounded-2xl overflow-hidden bg-brand-cream/10 border border-brand-gold/5 group">
@@ -315,7 +312,7 @@ export default function ProductDetails() {
         </div>
 
         {/* Tab specifications section (Details, Churning method, nutrients) */}
-        <div className="mt-16 bg-white border border-brand-gold/10 rounded-3xl p-6 sm:p-10 shadow-sm max-w-4xl mx-auto">
+        <div className="mt-16 p-6 sm:p-10 max-w-4xl mx-auto premium-card">
           {/* Tab buttons */}
           <div className="flex border-b border-brand-gold/10 pb-4 overflow-x-auto no-scrollbar gap-6">
             {[

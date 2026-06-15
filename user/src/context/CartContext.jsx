@@ -192,7 +192,7 @@ export const CartProvider = ({ children }) => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="fixed bottom-6 right-6 z-50 flex items-center gap-4 bg-zinc-950/95 border border-brand-gold/20 text-white pl-4 pr-5 py-3.5 rounded-2xl shadow-xl max-w-sm backdrop-blur-md"
+            className="fixed bottom-6 right-6 z-[200] flex items-center gap-4 bg-zinc-950/95 border border-brand-gold/20 text-white pl-4 pr-5 py-3.5 rounded-2xl shadow-xl max-w-sm backdrop-blur-md"
           >
             {toast.product?.image && (
               <img

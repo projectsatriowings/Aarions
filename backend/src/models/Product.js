@@ -52,6 +52,10 @@ const productSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    isFeatured: {
+      type: Boolean,
+      default: false,
+    },
     isBestSeller: {
       type: Boolean,
       default: false,

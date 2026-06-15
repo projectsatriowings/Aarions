@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { blogs as staticBlogs } from "../data/blogs";
 import api, { getImageUrl } from "../services/api";
+import Loader from "../components/common/Loader";
 
 export default function Blog() {
   const [blogs, setBlogs] = useState([]);
@@ -52,9 +53,7 @@ export default function Blog() {
 
         {/* Blog Grid */}
         {loading ? (
-          <div className="flex justify-center items-center py-24">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-gold" />
-          </div>
+          <Loader />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {blogs.map((blog, idx) => (
@@ -63,7 +62,7 @@ export default function Blog() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: idx * 0.1 }}
-                className="bg-white rounded-2xl overflow-hidden border border-brand-gold/10 hover:shadow-xl transition-all duration-500 flex flex-col group h-full"
+                className="premium-blog-card flex flex-col group h-full"
               >
                 {/* Image Container */}
                 <div className="aspect-[16/10] overflow-hidden bg-brand-cream/20 relative">

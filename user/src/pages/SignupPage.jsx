@@ -156,15 +156,12 @@ export default function SignupPage() {
         />
         <div className="auth-hero-grad" />
 
-        <div className="auth-hero-badge">
-          <div className="w-9 h-9 rounded-full overflow-hidden relative border-2 border-brand-gold/55 flex items-center justify-center bg-white flex-shrink-0">
-            <img 
-              src="https://aarions.in/img/honey/logo.jpg" 
-              alt="Aarions Logo" 
-              className="w-full h-full object-cover scale-[1.85] translate-y-[16%]"
-            />
-          </div>
-          <span className="auth-hero-badge-name">AARIONS</span>
+        <div className="absolute top-10 left-14">
+          <img 
+            src="/logo.png?v=3" 
+            alt="Aarions Logo" 
+            className="h-16 w-auto object-contain brightness-0 invert"
+          />
         </div>
 
         <div className="auth-hero-body">
@@ -220,7 +217,7 @@ export default function SignupPage() {
           ) : (
             <>
               <div className="auth-logo-ring">
-                <img src="https://aarions.in/img/honey/logo.jpg" alt="Aarions"/>
+                <img src="/logo.png?v=3" alt="Aarions" className="w-full h-full object-contain" />
               </div>
               <h1 className="auth-title">Create Account</h1>
               <p className="auth-subtitle">Join Aarions — pure, natural, trusted</p>

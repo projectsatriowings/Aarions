@@ -234,7 +234,7 @@ export default function CheckoutPage() {
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="max-w-md w-full bg-white border border-brand-gold/10 p-8 rounded-3xl text-center space-y-6 shadow-sm"
+          className="max-w-md w-full p-8 text-center space-y-6 premium-card"
         >
           <div className="flex justify-center text-green-600">
             <CheckCircle2 className="w-16 h-16" />
@@ -304,7 +304,7 @@ export default function CheckoutPage() {
           
           {/* Shipping form (Left Column) */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="bg-white border border-brand-gold/10 p-6 sm:p-8 rounded-2xl shadow-sm space-y-6">
+            <div className="p-6 sm:p-8 space-y-6 premium-card">
               <h2 className="font-playfair text-xl font-semibold text-brand-brown border-b border-brand-gold/10 pb-4">
                 Shipping Details
               </h2>
@@ -383,7 +383,7 @@ export default function CheckoutPage() {
           <div className="lg:col-span-5 space-y-6">
             
             {/* Promo Codes */}
-            <div className="bg-white border border-brand-gold/10 p-6 rounded-2xl shadow-sm space-y-3">
+            <div className="p-6 space-y-3 premium-card">
               <h3 className="text-xs uppercase tracking-wider font-semibold text-brand-brown/60 flex items-center">
                 <Tag className="w-4 h-4 text-brand-gold mr-2" />
                 Promo Discount Code
@@ -411,7 +411,7 @@ export default function CheckoutPage() {
             </div>
 
             {/* Calculations Breakdown */}
-            <div className="bg-white border border-brand-gold/10 p-6 rounded-2xl shadow-sm space-y-4">
+            <div className="p-6 space-y-4 premium-card">
               <h3 className="font-playfair text-lg font-semibold text-brand-brown border-b border-brand-gold/10 pb-3">
                 Order Summary
               </h3>

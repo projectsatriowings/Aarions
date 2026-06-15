@@ -108,7 +108,7 @@ export default function CartPage() {
             {/* Left Column: Cart Items List */}
             <div className="lg:col-span-8 space-y-6">
               
-              <div className="bg-white border border-brand-gold/10 rounded-2xl overflow-hidden shadow-sm divide-y divide-brand-gold/5">
+              <div className="premium-card overflow-hidden divide-y divide-brand-gold/5">
                 {cartItems.map((item) => (
                   <div key={item.id} className="p-4 sm:p-6 flex items-center gap-4 sm:gap-6">
                     {/* Item Image */}
@@ -199,7 +199,7 @@ export default function CartPage() {
             <div className="lg:col-span-4 space-y-6">
               
               {/* Coupon code box */}
-              <div className="bg-white border border-brand-gold/10 p-6 rounded-2xl shadow-sm space-y-4">
+              <div className="p-6 space-y-4 premium-card">
                 <h3 className="font-playfair text-lg font-semibold text-brand-brown flex items-center">
                   <Ticket className="w-4 h-4 text-brand-gold mr-2" />
                   Promo Code
@@ -234,7 +234,7 @@ export default function CartPage() {
               </div>
 
               {/* Pricing breakdown */}
-              <div className="bg-white border border-brand-gold/10 p-6 rounded-2xl shadow-sm space-y-4">
+              <div className="p-6 space-y-4 premium-card">
                 <h3 className="font-playfair text-lg font-semibold text-brand-brown">Order Summary</h3>
                 
                 <div className="space-y-2 text-xs sm:text-sm">

@@ -50,34 +50,98 @@ export default function About() {
         
         {/* Banner Section */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-24">
-          <div className="lg:col-span-7 space-y-6">
-            <span className="text-xs tracking-widest uppercase font-semibold text-brand-gold">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{
+              hidden: {},
+              visible: {
+                transition: {
+                  staggerChildren: 0.15
+                }
+              }
+            }}
+            className="lg:col-span-7 space-y-6"
+          >
+            <motion.span 
+              variants={{
+                hidden: { opacity: 0, y: 15 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+              }}
+              className="text-xs tracking-widest uppercase font-semibold text-brand-gold block"
+            >
               Our Story & Heritage
-            </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-playfair font-semibold text-brand-brown leading-tight">
+            </motion.span>
+            <motion.h1 
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+              }}
+              className="text-4xl sm:text-5xl lg:text-6xl font-playfair font-semibold text-brand-brown leading-tight"
+            >
               Purity Sourced From <br />
               <span className="text-brand-darkGold italic">Traditional Roots.</span>
-            </h1>
-            <div className="h-[1px] w-16 bg-brand-gold mt-4" />
-            <p className="text-sm text-brand-brown/75 leading-relaxed font-light">
-              Aarions was born out of a simple, personal quest: the search for real, unadulterated food. In a market flooded with chemically polished spices, syrup-diluted honey, and hydrogenated fats, we wanted to create a brand that acts as an honest gateway to ancient dietary wellness.
-            </p>
-            <p className="text-sm text-brand-brown/75 leading-relaxed font-light">
-              Our search took us from urban shelves to deep forest hives and rural cow sheds. We realized that the secret to health isn't in laboratories, but in preserving the slow, wise techniques developed by our grandparents.
-            </p>
-          </div>
-          <div className="lg:col-span-5 relative">
-            <div className="absolute -top-4 -left-4 w-full h-full border border-brand-gold/20 rounded-3xl hidden sm:block" />
-            <img
-              src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=600&q=80"
-              alt="Organic spices collection"
-              className="w-full object-cover rounded-3xl h-[350px] sm:h-[400px] shadow-lg relative z-10"
+            </motion.h1>
+            <motion.div 
+              variants={{
+                hidden: { width: 0 },
+                visible: { width: 64, transition: { duration: 0.8 } }
+              }}
+              className="h-[1px] bg-brand-gold mt-4" 
             />
-          </div>
+            <motion.p 
+              variants={{
+                hidden: { opacity: 0, y: 15 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+              }}
+              className="text-sm text-brand-brown/75 leading-relaxed font-light"
+            >
+              Aarions was born out of a simple, personal quest: the search for real, unadulterated food. In a market flooded with chemically polished spices, syrup-diluted honey, and hydrogenated fats, we wanted to create a brand that acts as an honest gateway to ancient dietary wellness.
+            </motion.p>
+            <motion.p 
+              variants={{
+                hidden: { opacity: 0, y: 15 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+              }}
+              className="text-sm text-brand-brown/75 leading-relaxed font-light"
+            >
+              Our search took us from urban shelves to deep forest hives and rural cow sheds. We realized that the secret to health isn't in laboratories, but in preserving the slow, wise techniques developed by our grandparents.
+            </motion.p>
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="lg:col-span-5 relative group"
+          >
+            <motion.div 
+              initial={{ opacity: 0, x: -10, y: -10 }}
+              whileInView={{ opacity: 1, x: 0, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+              className="absolute -top-4 -left-4 w-full h-full border border-brand-gold/20 rounded-3xl hidden sm:block" 
+            />
+            <div className="overflow-hidden rounded-3xl">
+              <img
+                src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=600&q=80"
+                alt="Organic spices collection"
+                className="w-full object-cover h-[350px] sm:h-[400px] shadow-lg relative z-10 transition-transform duration-700 group-hover:scale-105"
+              />
+            </div>
+          </motion.div>
         </div>
 
         {/* Pillars / Values Section */}
-        <div className="bg-white border border-brand-gold/10 p-8 sm:p-12 rounded-3xl shadow-sm mb-24 max-w-5xl mx-auto">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8 }}
+          className="bg-white border border-brand-gold/10 p-8 sm:p-12 rounded-3xl shadow-sm mb-24 max-w-5xl mx-auto"
+        >
           <div className="text-center max-w-xl mx-auto mb-12 space-y-2">
             <h2 className="text-2xl sm:text-3xl font-playfair font-semibold text-brand-brown">
               Our Core Principles
@@ -87,26 +151,44 @@ export default function About() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {values.map((val) => (
-              <div key={val.title} className="text-center space-y-3">
-                <div className="p-3.5 bg-brand-gold/10 rounded-full w-fit mx-auto text-brand-gold">
+            {values.map((val, idx) => (
+              <motion.div 
+                key={val.title} 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.8, delay: idx * 0.15, type: "spring", stiffness: 100 }}
+                whileHover={{ y: -8, scale: 1.02 }}
+                className="text-center space-y-3 p-6 rounded-2xl border border-transparent hover:border-brand-gold/20 hover:bg-brand-cream/5 transition-all duration-300 shadow-none hover:shadow-md cursor-default"
+              >
+                <motion.div 
+                  whileHover={{ rotate: 360, scale: 1.1 }}
+                  transition={{ duration: 0.5 }}
+                  className="p-3.5 bg-brand-gold/10 rounded-full w-fit mx-auto text-brand-gold"
+                >
                   {val.icon}
-                </div>
+                </motion.div>
                 <h3 className="font-playfair text-lg font-semibold text-brand-brown">{val.title}</h3>
                 <p className="text-xs sm:text-sm text-brand-brown/70 leading-relaxed font-light">{val.desc}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Interactive Timeline */}
         <div className="mb-24 max-w-4xl mx-auto">
-          <div className="text-center mb-16 space-y-2">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16 space-y-2"
+          >
             <h2 className="text-2xl sm:text-3xl font-playfair font-semibold text-brand-brown">
               The Journey of Aarions
             </h2>
             <div className="h-[1px] w-12 bg-brand-gold mx-auto" />
-          </div>
+          </motion.div>
 
           <div className="relative border-l border-brand-gold/20 pl-8 ml-4 sm:ml-8 space-y-12">
             {timeline.map((step, idx) => (
@@ -138,7 +220,13 @@ export default function About() {
         </div>
 
         {/* Trust Badges Certifications */}
-        <div className="text-center bg-brand-brown text-brand-cream py-16 px-6 rounded-3xl border border-brand-gold/15 shadow-xl max-w-4xl mx-auto space-y-8">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center bg-brand-brown text-brand-cream py-16 px-6 rounded-3xl border border-brand-gold/15 shadow-xl max-w-4xl mx-auto space-y-8"
+        >
           <div className="space-y-3">
             <span className="text-[10px] tracking-widest uppercase font-semibold text-brand-gold">
               Quality Assurance
@@ -151,24 +239,27 @@ export default function About() {
             </p>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10">
-            <div className="border border-brand-cream/10 rounded-xl px-5 py-4 bg-white/5 flex flex-col items-center">
-              <span className="font-playfair text-xl font-semibold text-brand-gold">FSSAI</span>
-              <span className="text-[9px] uppercase tracking-wider text-brand-cream/40 mt-1 font-bold">Registry No. 22424</span>
-            </div>
-            <div className="border border-brand-cream/10 rounded-xl px-5 py-4 bg-white/5 flex flex-col items-center">
-              <span className="font-playfair text-xl font-semibold text-brand-gold">USDA</span>
-              <span className="text-[9px] uppercase tracking-wider text-brand-cream/40 mt-1 font-bold">Organic Standard</span>
-            </div>
-            <div className="border border-brand-cream/10 rounded-xl px-5 py-4 bg-white/5 flex flex-col items-center">
-              <span className="font-playfair text-xl font-semibold text-brand-gold">ISO 22000</span>
-              <span className="text-[9px] uppercase tracking-wider text-brand-cream/40 mt-1 font-bold">Food Safety Mgmt</span>
-            </div>
-            <div className="border border-brand-cream/10 rounded-xl px-5 py-4 bg-white/5 flex flex-col items-center">
-              <span className="font-playfair text-xl font-semibold text-brand-gold">AGMARK</span>
-              <span className="text-[9px] uppercase tracking-wider text-brand-cream/40 mt-1 font-bold">Grade A Quality</span>
-            </div>
+            {[
+              { label: "FSSAI", desc: "Registry No. 22424" },
+              { label: "USDA", desc: "Organic Standard" },
+              { label: "ISO 22000", desc: "Food Safety Mgmt" },
+              { label: "AGMARK", desc: "Grade A Quality" }
+            ].map((cert, idx) => (
+              <motion.div 
+                key={cert.label}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                whileHover={{ y: -5, scale: 1.05, borderColor: "rgba(232, 163, 23, 0.4)", backgroundColor: "rgba(255, 248, 236, 0.08)" }}
+                className="border border-brand-cream/10 rounded-xl px-5 py-4 bg-white/5 flex flex-col items-center cursor-default transition-all duration-300 min-w-[140px]"
+              >
+                <span className="font-playfair text-xl font-semibold text-brand-gold">{cert.label}</span>
+                <span className="text-[9px] uppercase tracking-wider text-brand-cream/40 mt-1 font-bold">{cert.desc}</span>
+              </motion.div>
+            ))}
           </div>
-        </div>
+        </motion.div>
 
       </div>
     </motion.div>

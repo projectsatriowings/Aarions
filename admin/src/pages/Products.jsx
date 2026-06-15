@@ -29,6 +29,7 @@ export default function Products() {
     badge: "",
     isBestSeller: false,
     isNew: false,
+    isFeatured: false,
     // Product detail tab fields
     details: "",         // Product Story tab
     features: "",        // Comma-separated highlight features
@@ -109,6 +110,7 @@ export default function Products() {
         badge: product.badge || "",
         isBestSeller: !!product.isBestSeller,
         isNew: !!product.isNew,
+        isFeatured: !!product.isFeatured,
         details: product.details || "",
         features: Array.isArray(product.features) ? product.features.join(", ") : "",
         usage: product.usage || "",
@@ -131,6 +133,7 @@ export default function Products() {
         badge: "",
         isBestSeller: false,
         isNew: false,
+        isFeatured: false,
         details: "",
         features: "",
         usage: "",
@@ -313,7 +316,24 @@ export default function Products() {
                     <td className="py-3 px-4 flex items-center gap-3">
                       <img src={getImageUrl(prod.image)} alt={prod.name} className="w-10 h-10 rounded-lg object-cover border border-zinc-200 dark:border-zinc-800" />
                       <div>
-                        <h4 className="font-bold text-zinc-900 dark:text-zinc-100">{prod.name}</h4>
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <h4 className="font-bold text-zinc-900 dark:text-zinc-100">{prod.name}</h4>
+                          {prod.isFeatured && (
+                            <span className="text-[8px] tracking-wide font-extrabold uppercase bg-amber-500/10 text-amber-600 border border-amber-500/15 px-1.5 py-0.5 rounded">
+                              Featured
+                            </span>
+                          )}
+                          {prod.isBestSeller && (
+                            <span className="text-[8px] tracking-wide font-extrabold uppercase bg-blue-500/10 text-blue-600 border border-blue-500/15 px-1.5 py-0.5 rounded">
+                              Bestseller
+                            </span>
+                          )}
+                          {prod.isNew && (
+                            <span className="text-[8px] tracking-wide font-extrabold uppercase bg-green-500/10 text-green-600 border border-green-500/15 px-1.5 py-0.5 rounded">
+                              New
+                            </span>
+                          )}
+                        </div>
                         <span className="text-[10px] text-zinc-400 font-mono">{prod.weight}</span>
                       </div>
                     </td>
@@ -618,6 +638,16 @@ export default function Products() {
                     className="accent-amber-500"
                   />
                   <span className="text-xs text-zinc-600 dark:text-zinc-400">New Arrival Item</span>
+                </label>
+                <label className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    name="isFeatured"
+                    checked={formData.isFeatured}
+                    onChange={handleFormChange}
+                    className="accent-amber-500"
+                  />
+                  <span className="text-xs text-zinc-600 dark:text-zinc-400">Featured Product</span>
                 </label>
               </div>
 

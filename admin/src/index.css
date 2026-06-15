@@ -19,7 +19,9 @@
   --color-amber-500: #E8A317;    /* Active state & main brand accent */
   --color-amber-600: #C8870F;    /* Hover brand accent */
 
-  --font-playfair: "Playfair Display", Georgia, serif;
+  --font-playfair: "Inter", sans-serif;
+  --font-sans: "Inter", sans-serif;
+  --font-inter: "Inter", sans-serif;
 }
 
 @layer base {
@@ -70,7 +72,7 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: 'Inter', sans-serif;
   background-color: #FFF8EC;
   color: #2D1F17;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -82,7 +84,7 @@ body.dark-theme {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Inter', sans-serif;
 }
 
 /* Custom Scrollbars */
@@ -119,4 +121,9 @@ h1, h2, h3, h4, h5, h6 {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Force Inter font globally across the admin panel */
+* {
+  font-family: "Inter", sans-serif !important;
 }

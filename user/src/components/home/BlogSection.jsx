@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { blogs as staticBlogs } from "../../data/blogs";
 import api, { getImageUrl } from "../../services/api";
+import Loader from "../common/Loader";
 
 export default function BlogSection() {
   const sectionRef = useRef(null);
@@ -47,7 +48,7 @@ export default function BlogSection() {
   return (
     <section
       ref={sectionRef}
-      className="section-pad bg-white"
+      className="section-pad bg-[#FFFDF9] border-t border-brand-gold/10"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -78,16 +79,14 @@ export default function BlogSection() {
 
         {/* Blogs Grid */}
         {loading ? (
-          <div className="flex justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-gold" />
-          </div>
+          <Loader />
         ) : (
           <div className="blog-grid items-stretch">
             {blogs.map((blog, idx) => (
               <article
                 key={blog._id || blog.id}
                 className="premium-blog-card reveal group flex flex-col h-full"
-                style={{ transitionDelay: `${idx * 80}ms` }}
+                style={{ animationDelay: `${idx * 150}ms` }}
               >
                 {/* Media Image */}
                 <div className="blog-card__media relative overflow-hidden h-56">

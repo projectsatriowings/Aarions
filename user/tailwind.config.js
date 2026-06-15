@@ -16,7 +16,7 @@ export default {
         }
       },
       fontFamily: {
-        playfair: ['"Playfair Display"', 'serif'],
+        playfair: ['Inter', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
       },
       backgroundImage: {

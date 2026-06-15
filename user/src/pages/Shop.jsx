@@ -6,6 +6,7 @@ import { products as staticProducts } from "../data/products";
 import ProductCard from "../components/common/ProductCard";
 import QuickViewModal from "../components/common/QuickViewModal";
 import api from "../services/api";
+import Loader from "../components/common/Loader";
 
 export default function Shop() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -277,9 +278,7 @@ export default function Shop() {
 
             {/* Products Layout */}
             {loading ? (
-              <div className="flex justify-center items-center py-24">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-gold" />
-              </div>
+              <Loader />
             ) : displayedProducts.length > 0 ? (
               <div className="space-y-10">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

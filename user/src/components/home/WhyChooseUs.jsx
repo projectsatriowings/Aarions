@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Leaf, Scroll, ShieldCheck, Award, Gift, Users, Star } from "lucide-react";
+import { motion } from "framer-motion";
 
 // Pure React Count-Up Component triggered on viewport intersection
 function AnimatedCounter({ value, duration = 1500 }) {
@@ -68,27 +69,6 @@ function AnimatedCounter({ value, duration = 1500 }) {
 }
 
 export default function WhyChooseUs() {
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.querySelectorAll(".reveal").forEach((el, index) => {
-              setTimeout(() => el.classList.add("visible"), index * 80);
-            });
-          }
-        });
-      },
-      { threshold: 0.05 }
-    );
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    return () => observer.disconnect();
-  }, []);
-
   const bentoItems = [
     {
       icon: Leaf,
@@ -169,11 +149,46 @@ export default function WhyChooseUs() {
     }
   ];
 
+  // Animation Variants
+  const headerVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: "easeOut" }
+    }
+  };
+
+  const gridVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.08
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { type: "spring", stiffness: 60, damping: 13 }
+    }
+  };
+
+  const statVariants = {
+    hidden: { opacity: 0, scale: 0.95, y: 15 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: { type: "spring", stiffness: 65, damping: 12 }
+    }
+  };
+
   return (
-    <section
-      ref={sectionRef}
-      className="section-pad bg-[#FFF8EC] relative overflow-hidden"
-    >
+    <section className="section-pad bg-[#FFF8EC] relative overflow-hidden">
       {/* Background Ambient Glowing Orbs */}
       <div 
         className="absolute rounded-full pointer-events-none opacity-30 blur-3xl z-0"
@@ -199,7 +214,13 @@ export default function WhyChooseUs() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
-        <div className="text-center mb-10 lg:mb-14 reveal">
+        <motion.div 
+          variants={headerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="text-center mb-10 lg:mb-14"
+        >
           <span className="text-brand-gold text-sm font-semibold tracking-widest uppercase mb-3 block">
             Our Commitment
           </span>
@@ -209,16 +230,25 @@ export default function WhyChooseUs() {
           <p className="text-brand-brown/60 text-base lg:text-lg max-w-xl mx-auto font-light">
             We're not just selling products — we're building a lifestyle around natural purity.
           </p>
-        </div>
+        </motion.div>
 
         {/* Bento Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+        <motion.div 
+          variants={gridVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch"
+        >
           {bentoItems.map((item, idx) => {
             const Icon = item.icon;
             return (
-              <div
+              <motion.div
                 key={item.title}
-                className="reveal group premium-bento-card p-8 cursor-default flex flex-col justify-between h-full"
+                variants={cardVariants}
+                whileHover={{ y: -6, scale: 1.01 }}
+                transition={{ type: "spring", stiffness: 100, damping: 15 }}
+                className="group premium-bento-card p-8 cursor-pointer flex flex-col justify-between h-full hover:shadow-lg hover:shadow-brand-gold/5"
               >
                 <div>
                   <div
@@ -234,19 +264,28 @@ export default function WhyChooseUs() {
                     {item.desc}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
         {/* Counters Block */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-16 mb-4">
+        <motion.div 
+          variants={gridVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-16 mb-4"
+        >
           {stats.map((s, idx) => {
             const Icon = s.icon;
             return (
-              <div 
+              <motion.div 
                 key={idx} 
-                className="reveal glass-card glass-card-hover premium-sheen p-6 lg:p-8 rounded-3xl text-center relative overflow-hidden flex flex-col items-center justify-center group cursor-default"
+                variants={statVariants}
+                whileHover={{ y: -6 }}
+                transition={{ type: "spring", stiffness: 100, damping: 15 }}
+                className="glass-card glass-card-hover premium-sheen p-6 lg:p-8 rounded-3xl text-center relative overflow-hidden flex flex-col items-center justify-center group cursor-pointer"
               >
                 {/* Glow backdrop effect */}
                 <div 
@@ -276,13 +315,12 @@ export default function WhyChooseUs() {
                 <div className="text-brand-brown/40 text-xs mt-0.5">
                   {s.sub}
                 </div>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
       </div>
     </section>
   );
 }
-

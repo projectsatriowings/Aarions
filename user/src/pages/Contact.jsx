@@ -63,25 +63,42 @@ export default function Contact() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Title */}
-        <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-2xl mx-auto mb-16 space-y-3"
+        >
           <span className="text-xs tracking-widest uppercase font-semibold text-brand-gold">
             Get In Touch
           </span>
           <h1 className="text-4xl sm:text-5xl font-playfair font-semibold text-brand-brown">
             Contact Aarions
           </h1>
-          <div className="h-[1px] w-12 bg-brand-gold mx-auto mt-4" />
+          <motion.div 
+            initial={{ width: 0 }}
+            animate={{ width: 48 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="h-[1px] bg-brand-gold mx-auto mt-4" 
+          />
           <p className="text-sm text-brand-brown/60 leading-relaxed font-light">
             Have questions about our traditional processing, customized wellness honey, or bulk orders? Reach out to us.
           </p>
-        </div>
+        </motion.div>
 
         {/* Contact info grid & form */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start max-w-6xl mx-auto">
           
           {/* Left Column: Coordinates & Addresses */}
           <div className="lg:col-span-5 space-y-8">
-            <div className="bg-white border border-brand-gold/10 p-8 rounded-2xl shadow-sm space-y-6">
+            <motion.div 
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
+              whileHover={{ y: -5 }}
+              className="p-8 space-y-6 premium-card"
+            >
               <h3 className="font-playfair text-xl font-semibold text-brand-brown">General Information</h3>
               
               <div className="flex items-start">
@@ -99,9 +116,16 @@ export default function Contact() {
                   <p className="text-sm font-semibold text-brand-brown mt-0.5">{settings?.contactEmail || "info@aarions.in"}</p>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="bg-white border border-brand-gold/10 p-8 rounded-2xl shadow-sm space-y-6">
+            <motion.div 
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.15, type: "spring", stiffness: 100 }}
+              whileHover={{ y: -5 }}
+              className="p-8 space-y-6 premium-card"
+            >
               <h3 className="font-playfair text-xl font-semibold text-brand-brown">Our Locations</h3>
 
               {/* Head office */}
@@ -125,11 +149,17 @@ export default function Contact() {
                   </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Right Column: Contact Message Form */}
-          <div className="lg:col-span-7 bg-white border border-brand-gold/10 p-8 rounded-3xl shadow-sm">
+          <motion.div 
+            initial={{ opacity: 0, y: 35 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, type: "spring", stiffness: 80 }}
+            className="lg:col-span-7 p-8 premium-card"
+          >
             <h3 className="font-playfair text-2xl font-semibold text-brand-brown mb-6">Send Us a Message</h3>
 
             {submitted ? (
@@ -205,22 +235,33 @@ export default function Contact() {
                 </button>
               </form>
             )}
-          </div>
+          </motion.div>
         </div>
 
         {/* FAQs Accordion */}
         <div className="mt-24 max-w-4xl mx-auto border-t border-brand-gold/10 pt-16">
-          <div className="text-center mb-12 space-y-2">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12 space-y-2"
+          >
             <h2 className="text-2xl sm:text-3xl font-playfair font-semibold text-brand-brown">
               Frequently Asked Questions
             </h2>
             <div className="h-[1px] w-12 bg-brand-gold mx-auto" />
-          </div>
+          </motion.div>
 
           <div className="space-y-4">
             {faqData.map((faq, idx) => (
-              <div
+              <motion.div
                 key={idx}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                whileHover={{ scale: 1.01, borderColor: "rgba(232, 163, 23, 0.25)" }}
                 className="bg-white border border-brand-gold/10 rounded-2xl overflow-hidden shadow-sm transition-all"
               >
                 <button
@@ -253,7 +294,7 @@ export default function Contact() {
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

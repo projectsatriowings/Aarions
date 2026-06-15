@@ -54,7 +54,7 @@ export default function WishlistPage() {
           </div>
         ) : (
           // Empty State
-          <div className="bg-white border border-brand-gold/10 rounded-3xl p-12 sm:p-20 text-center max-w-md mx-auto space-y-6 shadow-sm">
+          <div className="p-12 sm:p-20 text-center max-w-md mx-auto space-y-6 premium-card">
             <div className="p-5 bg-brand-gold/10 rounded-full w-fit mx-auto text-brand-gold">
               <Heart className="w-10 h-10" />
             </div>

@@ -65,15 +65,8 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="md:col-span-5 space-y-6">
             <Link to="/" className="inline-flex items-center">
-              <div className="w-9 h-9 rounded-full border border-brand-gold/25 overflow-hidden relative flex items-center justify-center bg-white flex-shrink-0">
-                <img 
-                  src="https://aarions.in/img/honey/logo.jpg" 
-                  alt="Aarions Logo" 
-                  className="w-full h-full object-cover scale-[1.85] translate-y-[16%]"
-                />
-              </div>
-              <span className="font-display font-bold text-xl text-brand-gold tracking-widest ml-3.5">
-                Aarions
+              <span className="font-playfair text-2xl font-bold tracking-wider text-brand-gold uppercase">
+                Aarions Store
               </span>
             </Link>
 
@@ -172,7 +165,7 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-light text-white/40">
             <p className="text-center sm:text-left leading-6">
-              © {new Date().getFullYear()} Aarions. All rights reserved. Designed & Developed by{" "}
+              © {new Date().getFullYear()} Aarions Store. All rights reserved. Designed & Developed by{" "}
               <a
                 href="https://www.myyakobu.com/"
                 target="_blank"

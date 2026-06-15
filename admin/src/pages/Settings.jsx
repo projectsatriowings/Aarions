@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Settings, Save, AlertCircle, Loader2 } from "lucide-react";
 import api from "../services/api";
+import Loader from "../components/Loader";
 
 export default function SettingsPage() {
   const [settings, setSettings] = useState(null);
@@ -105,11 +106,7 @@ export default function SettingsPage() {
   };
 
   if (loading) {
-    return (
-      <div className="flex justify-center py-20">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-500" />
-      </div>
-    );
+    return <Loader />;
   }
 
   return (

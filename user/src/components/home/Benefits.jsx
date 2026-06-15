@@ -1,28 +1,8 @@
-import React, { useRef, useEffect } from "react";
-import { Trees, Leaf, ShieldAlert, Award, Gift, Heart } from "lucide-react";
+import React from "react";
+import { motion } from "framer-motion";
+import { Trees, Leaf, ShieldAlert, Gift, Heart } from "lucide-react";
 
 export default function Benefits() {
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.querySelectorAll(".reveal, .reveal-left, .reveal-right").forEach((el, index) => {
-              setTimeout(() => el.classList.add("visible"), index * 120);
-            });
-          }
-        });
-      },
-      { threshold: 0.05 }
-    );
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    return () => observer.disconnect();
-  }, []);
-
   const journeySteps = [
     {
       step: "Step 1",
@@ -94,11 +74,54 @@ export default function Benefits() {
     );
   }
 
+  // Animation Variants
+  const headerVariants = {
+    hidden: { opacity: 0, y: 35 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: "easeOut" }
+    }
+  };
+
+  const lineVariants = {
+    hidden: { scaleY: 0 },
+    visible: {
+      scaleY: 1,
+      transition: { duration: 1.8, ease: "easeInOut" }
+    }
+  };
+
+  const nodeVariants = {
+    hidden: { scale: 0, opacity: 0 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: { type: "spring", stiffness: 100, damping: 10, delay: 0.25 }
+    }
+  };
+
+  const textVariants = (isEven) => ({
+    hidden: { opacity: 0, x: isEven ? -45 : 45 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { type: "spring", stiffness: 55, damping: 14 }
+    }
+  });
+
+  const imageVariants = (isEven) => ({
+    hidden: { opacity: 0, x: isEven ? 45 : -45, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+      transition: { type: "spring", stiffness: 45, damping: 13 }
+    }
+  });
+
   return (
-    <section
-      ref={sectionRef}
-      className="section-pad bg-[#2D1F17] overflow-hidden relative"
-    >
+    <section className="section-pad bg-[#2D1F17] overflow-hidden relative">
       {/* Decorative ambient lighting */}
       <div 
         className="absolute rounded-full pointer-events-none" 
@@ -124,7 +147,13 @@ export default function Benefits() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="text-center mb-16 lg:mb-20 reveal">
+        <motion.div 
+          variants={headerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="text-center mb-16 lg:mb-20"
+        >
           <span className="text-brand-gold text-sm font-semibold tracking-widest uppercase mb-3 block">
             From Source to Table
           </span>
@@ -134,13 +163,17 @@ export default function Benefits() {
           <p className="text-white/50 text-base lg:text-lg max-w-xl mx-auto font-light">
             Every product carries a story of care, craftsmanship, and unwavering commitment to quality.
           </p>
-        </div>
+        </motion.div>
 
         {/* Timeline Path */}
         <div className="relative">
           {/* Vertical Line on Desktop */}
-          <div 
-            className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-brand-gold/80 via-brand-gold/30 to-transparent hidden lg:block"
+          <motion.div 
+            variants={lineVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-120px" }}
+            className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-brand-gold/80 via-brand-gold/30 to-transparent hidden lg:block origin-top"
             style={{ transform: "translateX(-50%)" }}
           />
 
@@ -153,16 +186,34 @@ export default function Benefits() {
               return (
                 <div
                   key={step.step}
-                  className="reveal relative grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center"
+                  className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center"
                 >
                   {/* Timeline Center Node Dot on Desktop */}
-                  <div 
-                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 bg-[#2D1F17] hidden lg:block z-10"
+                  <motion.div 
+                    variants={nodeVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                    whileHover={{ scale: 1.3 }}
+                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full border-2 bg-[#2D1F17] hidden lg:flex items-center justify-center z-10 cursor-pointer shadow-lg shadow-brand-gold/10"
                     style={{ borderColor: step.color }}
-                  />
+                  >
+                    <motion.div 
+                      animate={{ scale: [1, 1.25, 1] }}
+                      transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                      className="w-2.5 h-2.5 rounded-full"
+                      style={{ backgroundColor: step.color }}
+                    />
+                  </motion.div>
 
                   {/* Text Container */}
-                  <div className={`space-y-3 ${isEven ? "lg:text-right lg:pr-16" : "lg:pl-16 lg:order-2 text-left"}`}>
+                  <motion.div 
+                    variants={textVariants(isEven)}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                    className={`space-y-3 ${isEven ? "lg:text-right lg:pr-16" : "lg:pl-16 lg:order-2 text-left"}`}
+                  >
                     {/* Step pill badge */}
                     <div 
                       className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider mb-2"
@@ -182,12 +233,20 @@ export default function Benefits() {
                     <p className="text-white/60 leading-relaxed text-sm lg:text-base font-light max-w-xl lg:ml-auto lg:mr-0">
                       {step.desc}
                     </p>
-                  </div>
+                  </motion.div>
 
                   {/* Image Container */}
-                  <div className={`${isEven ? "lg:pl-16" : "lg:pr-16 lg:order-1"}`}>
-                    <div 
-                      className="relative rounded-3xl overflow-hidden aspect-video shadow-2xl border border-white/10 group"
+                  <motion.div 
+                    variants={imageVariants(isEven)}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                    className={`${isEven ? "lg:pl-16" : "lg:pr-16 lg:order-1"}`}
+                  >
+                    <motion.div 
+                      whileHover={{ y: -6, scale: 1.02 }}
+                      transition={{ type: "spring", stiffness: 100, damping: 15 }}
+                      className="relative rounded-3xl overflow-hidden aspect-video shadow-2xl border border-white/10 group cursor-pointer"
                       style={{ minHeight: "220px" }}
                     >
                       <img
@@ -197,8 +256,8 @@ export default function Benefits() {
                       />
                       {/* Hover subtle glow overlay */}
                       <div className="absolute inset-0 bg-brand-brown/10 group-hover:bg-brand-brown/0 transition-colors duration-300" />
-                    </div>
-                  </div>
+                    </motion.div>
+                  </motion.div>
 
                 </div>
               );

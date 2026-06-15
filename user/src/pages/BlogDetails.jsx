@@ -5,6 +5,7 @@ import { ArrowLeft, Calendar, Clock, User } from "lucide-react";
 import { blogs as staticBlogs } from "../data/blogs";
 import Newsletter from "../components/home/Newsletter";
 import api, { getImageUrl } from "../services/api";
+import Loader from "../components/common/Loader";
 
 export default function BlogDetails() {
   const { id } = useParams(); // 'id' holds the slug parameter
@@ -32,11 +33,7 @@ export default function BlogDetails() {
   }, [id]);
 
   if (loading) {
-    return (
-      <div className="min-h-screen pt-48 pb-24 flex items-center justify-center bg-brand-cream/30 text-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-gold" />
-      </div>
-    );
+    return <Loader fullPage />;
   }
 
   if (!blog) {
