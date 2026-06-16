@@ -131,13 +131,13 @@ export default function LoginPage() {
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          background: rgba(139, 30, 26, 0.12);
-          border: 1px solid rgba(139, 30, 26, 0.25);
+          background: rgba(232, 163, 23, 0.15);
+          border: 1px solid rgba(232, 163, 23, 0.3);
           border-radius: 100px;
           padding: 5px 14px;
           font-size: 11px;
           font-weight: 600;
-          color: #8B1E1A;
+          color: #FFAE42;
           letter-spacing: 0.5px;
           text-transform: uppercase;
           width: fit-content;
@@ -154,7 +154,7 @@ export default function LoginPage() {
         }
 
         .left-h1 span {
-          background: linear-gradient(90deg, #8B1E1A, #E8A317);
+          background: linear-gradient(90deg, #FFC533, #FF8E25);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -162,7 +162,7 @@ export default function LoginPage() {
 
         .left-desc {
           font-size: 15px;
-          color: rgba(255, 248, 236, 0.6);
+          color: rgba(255, 248, 236, 0.9);
           line-height: 1.7;
           max-width: 340px;
           margin-bottom: 40px;
@@ -188,7 +188,7 @@ export default function LoginPage() {
 
         .stat-label {
           font-size: 11px;
-          color: rgba(255, 248, 236, 0.45);
+          color: rgba(255, 248, 236, 0.75);
           font-weight: 500;
           text-transform: uppercase;
           letter-spacing: 0.5px;
@@ -204,7 +204,7 @@ export default function LoginPage() {
           position: relative;
           z-index: 2;
           font-size: 12px;
-          color: rgba(255, 248, 236, 0.3);
+          color: rgba(255, 248, 236, 0.65);
         }
 
         /* ── RIGHT PANEL ── */
@@ -258,7 +258,7 @@ export default function LoginPage() {
 
         .card-subtitle {
           font-size: 13px;
-          color: #9a806a;
+          color: #644c3c;
           margin-bottom: 36px;
           line-height: 1.5;
         }
@@ -299,7 +299,7 @@ export default function LoginPage() {
           gap: 6px;
           font-size: 11px;
           font-weight: 600;
-          color: #5a3f30;
+          color: #432e22;
           text-transform: uppercase;
           letter-spacing: 0.6px;
         }
@@ -410,7 +410,7 @@ export default function LoginPage() {
           gap: 6px;
           margin-top: 20px;
           font-size: 12px;
-          color: #9a806a;
+          color: #644c3c;
         }
 
         /* Responsive */

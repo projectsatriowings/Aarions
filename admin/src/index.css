@@ -145,3 +145,33 @@ h1, h2, h3, h4, h5, h6 {
 * {
   font-family: "Inter", sans-serif !important;
 }
+
+/* ── Product Modal Input Fix ──────────────────────────────── */
+/* Forces dark readable text inside the Add/Edit Product modal */
+.modal-input {
+  color: #1C1917 !important;
+  -webkit-text-fill-color: #1C1917 !important;
+  background-color: #FFFCF5 !important;
+  opacity: 1 !important;
+}
+
+.modal-input::placeholder {
+  color: #A8A29E !important;
+  -webkit-text-fill-color: #A8A29E !important;
+  opacity: 1 !important;
+}
+
+.modal-input:focus {
+  color: #1C1917 !important;
+  -webkit-text-fill-color: #1C1917 !important;
+  outline: none !important;
+}
+
+/* Fix browser autofill overlay */
+.modal-input:-webkit-autofill,
+.modal-input:-webkit-autofill:hover,
+.modal-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #1C1917 !important;
+  -webkit-box-shadow: 0 0 0px 1000px #FFFCF5 inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}

@@ -780,8 +780,8 @@ html {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(135deg, rgba(26,14,8,.72) 0%,  rgba(26,14,8,.12) 60%),
-    linear-gradient(to top,  rgba(26,14,8,.95) 0%,  rgba(26,14,8,.0)  55%);
+    linear-gradient(135deg, rgba(26,14,8,.85) 0%,  rgba(26,14,8,.35) 60%),
+    linear-gradient(to top,  rgba(26,14,8,.98) 0%,  rgba(26,14,8,.2)  60%);
 }
 
 /* content floating over image */
@@ -836,15 +836,17 @@ html {
 }
 .auth-hero-headline em {
   font-style: normal;
-  background: linear-gradient(100deg, #E8A317, #8B1E1A, #C8870F);
+  background: linear-gradient(100deg, #FFC533, #FF8E25, #FFB938);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  font-weight: 800;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
 }
 
 .auth-hero-sub {
   font-size: .875rem;
-  color: rgba(255,248,236,.6);
+  color: rgba(255,248,236,.92);
   line-height: 1.65;
   max-width: 380px;
   margin: 0;
@@ -874,7 +876,7 @@ html {
 .auth-hero-quote {
   font-size: .72rem;
   font-style: italic;
-  color: rgba(255,248,236,.3);
+  color: rgba(255,248,236,.68);
   letter-spacing: .04em;
   margin: 0;
 }
@@ -916,12 +918,12 @@ html {
   margin: 1.5rem 0 0 2.25rem;
   font-size: .75rem;
   font-weight: 500;
-  color: #9a806a;
+  color: #644c3c;
   text-decoration: none;
   letter-spacing: .03em;
   transition: color .2s;
 }
-.auth-back:hover { color: #c8870f; }
+.auth-back:hover { color: #8B1E1A; }
 
 /* inner form wrapper – centres vertically */
 .auth-inner {
@@ -955,7 +957,7 @@ html {
 }
 .auth-subtitle {
   font-size: .83rem;
-  color: #9a806a;
+  color: #644c3c;
   margin: 0 0 2rem;
 }
 
@@ -989,7 +991,7 @@ html {
   align-items: center;
   gap: .75rem;
   font-size: .72rem;
-  color: #c0a690;
+  color: #8c7360;
   margin-bottom: 1.4rem;
   letter-spacing: .05em;
   text-transform: uppercase;
@@ -1011,7 +1013,7 @@ html {
   font-weight: 700;
   letter-spacing: .08em;
   text-transform: uppercase;
-  color: #5a3f30;
+  color: #432e22;
 }
 .auth-label-row {
   display: flex;
@@ -1244,7 +1246,7 @@ html {
 .auth-switch {
   text-align: center;
   font-size: .83rem;
-  color: #9a806a;
+  color: #644c3c;
   margin-top: 1.6rem;
 }
 .auth-switch a {

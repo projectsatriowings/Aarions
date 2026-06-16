@@ -189,7 +189,7 @@ export default function SignupPage() {
                 }}>
                   <Check size={11} color="#e8a317"/>
                 </div>
-                <span style={{ fontSize:".83rem", color:"rgba(255,248,236,.78)" }}>{p}</span>
+                <span style={{ fontSize:".83rem", color:"rgba(255,248,236,.92)" }}>{p}</span>
               </div>
             ))}
           </div>
