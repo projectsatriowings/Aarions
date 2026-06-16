@@ -12,8 +12,8 @@ const sendTokenResponse = (admin, statusCode, res) => {
   const cookieOptions = {
     expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
+    secure: process.env.NODE_ENV === "production" ? true : false,
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
   };
 
   res
@@ -132,6 +132,8 @@ export const logoutAdmin = async (req, res, next) => {
   res.cookie("adminRefreshToken", "none", {
     expires: new Date(Date.now() + 10 * 1000), // 10s
     httpOnly: true,
+    secure: process.env.NODE_ENV === "production" ? true : false,
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
   });
 
   res.status(200).json({
