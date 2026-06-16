@@ -15,15 +15,15 @@ const websiteSettingsSchema = new mongoose.Schema(
     },
     contactEmail: {
       type: String,
-      default: "support@aarions.com",
+      default: "info@aarions.in",
     },
     contactPhone: {
       type: String,
-      default: "+91 98765 43210",
+      default: "+91 98432 70810",
     },
     address: {
       type: String,
-      default: "Aarions Corporate Office, India",
+      default: "No.1A, G1, Ground Floor, Gurudev Complex, 57th St, Venkatraman Nagar, Korattur, Chennai, Tamil Nadu 600080",
     },
     socialLinks: {
       facebook: { type: String, default: "" },

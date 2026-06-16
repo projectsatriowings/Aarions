@@ -179,6 +179,9 @@ const seedDB = async () => {
       announcementText: "Welcome to Aarions! Pure organic honey, ghee, and stone-ground masalas.",
       shippingFee: 60,
       gstPercentage: 5,
+      address: "No.1A, G1, Ground Floor, Gurudev Complex, 57th St, Venkatraman Nagar, Korattur, Chennai, Tamil Nadu 600080",
+      contactEmail: "info@aarions.in",
+      contactPhone: "+91 98432 70810",
     });
 
     // 7. Create a couple default Coupons

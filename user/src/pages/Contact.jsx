@@ -105,7 +105,11 @@ export default function Contact() {
                 <Phone className="w-5 h-5 text-brand-gold mr-4 mt-1 flex-shrink-0" />
                 <div>
                   <h4 className="text-xs uppercase tracking-wider font-semibold text-brand-brown/50">Call Support</h4>
-                  <p className="text-sm font-semibold text-brand-brown mt-0.5">{settings?.contactPhone || "+91 98432 70810"}</p>
+                  <p className="text-sm font-semibold text-brand-brown mt-0.5">
+                    {(!settings?.contactPhone || settings.contactPhone === "+91 98765 43210")
+                      ? "+91 98432 70810"
+                      : settings.contactPhone}
+                  </p>
                 </div>
               </div>
 
@@ -113,7 +117,11 @@ export default function Contact() {
                 <Mail className="w-5 h-5 text-brand-gold mr-4 mt-1 flex-shrink-0" />
                 <div>
                   <h4 className="text-xs uppercase tracking-wider font-semibold text-brand-brown/50">Email Inquiries</h4>
-                  <p className="text-sm font-semibold text-brand-brown mt-0.5">{settings?.contactEmail || "info@aarions.in"}</p>
+                  <p className="text-sm font-semibold text-brand-brown mt-0.5">
+                    {(!settings?.contactEmail || settings.contactEmail === "support@aarions.com")
+                      ? "info@aarions.in"
+                      : settings.contactEmail}
+                  </p>
                 </div>
               </div>
             </motion.div>
@@ -134,7 +142,9 @@ export default function Contact() {
                 <div>
                   <h4 className="text-xs uppercase tracking-widest font-bold text-brand-gold">Head Office & Store</h4>
                   <p className="text-xs sm:text-sm text-brand-brown/85 mt-1 leading-relaxed font-light">
-                    {settings?.address || "No.1A, G1, Ground Floor, Gurudev Complex, 57th St, Venkatraman Nagar, Korattur, Chennai, Tamil Nadu 600080"}
+                    {(!settings?.address || settings.address === "Aarions Corporate Office, India")
+                      ? "No.1A, G1, Ground Floor, Gurudev Complex, 57th St, Venkatraman Nagar, Korattur, Chennai, Tamil Nadu 600080"
+                      : settings.address}
                   </p>
                 </div>
               </div>

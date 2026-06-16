@@ -122,20 +122,30 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
                 <span>
-                  {settings?.address || "No.1A, G1, Ground Floor, Gurudev Complex, 57th St, Venkatraman Nagar, Korattur, Chennai, Tamil Nadu 600080"}
+                  {(!settings?.address || settings.address === "Aarions Corporate Office, India")
+                    ? "No.1A, G1, Ground Floor, Gurudev Complex, 57th St, Venkatraman Nagar, Korattur, Chennai, Tamil Nadu 600080"
+                    : settings.address}
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <svg className="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
-                <span>{settings?.contactPhone || "+91 98432 70810"}</span>
+                <span>
+                  {(!settings?.contactPhone || settings.contactPhone === "+91 98765 43210")
+                    ? "+91 98432 70810"
+                    : settings.contactPhone}
+                </span>
               </li>
               <li className="flex items-center gap-3">
                 <svg className="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L22 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                <span>{settings?.contactEmail || "info@aarions.in"}</span>
+                <span>
+                  {(!settings?.contactEmail || settings.contactEmail === "support@aarions.com")
+                    ? "info@aarions.in"
+                    : settings.contactEmail}
+                </span>
               </li>
             </ul>
 
