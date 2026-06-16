@@ -79,14 +79,14 @@ export default function Layout({ children }) {
       
       {/* ───────── SIDEBAR ───────── */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 bg-white border-r border-zinc-200 transition-all duration-300 z-30 flex flex-col justify-between ${
+        className={`fixed top-0 bottom-0 left-0 bg-[#FFFDF9] border-r border-[#E8A317]/10 transition-all duration-300 z-30 flex flex-col justify-between ${
           sidebarOpen ? "w-64" : "w-16"
         }`}
       >
         <div className="flex flex-col flex-grow">
           {/* Logo Section */}
-          <div className="h-16 flex items-center justify-between px-4 border-b border-zinc-200">
-            <Link to="/" className="flex items-center space-x-2.5 overflow-hidden">
+          <div className="h-16 flex items-center justify-between px-4 border-b border-[#E8A317]/10">
+            <Link to="/" className="flex items-center space-x-2 overflow-hidden">
               <img 
                 src="/logo.png?v=3" 
                 alt="Aarions Logo" 
@@ -94,6 +94,11 @@ export default function Layout({ children }) {
                   sidebarOpen ? "h-11 px-2" : "h-8 px-1"
                 }`}
               />
+              {sidebarOpen && (
+                <span className="text-[10px] tracking-[0.15em] font-bold uppercase bg-[#8B1E1A]/10 text-[#8B1E1A] border border-[#8B1E1A]/20 px-2 py-0.5 rounded-md shrink-0">
+                  Admin
+                </span>
+              )}
             </Link>
           </div>
 
@@ -106,8 +111,8 @@ export default function Layout({ children }) {
                 className={({ isActive }) =>
                   `flex items-center space-x-3 py-3 px-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all duration-200 ${
                     isActive
-                      ? "bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-md font-bold"
-                      : "text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900"
+                      ? "bg-gradient-to-r from-[#8B1E1A] to-[#C8870F] text-white shadow-md shadow-[#8B1E1A]/12 font-bold"
+                      : "text-[#2D1F17]/70 hover:bg-[#FFF8EC] hover:text-[#2D1F17]"
                   }`
                 }
               >
@@ -119,7 +124,7 @@ export default function Layout({ children }) {
         </div>
 
         {/* Footer Actions */}
-        <div className="p-2 border-t border-zinc-200 space-y-1">
+        <div className="p-2 border-t border-[#E8A317]/10 space-y-1">
           <button
             onClick={handleLogout}
             className="w-full flex items-center space-x-3 py-3 px-3.5 rounded-xl text-xs font-semibold uppercase tracking-wider text-red-650 hover:bg-red-500/10 transition-colors"
@@ -137,7 +142,7 @@ export default function Layout({ children }) {
         }`}
       >
         {/* Top Navbar */}
-        <header className={`h-16 fixed top-0 right-0 bg-zinc-50/85 backdrop-blur-md border-b border-zinc-200/50 flex items-center justify-between px-6 z-20 transition-all duration-300 ${
+        <header className={`h-16 fixed top-0 right-0 bg-[#FFF8EC]/90 backdrop-blur-md border-b border-[#E8A317]/15 flex items-center justify-between px-6 z-20 transition-all duration-300 ${
           sidebarOpen ? "left-64" : "left-16"
         }`}>
           
@@ -145,7 +150,7 @@ export default function Layout({ children }) {
           <div className="flex items-center space-x-4">
             <button
               onClick={() => setSidebarOpen((prev) => !prev)}
-              className="p-2 border border-zinc-200 rounded-xl hover:bg-zinc-100 text-zinc-500 transition-colors cursor-pointer"
+              className="p-2 border border-[#E8A317]/20 rounded-xl hover:bg-[#F8EED8] text-[#2D1F17] transition-all cursor-pointer"
             >
               <Menu className="w-4 h-4" />
             </button>
@@ -153,10 +158,10 @@ export default function Layout({ children }) {
 
           {/* User Profile Summary */}
           <div className="flex items-center space-x-4">
-            <span className="hidden sm:inline text-xs text-zinc-500 dark:text-zinc-400 font-semibold tracking-wide">
-              Logged as: <span className="font-bold text-zinc-700 dark:text-zinc-350">{admin?.name}</span> ({admin?.role})
+            <span className="hidden sm:inline text-xs text-zinc-500 font-semibold tracking-wide">
+              Logged as: <span className="font-bold text-[#2D1F17]">{admin?.name}</span> ({admin?.role})
             </span>
-            <Link to="/profile" className="w-9 h-9 rounded-full overflow-hidden border border-amber-500/30 flex items-center justify-center bg-amber-500/10">
+            <Link to="/profile" className="w-9 h-9 rounded-full overflow-hidden border border-[#8B1E1A]/30 flex items-center justify-center bg-[#8B1E1A]/10">
               {admin?.avatar && !avatarError ? (
                 <img
                   src={getImageUrl(admin.avatar)}
@@ -166,7 +171,7 @@ export default function Layout({ children }) {
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <span className="text-amber-500 text-sm font-bold uppercase leading-none">
+                <span className="text-[#8B1E1A] text-sm font-bold uppercase leading-none">
                   {admin?.name ? admin.name.split(" ").map(n => n[0]).join("").slice(0, 2) : "A"}
                 </span>
               )}

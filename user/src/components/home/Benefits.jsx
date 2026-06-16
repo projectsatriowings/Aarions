@@ -121,7 +121,7 @@ export default function Benefits() {
   });
 
   return (
-    <section className="section-pad bg-[#2D1F17] overflow-hidden relative">
+    <section className="section-pad overflow-hidden relative" style={{ background: "linear-gradient(135deg, #2D1F17 0%, #1D140F 50%, #300604 100%)" }}>
       {/* Decorative ambient lighting */}
       <div 
         className="absolute rounded-full pointer-events-none" 

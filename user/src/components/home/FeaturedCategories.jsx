@@ -94,7 +94,7 @@ export default function FeaturedCategories() {
   return (
     <section
       ref={sectionRef}
-      className="py-16 md:py-20 bg-[#FFF8EC] overflow-hidden"
+      className="py-16 md:py-20 bg-transparent overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         

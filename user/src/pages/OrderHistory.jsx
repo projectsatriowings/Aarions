@@ -119,7 +119,7 @@ export default function OrderHistory() {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -15 }}
       transition={{ duration: 0.4 }}
-      className="min-h-screen pt-40 pb-24 bg-gradient-to-b from-[#FFFDF9] via-brand-cream/15 to-[#FFFDF9]"
+      className="min-h-screen pt-40 pb-24 bg-transparent"
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -273,7 +273,7 @@ export default function OrderHistory() {
                   
                   <Link
                     to={`/orders/${order._id}`}
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-brand-brown text-white text-xs font-bold tracking-widest uppercase hover:bg-brand-gold hover:text-brand-brown transition-all duration-300 shadow-md hover:shadow-brand-gold/20 active:scale-95 whitespace-nowrap cursor-pointer"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full btn-gradient text-xs font-bold tracking-widest uppercase active:scale-95 whitespace-nowrap cursor-pointer"
                   >
                     <span>View Details</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" />

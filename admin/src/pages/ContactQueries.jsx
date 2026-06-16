@@ -194,7 +194,7 @@ export default function ContactQueries() {
                 <button
                   type="submit"
                   disabled={updating}
-                  className="bg-amber-500 hover:bg-amber-600 text-zinc-950 font-bold uppercase tracking-widest py-3 px-5 rounded-xl transition-colors disabled:opacity-50 flex items-center"
+                  className="btn-gradient font-bold uppercase tracking-widest py-3 px-5 rounded-xl disabled:opacity-50 flex items-center"
                 >
                   {updating ? (
                     <>

@@ -127,7 +127,7 @@ export default function ProductDetails() {
           </p>
           <Link
             to="/shop"
-            className="inline-flex items-center space-x-2 bg-brand-brown text-white text-xs tracking-widest uppercase font-semibold py-3.5 px-6 rounded-lg hover:bg-brand-gold hover:text-brand-brown transition-colors"
+            className="inline-flex items-center space-x-2 btn-gradient text-xs tracking-widest uppercase font-semibold py-3.5 px-6 rounded-lg"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Shop</span>
@@ -153,7 +153,7 @@ export default function ProductDetails() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen pt-40 pb-24 bg-brand-cream/20"
+      className="min-h-screen pt-40 pb-24 bg-transparent"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumbs */}
@@ -273,7 +273,7 @@ export default function ProductDetails() {
                 className={`flex-grow flex items-center justify-center space-x-2 py-4 px-8 rounded-lg text-xs tracking-widest uppercase font-semibold transition-all duration-300 shadow-md ${
                   added
                     ? "bg-green-600 text-white"
-                    : "bg-brand-brown hover:bg-brand-gold hover:text-brand-brown text-white"
+                    : "btn-gradient"
                 }`}
               >
                 {added ? (
@@ -562,7 +562,7 @@ export default function ProductDetails() {
                           <button
                             type="submit"
                             disabled={submittingReview}
-                            className="w-full bg-brand-brown hover:bg-brand-gold hover:text-brand-brown text-white text-[10px] tracking-widest uppercase font-semibold py-3.5 px-4 rounded-lg transition-colors flex items-center justify-center"
+                            className="w-full btn-gradient text-[10px] tracking-widest uppercase font-semibold py-3.5 px-4 rounded-lg flex items-center justify-center"
                           >
                             {submittingReview ? "Submitting..." : "Submit Review"}
                           </button>
@@ -574,7 +574,7 @@ export default function ProductDetails() {
                           </p>
                           <Link
                             to="/login"
-                            className="inline-block bg-brand-brown hover:bg-brand-gold hover:text-brand-brown text-white text-[10px] tracking-widest uppercase font-semibold py-2.5 px-6 rounded-lg transition-colors"
+                            className="inline-block btn-gradient text-[10px] tracking-widest uppercase font-semibold py-2.5 px-6 rounded-lg"
                           >
                             Login Now
                           </Link>

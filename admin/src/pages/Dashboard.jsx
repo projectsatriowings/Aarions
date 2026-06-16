@@ -68,8 +68,8 @@ export default function Dashboard() {
 
   const { kpis, salesChart, categoryChart, popularProducts, recentOrders, recentLogs } = data;
 
-  // Premium brand-aligned color palette: Gold, Dark Gold, Brown, Muted Brown, Cream Gold
-  const COLORS = ["#E8A317", "#C8870F", "#2D1F17", "#6B5D55", "#A89B93"];
+  // Premium brand-aligned color palette: Burgundy, Gold, Dark Gold, Brown, Muted Brown
+  const COLORS = ["#8B1E1A", "#E8A317", "#C8870F", "#2D1F17", "#A89B93"];
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -84,10 +84,10 @@ export default function Dashboard() {
       })() : "";
 
       return (
-        <div className="bg-[#2D1F17]/95 backdrop-blur-md border border-amber-500/20 p-3 rounded-2xl shadow-xl text-xs space-y-1.5 text-[#FFF8EC]">
+        <div className="bg-[#2D1F17]/95 backdrop-blur-md border border-[#E8A317]/25 p-3 rounded-2xl shadow-xl text-xs space-y-1.5 text-[#FFF8EC]">
           <p className="font-semibold text-[#A89B93] border-b border-white/5 pb-1">{formattedLabel}</p>
           <div className="flex items-center gap-4 justify-between">
-            <span className="text-amber-500 font-bold">Revenue:</span>
+            <span className="text-[#E8A317] font-bold">Revenue:</span>
             <span className="font-bold text-white">₹{payload[0].value.toLocaleString()}</span>
           </div>
           {payload[0].payload.orders !== undefined && (
@@ -268,24 +268,24 @@ export default function Dashboard() {
                 <AreaChart data={processedSalesChart} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
                   <defs>
                     <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#E8A317" stopOpacity={0.35}/>
-                      <stop offset="95%" stopColor="#C8870F" stopOpacity={0.01}/>
+                      <stop offset="5%" stopColor="#8B1E1A" stopOpacity={0.35}/>
+                      <stop offset="95%" stopColor="#E8A317" stopOpacity={0.01}/>
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="4 4" stroke="#2D1F17" strokeOpacity={0.06} vertical={false} />
                   <XAxis dataKey="name" stroke="#6B5D55" fontSize={10} tickLine={false} axisLine={false} dy={8} tickFormatter={formatXAxis} />
                   <YAxis stroke="#6B5D55" fontSize={10} tickLine={false} axisLine={false} dx={-4} tickFormatter={formatYAxis} />
-                  <Tooltip content={<CustomTooltip />} cursor={{ stroke: "rgba(232, 163, 23, 0.15)", strokeWidth: 1.5 }} />
+                  <Tooltip content={<CustomTooltip />} cursor={{ stroke: "rgba(139, 30, 26, 0.15)", strokeWidth: 1.5 }} />
                   <Area
                     type="monotone"
                     dataKey="revenue"
-                    stroke="#E8A317"
+                    stroke="#8B1E1A"
                     strokeWidth={3}
                     fillOpacity={1}
                     fill="url(#colorRevenue)"
                     name="Sales (₹)"
-                    activeDot={{ r: 6, stroke: "#FFFDF9", strokeWidth: 2, fill: "#E8A317" }}
-                    dot={{ r: 3, stroke: "#E8A317", strokeWidth: 1.5, fill: "#FFFDF9" }}
+                    activeDot={{ r: 6, stroke: "#FFFDF9", strokeWidth: 2, fill: "#8B1E1A" }}
+                    dot={{ r: 3, stroke: "#8B1E1A", strokeWidth: 1.5, fill: "#FFFDF9" }}
                   />
                 </AreaChart>
               </ResponsiveContainer>
@@ -364,8 +364,8 @@ export default function Dashboard() {
                 <BarChart data={processedSalesChart} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                   <defs>
                     <linearGradient id="colorOrders" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#C8870F" stopOpacity={0.95}/>
-                      <stop offset="95%" stopColor="#E8A317" stopOpacity={0.4}/>
+                      <stop offset="5%" stopColor="#8B1E1A" stopOpacity={0.95}/>
+                      <stop offset="95%" stopColor="#C8870F" stopOpacity={0.4}/>
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="4 4" stroke="#2D1F17" strokeOpacity={0.06} vertical={false} />
@@ -373,7 +373,7 @@ export default function Dashboard() {
                   <YAxis stroke="#6B5D55" fontSize={10} tickLine={false} axisLine={false} dx={-4} allowDecimals={false} />
                   <Tooltip
                     contentStyle={{ background: "#2D1F17", border: "none", borderRadius: "12px", fontSize: "11px", color: "#FFF8EC" }}
-                    cursor={{ fill: "rgba(232, 163, 23, 0.05)" }}
+                    cursor={{ fill: "rgba(139, 30, 26, 0.05)" }}
                     formatter={(value) => [`${value} Orders`, "Volume"]}
                     labelFormatter={(label) => {
                       const parts = label.split("-");
@@ -412,8 +412,8 @@ export default function Dashboard() {
                 >
                   <defs>
                     <linearGradient id="colorUnits" x1="0" y1="0" x2="1" y2="0">
-                      <stop offset="5%" stopColor="#E8A317" stopOpacity={0.5}/>
-                      <stop offset="95%" stopColor="#C8870F" stopOpacity={0.95}/>
+                      <stop offset="5%" stopColor="#8B1E1A" stopOpacity={0.5}/>
+                      <stop offset="95%" stopColor="#E8A317" stopOpacity={0.95}/>
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="4 4" stroke="#2D1F17" strokeOpacity={0.06} horizontal={false} />
@@ -430,7 +430,7 @@ export default function Dashboard() {
                   />
                   <Tooltip
                     contentStyle={{ background: "#2D1F17", border: "none", borderRadius: "12px", fontSize: "11px", color: "#FFF8EC" }}
-                    cursor={{ fill: "rgba(232, 163, 23, 0.05)" }}
+                    cursor={{ fill: "rgba(139, 30, 26, 0.05)" }}
                     formatter={(value, name) => [
                       name === "unitsSold" ? `${value} units` : `₹${value.toLocaleString()}`, 
                       name === "unitsSold" ? "Units Sold" : "Total Sales"

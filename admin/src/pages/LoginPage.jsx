@@ -60,7 +60,7 @@ export default function LoginPage() {
           position: absolute;
           inset: 0;
           background:
-            radial-gradient(ellipse 60% 50% at 20% 30%, rgba(232, 163, 23, 0.18) 0%, transparent 60%),
+            radial-gradient(ellipse 60% 50% at 20% 30%, rgba(139, 30, 26, 0.18) 0%, transparent 60%),
             radial-gradient(ellipse 50% 60% at 80% 80%, rgba(200, 135, 15, 0.12) 0%, transparent 60%);
           pointer-events: none;
         }
@@ -70,7 +70,7 @@ export default function LoginPage() {
           position: absolute;
           top: -200px; right: -200px;
           width: 600px; height: 600px;
-          background: radial-gradient(circle, rgba(232, 163, 23, 0.08) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(139, 30, 26, 0.08) 0%, transparent 70%);
           border-radius: 50%;
           animation: pulseGlow 6s ease-in-out infinite alternate;
         }
@@ -102,10 +102,10 @@ export default function LoginPage() {
 
         .left-logo-icon {
           width: 38px; height: 38px;
-          background: linear-gradient(135deg, #e8a317, #c8870f);
+          background: linear-gradient(135deg, #8B1E1A, #C8870F);
           border-radius: 10px;
           display: flex; align-items: center; justify-content: center;
-          box-shadow: 0 4px 20px rgba(232, 163, 23, 0.35);
+          box-shadow: 0 4px 20px rgba(139, 30, 26, 0.22);
         }
 
         .left-logo-text {
@@ -115,7 +115,7 @@ export default function LoginPage() {
           letter-spacing: -0.3px;
         }
 
-        .left-logo-text span { color: #e8a317; }
+        .left-logo-text span { color: #8B1E1A; }
 
         .left-hero {
           position: relative;
@@ -131,13 +131,13 @@ export default function LoginPage() {
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          background: rgba(232, 163, 23, 0.12);
-          border: 1px solid rgba(232, 163, 23, 0.25);
+          background: rgba(139, 30, 26, 0.12);
+          border: 1px solid rgba(139, 30, 26, 0.25);
           border-radius: 100px;
           padding: 5px 14px;
           font-size: 11px;
           font-weight: 600;
-          color: #e8a317;
+          color: #8B1E1A;
           letter-spacing: 0.5px;
           text-transform: uppercase;
           width: fit-content;
@@ -154,7 +154,7 @@ export default function LoginPage() {
         }
 
         .left-h1 span {
-          background: linear-gradient(90deg, #e8a317, #f7cc5e);
+          background: linear-gradient(90deg, #8B1E1A, #E8A317);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -227,7 +227,7 @@ export default function LoginPage() {
           top: 0; left: 0;
           width: 3px;
           height: 100%;
-          background: linear-gradient(180deg, #e8a317 0%, #c8870f 50%, transparent 100%);
+          background: linear-gradient(180deg, #8B1E1A 0%, #C8870F 50%, transparent 100%);
           opacity: .55;
           pointer-events: none;
         }
@@ -240,12 +240,12 @@ export default function LoginPage() {
         /* Card header */
         .card-icon-wrap {
           width: 56px; height: 56px;
-          background: linear-gradient(135deg, rgba(232, 163, 23, 0.15), rgba(200, 135, 15, 0.1));
-          border: 1px solid rgba(232, 163, 23, 0.25);
+          background: linear-gradient(135deg, rgba(139, 30, 26, 0.15), rgba(200, 135, 15, 0.1));
+          border: 1px solid rgba(139, 30, 26, 0.25);
           border-radius: 16px;
           display: flex; align-items: center; justify-content: center;
           margin-bottom: 24px;
-          box-shadow: 0 0 30px rgba(232, 163, 23, 0.12);
+          box-shadow: 0 0 30px rgba(139, 30, 26, 0.12);
         }
 
         .card-title {
@@ -315,9 +315,9 @@ export default function LoginPage() {
         }
 
         .field-wrap.focused {
-          border-color: #e8a317;
+          border-color: #8B1E1A;
           background: #fff;
-          box-shadow: 0 0 0 3.5px rgba(232, 163, 23, 0.13);
+          box-shadow: 0 0 0 3.5px rgba(139, 30, 26, 0.13);
         }
 
         .field-icon {
@@ -329,7 +329,7 @@ export default function LoginPage() {
           transition: color 0.2s;
         }
 
-        .field-wrap.focused .field-icon { color: #e8a317; }
+        .field-wrap.focused .field-icon { color: #8B1E1A; }
 
         .field-input {
           flex: 1;
@@ -355,7 +355,7 @@ export default function LoginPage() {
           transition: color 0.2s;
         }
 
-        .eye-btn:hover { color: #e8a317; }
+        .eye-btn:hover { color: #8B1E1A; }
 
         /* Divider */
         .field-divider {
@@ -371,7 +371,7 @@ export default function LoginPage() {
           align-items: center;
           justify-content: center;
           gap: 10px;
-          background: linear-gradient(135deg, #e8a317 0%, #c8870f 100%);
+          background: linear-gradient(135deg, #8B1E1A 0%, #C8870F 100%);
           border: none;
           border-radius: 12px;
           padding: 15px 24px;
@@ -383,20 +383,20 @@ export default function LoginPage() {
           transition: all 0.25s ease;
           position: relative;
           overflow: hidden;
-          box-shadow: 0 5px 20px rgba(232,163,23,0.38);
+          box-shadow: 0 5px 20px rgba(139, 30, 26, 0.22);
         }
 
         .submit-btn::before {
           content: '';
           position: absolute;
           inset: 0;
-          background: linear-gradient(135deg, #f7cc5e 0%, #c8870f 100%);
+          background: linear-gradient(135deg, #A72824 0%, #E8A317 100%);
           opacity: 0;
           transition: opacity 0.25s;
         }
 
         .submit-btn:hover::before { opacity: 1; }
-        .submit-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 28px rgba(232,163,23,0.45); }
+        .submit-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 28px rgba(139, 30, 26, 0.38); }
         .submit-btn:active { transform: translateY(0); }
         .submit-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
 
@@ -435,7 +435,7 @@ export default function LoginPage() {
         .bg-dots span {
           position: absolute;
           border-radius: 50%;
-          background: rgba(232,163,23,0.08);
+          background: rgba(139,30,26,0.08);
           animation: floatDot linear infinite;
         }
 

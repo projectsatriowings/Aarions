@@ -35,7 +35,7 @@ export default function Certifications() {
   };
 
   return (
-    <section className="bg-gradient-to-b from-[#FFFDF9] to-[#FFF8EC] py-16 relative overflow-hidden border-y border-brand-gold/15">
+    <section className="bg-transparent py-16 relative overflow-hidden border-y border-brand-gold/15">
       {/* Background ambient lighting */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-brand-gold/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-brand-cream/40 rounded-full blur-3xl pointer-events-none" />

@@ -28,7 +28,7 @@ export default function Newsletter() {
   };
 
   return (
-    <section className="py-24 bg-[#FFF8EC] relative overflow-hidden">
+    <section className="py-12 md:py-16 bg-transparent relative overflow-hidden">
       {/* Background radial glows */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-[-20%] right-[-10%] w-[45%] aspect-square rounded-full bg-brand-gold/5 blur-[120px]" />

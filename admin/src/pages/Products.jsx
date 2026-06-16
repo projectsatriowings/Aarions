@@ -266,7 +266,7 @@ export default function Products() {
         </div>
         <button
           onClick={() => handleOpenModal()}
-          className="inline-flex items-center space-x-1.5 bg-amber-500 hover:bg-amber-600 text-zinc-950 text-xs font-bold uppercase tracking-widest py-3 px-5 rounded-xl transition-colors shadow-sm"
+          className="inline-flex items-center space-x-1.5 btn-gradient text-xs font-bold uppercase tracking-widest py-3 px-5 rounded-xl"
         >
           <Plus className="w-4 h-4" />
           <span>Add Product</span>
@@ -663,7 +663,7 @@ export default function Products() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="bg-amber-500 hover:bg-amber-600 text-zinc-950 text-xs font-bold uppercase tracking-widest py-3 px-5 rounded-xl transition-colors disabled:opacity-50 flex items-center"
+                  className="btn-gradient text-xs font-bold uppercase tracking-widest py-3 px-5 rounded-xl disabled:opacity-50 flex items-center"
                 >
                   {submitting ? (
                     <>

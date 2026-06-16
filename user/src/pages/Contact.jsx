@@ -58,7 +58,7 @@ export default function Contact() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen pt-40 pb-24 bg-brand-cream/20"
+      className="min-h-screen pt-40 pb-24 bg-transparent"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -228,7 +228,7 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  className="w-full bg-brand-brown hover:bg-brand-gold hover:text-brand-brown text-white text-xs tracking-widest uppercase font-semibold py-4 rounded-xl shadow-lg transition-all duration-300 flex items-center justify-center space-x-2"
+                  className="w-full btn-gradient text-xs tracking-widest uppercase font-semibold py-4 rounded-xl flex items-center justify-center space-x-2"
                 >
                   <Send className="w-4 h-4" />
                   <span>Send Message</span>

@@ -138,7 +138,7 @@ export default function Navbar() {
               >
                 <Heart className="w-5 h-5 stroke-[1.8]" />
                 {wishlistCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-brand-gold text-brand-brown text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-brand-cream">
+                  <span className="absolute -top-1 -right-1 bg-brand-red text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-brand-cream">
                     {wishlistCount}
                   </span>
                 )}
@@ -152,7 +152,7 @@ export default function Navbar() {
               >
                 <ShoppingBag className="w-5 h-5 stroke-[1.8]" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-brand-gold text-brand-brown text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-brand-cream">
+                  <span className="absolute -top-1 -right-1 bg-brand-red text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-brand-cream">
                     {cartCount}
                   </span>
                 )}

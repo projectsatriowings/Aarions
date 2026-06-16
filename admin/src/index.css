@@ -1,6 +1,15 @@
 @import "tailwindcss";
 
 @theme {
+  --color-brand-gold: #E8A317;
+  --color-brand-darkGold: #C8870F;
+  --color-brand-brown: #2D1F17;
+  --color-brand-cream: #FFF8EC;
+  --color-brand-darkCream: #F8EED8;
+  --color-brand-red: #8B1E1A;
+  --color-brand-darkRed: #6B120F;
+  --color-brand-lightRed: #A72824;
+
   --color-zinc-50: #FFF8EC;      /* Page background in light theme */
   --color-zinc-950: #1A120D;     /* Page background in dark theme */
   --color-white: #FFFDF9;        /* Sidebar & Header background in light theme */
@@ -11,8 +20,6 @@
   --color-zinc-200: rgba(45, 31, 23, 0.08);   /* Borders in light theme */
   --color-zinc-800: rgba(232, 163, 23, 0.15);  /* Borders in dark theme */
   
-  --color-zinc-900: #2D1F17;     /* Text color in light theme */
-  --color-zinc-100: #FFF8EC;     /* Text color in dark theme */
   --color-zinc-500: #6B5D55;     /* Muted labels in light theme */
   --color-zinc-400: #A89B93;     /* Muted labels in dark theme */
 
@@ -93,21 +100,32 @@ h1, h2, h3, h4, h5, h6 {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #FFF8EC;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 3px;
+  background: #8B1E1A;
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #6B120F;
 }
 
-.dark-theme ::-webkit-scrollbar-thumb {
-  background: #27272a;
+/* Premium Gradient Button Style */
+.btn-gradient {
+  color: #fff !important;
+  background: linear-gradient(135deg, #8B1E1A 0%, #C8870F 100%) !important;
+  box-shadow: 0 4px 20px rgba(139, 30, 26, 0.22) !important;
+  transition: all 0.3s ease-in-out !important;
 }
-.dark-theme ::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46;
+
+.btn-gradient:hover {
+  background: linear-gradient(135deg, #A72824 0%, #E8A317 100%) !important;
+  box-shadow: 0 8px 30px rgba(139, 30, 26, 0.38) !important;
+  transform: translateY(-2px) !important;
+}
+
+.btn-gradient:active {
+  transform: translateY(0) !important;
 }
 
 /* Modern Card Glow */

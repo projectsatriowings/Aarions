@@ -46,7 +46,7 @@ export default function BlogDetails() {
           </p>
           <Link
             to="/blog"
-            className="inline-flex items-center space-x-2 bg-brand-brown text-white text-xs tracking-widest uppercase font-semibold py-3.5 px-6 rounded-lg hover:bg-brand-gold hover:text-brand-brown transition-colors"
+            className="inline-flex items-center space-x-2 btn-gradient text-xs tracking-widest uppercase font-semibold py-3.5 px-6 rounded-lg"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Blog</span>
@@ -61,7 +61,7 @@ export default function BlogDetails() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen pt-40 pb-12 bg-brand-cream/20"
+      className="min-h-screen pt-40 pb-12 bg-transparent"
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         

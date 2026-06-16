@@ -173,7 +173,7 @@ export default function Shop() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen pt-40 pb-24 bg-[#FFF8EC] relative overflow-hidden"
+      className="min-h-screen pt-40 pb-24 bg-transparent relative overflow-hidden"
       style={{
         backgroundImage: "radial-gradient(rgba(232, 163, 23, 0.04) 1.5px, transparent 1.5px)",
         backgroundSize: "24px 24px"
@@ -416,7 +416,7 @@ export default function Shop() {
                 </p>
                 <button
                   onClick={handleResetFilters}
-                  className="bg-brand-brown hover:bg-brand-gold hover:text-brand-brown text-white text-xs tracking-widest uppercase font-semibold py-3.5 px-6 rounded-xl transition-all duration-300 shadow-sm cursor-pointer"
+                  className="btn-gradient text-xs tracking-widest uppercase font-semibold py-3.5 px-6 rounded-xl cursor-pointer"
                 >
                   Reset All Filters
                 </button>

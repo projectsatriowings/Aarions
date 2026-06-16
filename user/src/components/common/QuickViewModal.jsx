@@ -142,7 +142,7 @@ export default function QuickViewModal({ product, onClose }) {
               className={`flex-grow flex items-center justify-center space-x-2 px-6 py-3.5 rounded-lg text-sm font-semibold tracking-wider uppercase transition-all duration-300 shadow-md w-full ${
                 added
                   ? "bg-green-600 text-white"
-                  : "bg-brand-brown hover:bg-brand-gold hover:text-brand-brown text-white"
+                  : "btn-gradient"
               }`}
             >
               {added ? (

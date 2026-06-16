@@ -15,7 +15,7 @@ export default function WishlistPage() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen pt-40 pb-24 bg-brand-cream/20"
+      className="min-h-screen pt-40 pb-24 bg-transparent"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -65,7 +65,7 @@ export default function WishlistPage() {
             <div className="pt-2">
               <Link
                 to="/shop"
-                className="bg-brand-brown hover:bg-brand-gold hover:text-brand-brown text-white text-xs tracking-widest uppercase font-semibold py-4 px-8 rounded-xl transition-colors shadow-md inline-block"
+                className="btn-gradient text-xs tracking-widest uppercase font-semibold py-4 px-8 rounded-xl inline-block"
               >
                 Explore Products
               </Link>

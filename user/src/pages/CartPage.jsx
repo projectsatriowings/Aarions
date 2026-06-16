@@ -74,7 +74,7 @@ export default function CartPage() {
             <Link
               to="/shop"
               onClick={() => setCheckoutSuccess(false)}
-              className="inline-flex items-center space-x-2 bg-brand-brown text-white text-xs tracking-widest uppercase font-semibold py-3.5 px-6 rounded-lg hover:bg-brand-gold hover:text-brand-brown transition-colors"
+              className="inline-flex items-center space-x-2 btn-gradient text-xs tracking-widest uppercase font-semibold py-3.5 px-6 rounded-lg"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Shop</span>
@@ -90,7 +90,7 @@ export default function CartPage() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen pt-40 pb-24 bg-brand-cream/20"
+      className="min-h-screen pt-40 pb-24 bg-transparent"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -214,7 +214,7 @@ export default function CartPage() {
                   />
                   <button
                     type="submit"
-                    className="bg-brand-brown hover:bg-brand-gold hover:text-brand-brown text-white text-xs tracking-wider uppercase font-semibold px-4 py-2 rounded-lg transition-colors"
+                    className="btn-gradient text-xs tracking-wider uppercase font-semibold px-4 py-2 rounded-lg"
                   >
                     Apply
                   </button>
@@ -272,7 +272,7 @@ export default function CartPage() {
 
                 <button
                   onClick={handleCheckout}
-                  className="w-full bg-brand-brown hover:bg-brand-gold hover:text-brand-brown text-white text-xs tracking-widest uppercase font-semibold py-4 rounded-xl shadow-lg transition-all duration-300 flex items-center justify-center space-x-2 mt-4"
+                  className="w-full btn-gradient text-xs tracking-widest uppercase font-semibold py-4 rounded-xl flex items-center justify-center space-x-2 mt-4"
                 >
                   <span>Proceed to Checkout</span>
                   <ArrowRight className="w-4 h-4" />
@@ -298,7 +298,7 @@ export default function CartPage() {
             <div className="pt-2">
               <Link
                 to="/shop"
-                className="bg-brand-brown hover:bg-brand-gold hover:text-brand-brown text-white text-xs tracking-widest uppercase font-semibold py-4 px-8 rounded-xl transition-colors shadow-md inline-block"
+                className="btn-gradient text-xs tracking-widest uppercase font-semibold py-4 px-8 rounded-xl inline-block"
               >
                 Go to Shop
               </Link>

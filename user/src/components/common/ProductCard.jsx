@@ -23,7 +23,7 @@ export default function ProductCard({ product, onQuickView }) {
       {/* Product Badges */}
       <div className="absolute top-6 left-6 z-10 flex flex-col space-y-1.5 pointer-events-none">
         {product.isBestSeller && (
-          <span className="bg-brand-brown text-brand-gold text-[9px] tracking-[0.15em] uppercase font-bold px-3 py-1 rounded-full shadow-md z-20">
+          <span className="bg-brand-red text-white text-[9px] tracking-[0.15em] uppercase font-bold px-3 py-1 rounded-full shadow-md z-20">
             Best Seller
           </span>
         )}
@@ -147,7 +147,7 @@ export default function ProductCard({ product, onQuickView }) {
               e.stopPropagation();
               addToCart(product, 1);
             }}
-            className="flex items-center space-x-1.5 bg-brand-brown hover:bg-brand-gold text-white hover:text-brand-brown px-4 py-2.5 rounded-xl text-xs font-bold tracking-widest uppercase transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-brand-gold/10 cursor-pointer"
+            className="flex items-center space-x-1.5 btn-gradient px-4 py-2.5 rounded-xl text-xs font-bold tracking-widest uppercase cursor-pointer"
           >
             <ShoppingCart className="w-3.5 h-3.5" />
             <span>Add</span>

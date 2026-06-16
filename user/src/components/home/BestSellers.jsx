@@ -113,7 +113,7 @@ export default function BestSellers({ onQuickView }) {
   return (
     <section
       ref={sectionRef}
-      className="bs-section py-16 md:py-20 bg-gradient-to-b from-[#FFF8EC] to-[#FFFDF9] relative overflow-hidden"
+      className="bs-section py-12 md:py-16 bg-transparent relative overflow-hidden"
     >
       {/* Decorative ambient lighting */}
       <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-brand-gold/5 rounded-full blur-[120px] pointer-events-none" />
@@ -211,7 +211,7 @@ export default function BestSellers({ onQuickView }) {
                       {/* Bestseller Badge */}
                       {product.isBestSeller && (
                         <div className="absolute top-4 left-4 z-10 pointer-events-none">
-                          <span className="bg-[#2D1F17] text-[#E8A317] text-[8px] tracking-[0.2em] uppercase font-bold px-3 py-1 rounded-full shadow-md">
+                          <span className="bg-brand-red text-white text-[8px] tracking-[0.2em] uppercase font-bold px-3 py-1 rounded-full shadow-md">
                             Best Seller
                           </span>
                         </div>
@@ -330,7 +330,7 @@ export default function BestSellers({ onQuickView }) {
                         {/* Premium Add Button */}
                         <button
                           onClick={() => addToCart(product, 1)}
-                          className="px-4.5 py-2 bg-brand-brown hover:bg-brand-gold text-white hover:text-brand-brown text-[10px] font-bold tracking-widest uppercase rounded-full transition-all duration-300 shadow-sm cursor-pointer hover:scale-105 active:scale-95"
+                          className="px-4.5 py-2 btn-gradient text-[10px] font-bold tracking-widest uppercase rounded-full cursor-pointer hover:scale-105 active:scale-95"
                         >
                           Add
                         </button>

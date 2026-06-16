@@ -111,7 +111,7 @@ export default function FeaturedProducts({ onQuickView }) {
 
   if (loading) {
     return (
-      <section className="py-16 md:py-20 bg-brand-cream flex items-center justify-center min-h-[400px]">
+      <section className="py-16 md:py-20 bg-transparent flex items-center justify-center min-h-[400px]">
         <Loader />
       </section>
     );
@@ -132,7 +132,7 @@ export default function FeaturedProducts({ onQuickView }) {
     : ["100% Organic Purity", "Traditionally Handcrafted", "Zero Preservatives", "Directly Farm Sourced"];
 
   return (
-    <section className="relative overflow-hidden bg-brand-cream py-16 md:py-20 px-4 sm:px-6 lg:px-8 border-t border-brand-gold/10">
+    <section className="relative overflow-hidden bg-transparent py-12 md:py-16 px-4 sm:px-6 lg:px-8 border-t border-brand-gold/10">
       
       {/* Background Decorative Textures & Glows for main section */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
@@ -160,7 +160,7 @@ export default function FeaturedProducts({ onQuickView }) {
           </div>
           <Link
             to="/shop"
-            className="group inline-flex items-center gap-3.5 px-6 py-3.5 bg-brand-brown hover:bg-brand-gold hover:text-brand-brown text-white text-xs font-semibold uppercase tracking-widest rounded-full transition-all duration-300 shadow-md hover:shadow-brand-gold/10"
+            className="group inline-flex items-center gap-3.5 px-6 py-3.5 btn-gradient text-xs font-semibold uppercase tracking-widest rounded-full"
           >
             <span>Explore Collection</span>
             <ArrowRightIcon className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5" />
@@ -302,7 +302,7 @@ export default function FeaturedProducts({ onQuickView }) {
               <div className="flex flex-col sm:flex-row gap-4 pt-2">
                 <button
                   onClick={() => addToCart(heroProduct, heroQty)}
-                  className="flex-1 inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-brand-brown hover:bg-brand-gold hover:text-brand-brown text-white text-xs font-semibold uppercase tracking-widest rounded-full transition-all duration-300 shadow-md hover:shadow-brand-gold/10"
+                  className="flex-1 inline-flex items-center justify-center gap-2.5 px-8 py-4 btn-gradient text-xs font-semibold uppercase tracking-widest rounded-full"
                 >
                   <ShoppingBag className="w-4 h-4" />
                   <span>Add To Cart</span>
@@ -324,7 +324,7 @@ export default function FeaturedProducts({ onQuickView }) {
       </div>
 
       {/* ================= 3. TRENDING PRODUCTS SHOWCASE (INFINITE MARQUEE) ================= */}
-      <div className="w-full bg-[#F8F4EC] border-t border-brand-gold/15 py-16 md:py-20 px-4 sm:px-6 lg:px-8 mt-12 -mx-4 sm:-mx-6 lg:-mx-8 relative overflow-hidden">
+      <div className="w-full bg-[#F8F4EC] border-t border-brand-gold/15 py-10 md:py-12 px-4 sm:px-6 lg:px-8 mt-8 -mx-4 sm:-mx-6 lg:-mx-8 relative overflow-hidden">
         
         {/* Subtle Decorative Elements: gold circles, gradients, glow */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">

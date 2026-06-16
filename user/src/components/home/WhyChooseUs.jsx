@@ -201,7 +201,7 @@ export default function WhyChooseUs() {
 
   return (
     <section 
-      className="section-pad bg-[#FFF8EC] relative overflow-hidden py-20 lg:py-28"
+      className="bg-transparent relative overflow-hidden py-12 lg:py-16"
       style={{
         backgroundImage: "radial-gradient(rgba(232, 163, 23, 0.04) 1.5px, transparent 1.5px)",
         backgroundSize: "24px 24px"

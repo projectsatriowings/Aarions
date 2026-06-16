@@ -54,7 +54,7 @@ function AppShell() {
         </AnimatePresence>
       ) : (
         /* Main Layout – with header & footer */
-        <div className="flex flex-col min-h-screen bg-brand-cream/10">
+        <div className="flex flex-col min-h-screen bg-transparent">
           <AnnouncementBar />
           <Navbar />
           <main className="flex-grow">

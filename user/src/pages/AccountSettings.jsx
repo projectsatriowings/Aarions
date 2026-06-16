@@ -152,7 +152,7 @@ export default function AccountSettings() {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -15 }}
       transition={{ duration: 0.4 }}
-      className="min-h-screen pt-40 pb-24 bg-brand-cream/10"
+      className="min-h-screen pt-40 pb-24 bg-transparent"
     >
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -239,7 +239,7 @@ export default function AccountSettings() {
 
                 <button
                   type="submit"
-                  className="bg-brand-brown hover:bg-brand-gold hover:text-brand-brown text-white text-xs font-semibold uppercase tracking-widest py-3.5 px-6 rounded-xl transition-all shadow-sm flex items-center justify-center"
+                  className="btn-gradient text-xs font-semibold uppercase tracking-widest py-3.5 px-6 rounded-xl flex items-center justify-center"
                 >
                   Save Profile Changes
                 </button>
@@ -412,7 +412,7 @@ export default function AccountSettings() {
                 <div className="flex gap-2.5 pt-2">
                   <button
                     type="submit"
-                    className="bg-brand-brown text-white text-[10px] uppercase font-bold tracking-widest px-4 py-2.5 rounded-lg hover:bg-brand-gold hover:text-brand-brown transition-colors"
+                    className="btn-gradient text-[10px] uppercase font-bold tracking-widest px-4 py-2.5 rounded-lg"
                   >
                     Save
                   </button>

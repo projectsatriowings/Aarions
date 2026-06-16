@@ -229,7 +229,7 @@ export default function CheckoutPage() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="min-h-screen pt-48 pb-24 bg-brand-cream/10 flex items-center justify-center"
+        className="min-h-screen pt-48 pb-24 bg-transparent flex items-center justify-center"
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -262,7 +262,7 @@ export default function CheckoutPage() {
           <div className="flex flex-col space-y-3 pt-2">
             <Link
               to="/orders"
-              className="bg-brand-brown text-white text-xs tracking-widest uppercase font-semibold py-3.5 rounded-lg hover:bg-brand-gold hover:text-brand-brown transition-colors shadow-sm"
+              className="btn-gradient text-xs tracking-widest uppercase font-semibold py-3.5 rounded-lg text-center"
             >
               Track Order
             </Link>
@@ -284,7 +284,7 @@ export default function CheckoutPage() {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -15 }}
       transition={{ duration: 0.4 }}
-      className="min-h-screen pt-40 pb-24 bg-brand-cream/10"
+      className="min-h-screen pt-40 pb-24 bg-transparent"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -398,7 +398,7 @@ export default function CheckoutPage() {
                 />
                 <button
                   type="submit"
-                  className="bg-brand-brown hover:bg-brand-gold hover:text-brand-brown text-white text-[10px] uppercase font-bold tracking-widest px-4 rounded-xl transition-colors"
+                  className="btn-gradient text-[10px] uppercase font-bold tracking-widest px-4 rounded-xl"
                 >
                   Apply
                 </button>
@@ -460,7 +460,7 @@ export default function CheckoutPage() {
               <button
                 onClick={handlePayment}
                 disabled={submitting}
-                className="w-full flex items-center justify-center bg-brand-brown hover:bg-brand-gold hover:text-brand-brown text-white text-xs font-semibold uppercase tracking-widest py-4 rounded-xl transition-all shadow-md mt-4 disabled:opacity-50"
+                className="w-full flex items-center justify-center btn-gradient text-xs font-semibold uppercase tracking-widest py-4 rounded-xl mt-4 disabled:opacity-50"
               >
                 {submitting ? (
                   <>

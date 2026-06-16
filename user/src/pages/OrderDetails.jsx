@@ -116,7 +116,7 @@ export default function OrderDetails() {
           </p>
           <Link
             to="/orders"
-            className="inline-flex items-center space-x-2 bg-brand-brown text-white text-xs tracking-widest uppercase font-semibold py-3.5 px-6 rounded-full hover:bg-brand-gold hover:text-brand-brown transition-all shadow-md active:scale-95"
+            className="inline-flex items-center space-x-2 btn-gradient text-xs tracking-widest uppercase font-semibold py-3.5 px-6 rounded-full active:scale-95"
           >
             <span>Back to Orders</span>
           </Link>
@@ -134,7 +134,7 @@ export default function OrderDetails() {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -15 }}
       transition={{ duration: 0.4 }}
-      className="min-h-screen pt-40 pb-24 bg-gradient-to-b from-[#FFFDF9] via-brand-cream/15 to-[#FFFDF9]"
+      className="min-h-screen pt-40 pb-24 bg-transparent"
     >
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         

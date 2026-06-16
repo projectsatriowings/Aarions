@@ -296,7 +296,7 @@ export default function Orders() {
                   <button
                     type="submit"
                     disabled={updating}
-                    className="bg-amber-500 hover:bg-amber-600 text-zinc-950 font-bold uppercase tracking-widest px-4 py-2.5 rounded-lg flex items-center transition-colors"
+                    className="btn-gradient font-bold uppercase tracking-widest px-4 py-2.5 rounded-lg flex items-center"
                   >
                     {updating ? <Loader2 className="w-3.5 h-3.5 mr-2 animate-spin" /> : null}
                     Update Dispatch Details

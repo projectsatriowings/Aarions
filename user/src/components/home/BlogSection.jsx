@@ -48,7 +48,7 @@ export default function BlogSection() {
   return (
     <section
       ref={sectionRef}
-      className="section-pad bg-[#FFFDF9] border-t border-brand-gold/10"
+      className="section-pad bg-transparent border-t border-brand-gold/10"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
