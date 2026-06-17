@@ -5,14 +5,18 @@ import api from "../services/api";
 export default function Customers() {
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const fetchCustomers = async () => {
+      setLoading(true);
       try {
         // Fetch users from the backend customers directory endpoint
-        const res = await api.get("/customers");
+        const res = await api.get(`/customers?page=${page}`);
         if (res.data.success) {
           setCustomers(res.data.customers);
+          setTotalPages(res.data.pagination.pages);
         }
       } catch (err) {
         console.warn("Customers API not configured. Falling back to dummy accounts.");
@@ -20,12 +24,13 @@ export default function Customers() {
           { _id: "1", name: "Aarion Customer 1", email: "customer@aarions.com", createdAt: new Date() },
           { _id: "2", name: "Sarah Connor", email: "sarah@gmail.com", createdAt: new Date(Date.now() - 24*60*60*1000) }
         ]);
+        setTotalPages(1);
       } finally {
         setLoading(false);
       }
     };
     fetchCustomers();
-  }, []);
+  }, [page]);
 
   return (
     <div className="space-y-6">
@@ -81,6 +86,39 @@ export default function Customers() {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* Pagination */}
+          <div className="flex justify-between items-center px-4 py-3 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50/20 dark:bg-zinc-900/20">
+            <button
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              disabled={page === 1}
+              className="inline-flex items-center text-[10px] uppercase font-bold tracking-wider text-zinc-500 hover:text-amber-500 disabled:opacity-30 disabled:hover:text-zinc-500 transition-colors"
+            >
+              Previous
+            </button>
+            <div className="flex items-center gap-1.5">
+              {Array.from({ length: totalPages || 1 }, (_, i) => i + 1).map((p) => (
+                <button
+                  key={p}
+                  onClick={() => setPage(p)}
+                  className={`w-6 h-6 rounded-md text-[10px] font-bold transition-all flex items-center justify-center ${
+                    page === p
+                      ? "bg-amber-500 text-white shadow-sm font-bold"
+                      : "text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-200"
+                  }`}
+                >
+                  {p}
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              disabled={page === totalPages || totalPages === 0}
+              className="inline-flex items-center text-[10px] uppercase font-bold tracking-wider text-zinc-500 hover:text-amber-500 disabled:opacity-30 disabled:hover:text-zinc-500 transition-colors"
+            >
+              Next
+            </button>
           </div>
         </div>
       )}

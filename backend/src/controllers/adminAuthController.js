@@ -186,9 +186,24 @@ export const getAdminMe = async (req, res, next) => {
 // @access  Private/Admin
 export const getCustomersAdmin = async (req, res, next) => {
   try {
-    const customers = await User.find({ role: "customer" }).sort("-createdAt");
+    const { page = 1, limit = 10 } = req.query;
+    const skip = (Number(page) - 1) * Number(limit);
+
+    const customers = await User.find({ role: "customer" })
+      .sort("-createdAt")
+      .skip(skip)
+      .limit(Number(limit));
+
+    const total = await User.countDocuments({ role: "customer" });
+
     res.status(200).json({
       success: true,
+      count: customers.length,
+      pagination: {
+        total,
+        page: Number(page),
+        pages: Math.ceil(total / Number(limit)),
+      },
       customers,
     });
   } catch (error) {
