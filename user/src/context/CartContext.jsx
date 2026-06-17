@@ -61,20 +61,12 @@ export const CartProvider = ({ children }) => {
           setLoading(false);
         }
       } else {
-        // Guest mode
-        const savedCart = localStorage.getItem("aarions_cart");
-        setCartItems(savedCart ? JSON.parse(savedCart) : []);
+        // Guest mode disabled
+        setCartItems([]);
       }
     };
     loadCart();
   }, [user]);
-
-  // Sync localStorage for guest users
-  useEffect(() => {
-    if (!user) {
-      localStorage.setItem("aarions_cart", JSON.stringify(cartItems));
-    }
-  }, [cartItems, user]);
 
   const addToCart = async (product, quantity = 1) => {
     if (!user) {
@@ -117,6 +109,7 @@ export const CartProvider = ({ children }) => {
         console.error("API error removing from cart:", error.message);
       }
     } else {
+      if (!user) return;
       // Local state fallback
       setCartItems((prevItems) => prevItems.filter((item) => item.id !== productId && item._id !== productId));
     }
@@ -140,6 +133,7 @@ export const CartProvider = ({ children }) => {
         console.error("API error updating cart quantity:", error.message);
       }
     } else {
+      if (!user) return;
       // Local state fallback
       setCartItems((prevItems) =>
         prevItems.map((item) =>
