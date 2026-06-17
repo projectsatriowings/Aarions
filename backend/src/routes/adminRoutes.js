@@ -51,6 +51,7 @@ import {
 } from "../controllers/contactController.js";
 import { getAdminSubscribers } from "../controllers/newsletterController.js";
 import { updateSettings } from "../controllers/settingsController.js";
+import { getPaymentSettings, updatePaymentSettings } from "../controllers/paymentSettingsController.js";
 import { getDashboardMetrics } from "../controllers/dashboardController.js";
 
 const router = express.Router();
@@ -143,5 +144,7 @@ router.get("/customers", authorizePermissions("manage_users"), getCustomersAdmin
 
 // Website Global Settings
 router.put("/settings", authorizePermissions("manage_settings"), upload.single("logo"), updateSettings);
+router.get("/payments/settings", authorizePermissions("manage_settings"), getPaymentSettings);
+router.put("/payments/settings", authorizePermissions("manage_settings"), updatePaymentSettings);
 
 export default router;

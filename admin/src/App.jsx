@@ -16,6 +16,7 @@ import Blogs from "./pages/Blogs";
 import Newsletter from "./pages/Newsletter";
 import ContactQueries from "./pages/ContactQueries";
 import SettingsPage from "./pages/Settings";
+import PaymentGateway from "./pages/PaymentGateway";
 import Profile from "./pages/Profile";
 
 function DashboardShell({ children }) {
@@ -42,6 +43,7 @@ export default function App() {
           <Route path="/newsletter" element={<DashboardShell><Newsletter /></DashboardShell>} />
           <Route path="/contact" element={<DashboardShell><ContactQueries /></DashboardShell>} />
           <Route path="/settings" element={<DashboardShell><SettingsPage /></DashboardShell>} />
+          <Route path="/payment-gateway" element={<DashboardShell><PaymentGateway /></DashboardShell>} />
           <Route path="/profile" element={<DashboardShell><Profile /></DashboardShell>} />
         </Routes>
       </AdminAuthProvider>

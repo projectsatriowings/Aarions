@@ -9,20 +9,20 @@ import AuditLog from "../models/AuditLog.js";
 export const getDashboardMetrics = async (req, res, next) => {
   try {
     // 1. KPI cards data
-    const totalOrders = await Order.countDocuments();
+    const totalOrders = await Order.countDocuments({ status: { $ne: "Pending" } });
     const totalUsers = await User.countDocuments({ role: "customer" });
     const lowStockProducts = await Product.countDocuments({ inventory: { $lt: 10 } });
 
     // Sum of successful order revenue
     const revenueStats = await Order.aggregate([
-      { $match: { status: { $ne: "Cancelled" } } },
+      { $match: { status: { $nin: ["Cancelled", "Pending"] } } },
       { $group: { _id: null, totalRevenue: { $sum: "$totalAmount" } } },
     ]);
     const totalRevenue = revenueStats.length > 0 ? revenueStats[0].totalRevenue : 0;
 
     // 2. Sales analytics chart data (Grouped by Month)
     const salesOverTime = await Order.aggregate([
-      { $match: { status: { $ne: "Cancelled" } } },
+      { $match: { status: { $nin: ["Cancelled", "Pending"] } } },
       {
         $group: {
           _id: { $dateToString: { format: "%Y-%m", date: "$createdAt" } },
@@ -43,7 +43,7 @@ export const getDashboardMetrics = async (req, res, next) => {
 
     // 3. Category distribution (Revenue by category)
     const categoryStats = await Order.aggregate([
-      { $match: { status: { $ne: "Cancelled" } } },
+      { $match: { status: { $nin: ["Cancelled", "Pending"] } } },
       { $unwind: "$items" },
       {
         $lookup: {
@@ -69,7 +69,7 @@ export const getDashboardMetrics = async (req, res, next) => {
 
     // 4. Popular products (top 5 sold)
     const popularProductsStats = await Order.aggregate([
-      { $match: { status: { $ne: "Cancelled" } } },
+      { $match: { status: { $nin: ["Cancelled", "Pending"] } } },
       { $unwind: "$items" },
       {
         $group: {
@@ -85,7 +85,7 @@ export const getDashboardMetrics = async (req, res, next) => {
     ]);
 
     // 5. Recent orders
-    const recentOrders = await Order.find()
+    const recentOrders = await Order.find({ status: { $ne: "Pending" } })
       .populate("user", "name email")
       .sort("-createdAt")
       .limit(5);

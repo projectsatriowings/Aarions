@@ -12,6 +12,7 @@ import {
   Mail,
   HelpCircle,
   Settings,
+  CreditCard,
   User,
   LogOut,
   Menu,
@@ -64,6 +65,7 @@ export default function Layout({ children }) {
     { label: "Newsletter", path: "/newsletter", icon: Mail, permission: "manage_newsletter" },
     { label: "Contact Queries", path: "/contact", icon: HelpCircle, permission: "manage_queries" },
     { label: "Settings", path: "/settings", icon: Settings, permission: "manage_settings" },
+    { label: "Payment Gateway", path: "/payment-gateway", icon: CreditCard, permission: "manage_settings" },
     { label: "Profile", path: "/profile", icon: User, permission: "read_all" },
   ];
 

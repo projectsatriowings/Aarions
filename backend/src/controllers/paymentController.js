@@ -1,4 +1,5 @@
-import { razorpayInstance, isRazorpayConfigured } from "../config/razorpay.js";
+import Razorpay from "razorpay";
+import PaymentSettings from "../models/PaymentSettings.js";
 import Payment from "../models/Payment.js";
 import Order from "../models/Order.js";
 import Product from "../models/Product.js";
@@ -6,6 +7,44 @@ import AuditLog from "../models/AuditLog.js";
 import { ErrorResponse } from "../middleware/errorHandler.js";
 import crypto from "crypto";
 import { sendOrderConfirmationEmail } from "../utils/emailHelper.js";
+
+// Helper to dynamically resolve active Razorpay credentials and instance
+const getActiveRazorpayConfig = async () => {
+  try {
+    const settings = await PaymentSettings.findOne();
+    if (settings && settings.isActive && settings.razorpayKeyId && settings.razorpayKeySecret) {
+      return {
+        keyId: settings.razorpayKeyId,
+        keySecret: settings.razorpayKeySecret,
+        isConfigured: true,
+        instance: new Razorpay({
+          key_id: settings.razorpayKeyId,
+          key_secret: settings.razorpayKeySecret,
+        }),
+      };
+    }
+  } catch (err) {
+    console.error("Error retrieving custom payment settings, falling back to env:", err.message);
+  }
+
+  const envKeyId = process.env.RAZORPAY_KEY_ID;
+  const envKeySecret = process.env.RAZORPAY_KEY_SECRET;
+  const isEnvConfigured = !!(
+    envKeyId &&
+    envKeyId !== "your_razorpay_key_id" &&
+    envKeyId !== "rzp_test_dummykeyid123" &&
+    envKeySecret
+  );
+
+  return {
+    keyId: envKeyId,
+    keySecret: envKeySecret,
+    isConfigured: isEnvConfigured,
+    instance: isEnvConfigured
+      ? new Razorpay({ key_id: envKeyId, key_secret: envKeySecret })
+      : null,
+  };
+};
 
 // @desc    Create Razorpay Order
 // @route   POST /api/payments/create-order
@@ -22,14 +61,16 @@ export const createRazorpayOrder = async (req, res, next) => {
       receipt: `receipt_order_${Date.now()}`,
     };
 
-    if (isRazorpayConfigured) {
-      const order = await razorpayInstance.orders.create(options);
+    const rzConfig = await getActiveRazorpayConfig();
+
+    if (rzConfig.isConfigured) {
+      const order = await rzConfig.instance.orders.create(options);
       return res.status(201).json({
         success: true,
         orderId: order.id,
         amount: order.amount,
         currency: order.currency,
-        key: process.env.RAZORPAY_KEY_ID,
+        key: rzConfig.keyId,
         mock: false,
       });
     } else {
@@ -60,15 +101,16 @@ export const verifyPaymentSignature = async (req, res, next) => {
 
     // Check if order was created as mock
     const isMock = razorpay_order_id && razorpay_order_id.startsWith("order_mock_");
+    const rzConfig = await getActiveRazorpayConfig();
 
     if (isMock) {
       // Mock signature verification for sandbox
       isValid = true;
-    } else if (isRazorpayConfigured) {
+    } else if (rzConfig.isConfigured) {
       // Real signature verification
       const body = razorpay_order_id + "|" + razorpay_payment_id;
       const expectedSignature = crypto
-        .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+        .createHmac("sha256", rzConfig.keySecret)
         .update(body.toString())
         .digest("hex");
 
@@ -167,6 +209,7 @@ export const refundPayment = async (req, res, next) => {
     }
 
     const refundAmount = amount || payment.amount;
+    const rzConfig = await getActiveRazorpayConfig();
 
     if (payment.paymentId.startsWith("mock_pay_")) {
       // Mock Sandbox Refund
@@ -177,9 +220,9 @@ export const refundPayment = async (req, res, next) => {
       order.refundStatus = "refunded";
       order.refundedAmount = refundAmount;
       await order.save();
-    } else if (isRazorpayConfigured) {
+    } else if (rzConfig.isConfigured) {
       // Real Razorpay Refund
-      const response = await razorpayInstance.payments.refund(payment.paymentId, {
+      const response = await rzConfig.instance.payments.refund(payment.paymentId, {
         amount: Math.round(refundAmount * 100), // convert to paise
       });
 

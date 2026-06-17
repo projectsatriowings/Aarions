@@ -1,6 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { Search, Eye, Edit3, X, Loader2, Truck, ClipboardList } from "lucide-react";
+import { Search, Eye, Edit3, X, Loader2, Truck, ClipboardList, DollarSign, ShoppingBag, Users, AlertTriangle, TrendingUp } from "lucide-react";
+import { motion } from "framer-motion";
 import api, { getImageUrl } from "../services/api";
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.05
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 15 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 80, damping: 15 }
+  }
+};
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
@@ -20,6 +39,26 @@ export default function Orders() {
   const [trackingNumber, setTrackingNumber] = useState("");
   const [carrier, setCarrier] = useState("");
   const [expectedDeliveryDate, setExpectedDeliveryDate] = useState("");
+
+  // KPI states
+  const [kpis, setKpis] = useState(null);
+  const [kpisLoading, setKpisLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchKPIs = async () => {
+      try {
+        const res = await api.get("/dashboard");
+        if (res.data.success) {
+          setKpis(res.data.kpis);
+        }
+      } catch (err) {
+        console.error("Failed to fetch KPIs:", err);
+      } finally {
+        setKpisLoading(false);
+      }
+    };
+    fetchKPIs();
+  }, []);
 
   const fetchOrders = async () => {
     setLoading(true);
@@ -106,6 +145,105 @@ export default function Orders() {
         <h1 className="font-playfair text-2xl sm:text-3xl font-bold">Customer Orders</h1>
         <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Monitor delivery checkpoints, tracking codes, and billing transactions</p>
       </div>
+
+      {/* KPI Cards Row */}
+      {kpisLoading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[...Array(4)].map((_, idx) => (
+            <div key={idx} className="bg-[#FFFDF9] dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 p-5 rounded-2xl shadow-sm h-32 animate-pulse flex flex-col justify-between">
+              <div className="flex justify-between items-start">
+                <div className="space-y-2 w-2/3">
+                  <div className="h-2.5 bg-zinc-200 dark:bg-zinc-700 rounded w-1/2"></div>
+                  <div className="h-6 bg-zinc-300 dark:bg-zinc-650 rounded w-3/4"></div>
+                </div>
+                <div className="w-10 h-10 bg-zinc-200 dark:bg-zinc-700 rounded-xl"></div>
+              </div>
+              <div className="h-3 bg-zinc-200 dark:bg-zinc-700 rounded w-1/2"></div>
+            </div>
+          ))}
+        </div>
+      ) : kpis ? (
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
+          {/* Revenue Card */}
+          <motion.div variants={itemVariants} className="bg-[#FFFDF9] dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 p-5 rounded-2xl shadow-sm hover:-translate-y-1 hover:border-amber-500/25 hover:shadow-md transition-all duration-300 flex flex-col justify-between h-32">
+            <div className="flex justify-between items-start w-full">
+              <div className="space-y-1">
+                <span className="text-[10px] uppercase tracking-wider font-semibold text-zinc-500 dark:text-zinc-400">Total Revenue</span>
+                <h3 className="text-2xl font-bold text-[#2D1F17] dark:text-zinc-100">₹{kpis.totalRevenue.toLocaleString()}</h3>
+              </div>
+              <div className="p-2.5 bg-amber-500/10 border border-amber-500/20 text-amber-500 rounded-xl shadow-sm">
+                <DollarSign className="w-5 h-5" />
+              </div>
+            </div>
+            <div className="flex items-center gap-1 text-[10px] text-emerald-600 font-semibold">
+              <TrendingUp className="w-3.5 h-3.5" />
+              <span>+12.4% vs last month</span>
+            </div>
+          </motion.div>
+
+          {/* Orders Card */}
+          <motion.div variants={itemVariants} className="bg-[#FFFDF9] dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 p-5 rounded-2xl shadow-sm hover:-translate-y-1 hover:border-amber-500/25 hover:shadow-md transition-all duration-300 flex flex-col justify-between h-32">
+            <div className="flex justify-between items-start w-full">
+              <div className="space-y-1">
+                <span className="text-[10px] uppercase tracking-wider font-semibold text-zinc-500 dark:text-zinc-400">Total Orders</span>
+                <h3 className="text-2xl font-bold text-[#2D1F17] dark:text-zinc-100">{kpis.totalOrders}</h3>
+              </div>
+              <div className="p-2.5 bg-sky-500/10 border border-sky-500/20 text-sky-650 rounded-xl shadow-sm">
+                <ShoppingBag className="w-5 h-5" />
+              </div>
+            </div>
+            <div className="flex items-center gap-1 text-[10px] text-emerald-600 font-semibold">
+              <TrendingUp className="w-3.5 h-3.5" />
+              <span>+8.2% vs last month</span>
+            </div>
+          </motion.div>
+
+          {/* Customers Card */}
+          <motion.div variants={itemVariants} className="bg-[#FFFDF9] dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 p-5 rounded-2xl shadow-sm hover:-translate-y-1 hover:border-amber-500/25 hover:shadow-md transition-all duration-300 flex flex-col justify-between h-32">
+            <div className="flex justify-between items-start w-full">
+              <div className="space-y-1">
+                <span className="text-[10px] uppercase tracking-wider font-semibold text-zinc-500 dark:text-zinc-400">Active Customers</span>
+                <h3 className="text-2xl font-bold text-[#2D1F17] dark:text-zinc-100">{kpis.totalUsers}</h3>
+              </div>
+              <div className="p-2.5 bg-green-500/10 border border-green-500/20 text-green-650 rounded-xl shadow-sm">
+                <Users className="w-5 h-5" />
+              </div>
+            </div>
+            <div className="flex items-center gap-1.5 text-[10px] text-zinc-500 font-medium">
+              <Users className="w-3.5 h-3.5 text-zinc-400" />
+              <span>Registered client accounts</span>
+            </div>
+          </motion.div>
+
+          {/* Low Stock Card */}
+          <motion.div variants={itemVariants} className="bg-[#FFFDF9] dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800/80 p-5 rounded-2xl shadow-sm hover:-translate-y-1 hover:border-amber-500/25 hover:shadow-md transition-all duration-300 flex flex-col justify-between h-32">
+            <div className="flex justify-between items-start w-full">
+              <div className="space-y-1">
+                <span className="text-[10px] uppercase tracking-wider font-semibold text-zinc-500 dark:text-zinc-400">Low Stock Alert</span>
+                <h3 className="text-2xl font-bold text-[#2D1F17] dark:text-zinc-100">{kpis.lowStockProducts}</h3>
+              </div>
+              <div className={`p-2.5 rounded-xl shadow-sm ${
+                kpis.lowStockProducts > 0 
+                  ? "bg-red-500/10 border border-red-500/20 text-red-500" 
+                  : "bg-emerald-500/10 border border-emerald-500/20 text-emerald-550"
+              }`}>
+                <AlertTriangle className="w-5 h-5" />
+              </div>
+            </div>
+            <div className={`flex items-center gap-1.5 text-[10px] font-semibold ${
+              kpis.lowStockProducts > 0 ? "text-red-650" : "text-[#2D1F17]"
+            }`}>
+              <AlertTriangle className="w-3.5 h-3.5" />
+              <span>{kpis.lowStockProducts > 0 ? "Immediate restock required" : "All products well-stocked"}</span>
+            </div>
+          </motion.div>
+        </motion.div>
+      ) : null}
 
       {/* Search and Filter */}
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-4 rounded-xl shadow-sm flex flex-col sm:flex-row justify-between gap-4">
@@ -195,25 +333,37 @@ export default function Orders() {
           </div>
 
           {/* Pagination */}
-          {totalPages > 1 && (
-            <div className="flex justify-between items-center px-4 py-3 border-t border-zinc-200 dark:border-zinc-800">
-              <button
-                onClick={() => setPage((p) => Math.max(1, p - 1))}
-                disabled={page === 1}
-                className="text-[10px] uppercase font-bold tracking-wider text-zinc-500 hover:underline disabled:opacity-30"
-              >
-                Previous
-              </button>
-              <span className="text-xs text-zinc-400">Page {page} of {totalPages}</span>
-              <button
-                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                disabled={page === totalPages}
-                className="text-[10px] uppercase font-bold tracking-wider text-zinc-500 hover:underline disabled:opacity-30"
-              >
-                Next
-              </button>
+          <div className="flex justify-between items-center px-4 py-3 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50/20 dark:bg-zinc-900/20">
+            <button
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              disabled={page === 1}
+              className="inline-flex items-center text-[10px] uppercase font-bold tracking-wider text-zinc-500 hover:text-amber-500 disabled:opacity-30 disabled:hover:text-zinc-500 transition-colors"
+            >
+              Previous
+            </button>
+            <div className="flex items-center gap-1.5">
+              {Array.from({ length: totalPages || 1 }, (_, i) => i + 1).map((p) => (
+                <button
+                  key={p}
+                  onClick={() => setPage(p)}
+                  className={`w-6 h-6 rounded-md text-[10px] font-bold transition-all flex items-center justify-center ${
+                    page === p
+                      ? "bg-amber-500 text-white shadow-sm font-bold"
+                      : "text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-200"
+                  }`}
+                >
+                  {p}
+                </button>
+              ))}
             </div>
-          )}
+            <button
+              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              disabled={page === totalPages || totalPages === 0}
+              className="inline-flex items-center text-[10px] uppercase font-bold tracking-wider text-zinc-500 hover:text-amber-500 disabled:opacity-30 disabled:hover:text-zinc-500 transition-colors"
+            >
+              Next
+            </button>
+          </div>
         </div>
       )}
 
