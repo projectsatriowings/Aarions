@@ -46,6 +46,51 @@ const getActiveRazorpayConfig = async () => {
   };
 };
 
+// Helper to process refund for an order paid via Razorpay
+export const processOrderRefund = async (order) => {
+  if (order.paymentMethod !== "razorpay") {
+    return { success: false, message: "Payment method is not Razorpay" };
+  }
+
+  const payment = await Payment.findOne({ order: order._id });
+  if (!payment) {
+    return { success: false, message: "Payment record not found for this order" };
+  }
+
+  const refundAmount = payment.amount; // full amount
+  const rzConfig = await getActiveRazorpayConfig();
+
+  if (payment.paymentId.startsWith("mock_pay_")) {
+    // Mock Sandbox Refund
+    payment.status = "refunded";
+    payment.refundId = `refund_mock_${Date.now()}`;
+    await payment.save();
+
+    order.refundStatus = "refunded";
+    order.refundedAmount = refundAmount;
+    await order.save();
+    
+    return { success: true, mock: true, refundId: payment.refundId };
+  } else if (rzConfig.isConfigured) {
+    // Real Razorpay Refund
+    const response = await rzConfig.instance.payments.refund(payment.paymentId, {
+      amount: Math.round(refundAmount * 100), // convert to paise
+    });
+
+    payment.status = "refunded";
+    payment.refundId = response.id;
+    await payment.save();
+
+    order.refundStatus = "refunded";
+    order.refundedAmount = refundAmount;
+    await order.save();
+
+    return { success: true, mock: false, refundId: response.id };
+  }
+
+  return { success: false, message: "Razorpay is not configured" };
+};
+
 // @desc    Create Razorpay Order
 // @route   POST /api/payments/create-order
 // @access  Private

@@ -386,73 +386,85 @@ export default function Orders() {
             <div className="p-6 space-y-6 text-xs">
               
               {/* Order Status Controls */}
-              <form onSubmit={handleUpdateStatus} className="bg-zinc-50 dark:bg-zinc-800/20 border border-zinc-200 dark:border-zinc-850 p-5 rounded-xl space-y-4">
-                <h4 className="text-[10px] uppercase tracking-wider font-bold text-zinc-500 flex items-center">
-                  <Truck className="w-4 h-4 text-amber-500 mr-2" />
-                  Override Delivery Status
-                </h4>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="flex flex-col space-y-1">
-                    <label className="text-[9px] uppercase font-semibold text-zinc-500">Order State</label>
-                    <select
-                      value={statusInput}
-                      onChange={(e) => setStatusInput(e.target.value)}
-                      className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 outline-none text-zinc-900 dark:text-zinc-100"
+              {selectedOrder.status === "Cancelled" ? (
+                <div className="bg-rose-50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/40 p-5 rounded-xl flex items-center gap-3">
+                  <AlertTriangle className="w-5 h-5 text-rose-500 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-semibold text-rose-900 dark:text-rose-450 uppercase tracking-wider text-[10px]">Order Cancelled</h4>
+                    <p className="text-[11px] text-rose-700/80 dark:text-rose-400/70 mt-1 leading-relaxed">
+                      This customer order has been cancelled. All inventory stocks have been restored, and dispatch or shipping details can no longer be updated.
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <form onSubmit={handleUpdateStatus} className="bg-zinc-50 dark:bg-zinc-800/20 border border-zinc-200 dark:border-zinc-850 p-5 rounded-xl space-y-4">
+                  <h4 className="text-[10px] uppercase tracking-wider font-bold text-zinc-500 flex items-center">
+                    <Truck className="w-4 h-4 text-amber-500 mr-2" />
+                    Override Delivery Status
+                  </h4>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="flex flex-col space-y-1">
+                      <label className="text-[9px] uppercase font-semibold text-zinc-500">Order State</label>
+                      <select
+                        value={statusInput}
+                        onChange={(e) => setStatusInput(e.target.value)}
+                        className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 outline-none text-zinc-900 dark:text-zinc-100"
+                      >
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Packed">Packed</option>
+                        <option value="Shipped">Shipped</option>
+                        <option value="Out For Delivery">Out For Delivery</option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Cancelled">Cancelled</option>
+                      </select>
+                    </div>
+
+                    <div className="flex flex-col space-y-1">
+                      <label className="text-[9px] uppercase font-semibold text-zinc-500">Tracking Code</label>
+                      <input
+                        type="text"
+                        value={trackingNumber}
+                        onChange={(e) => setTrackingNumber(e.target.value)}
+                        placeholder="e.g. AAR-983427"
+                        className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 outline-none text-zinc-900 dark:text-zinc-100"
+                      />
+                    </div>
+
+                    <div className="flex flex-col space-y-1">
+                      <label className="text-[9px] uppercase font-semibold text-zinc-500">Shipping Carrier</label>
+                      <input
+                        type="text"
+                        value={carrier}
+                        onChange={(e) => setCarrier(e.target.value)}
+                        placeholder="e.g. Delhivery, Bluedart"
+                        className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 outline-none text-zinc-900 dark:text-zinc-100"
+                      />
+                    </div>
+
+                    <div className="flex flex-col space-y-1">
+                      <label className="text-[9px] uppercase font-semibold text-zinc-500">Expected Delivery</label>
+                      <input
+                        type="date"
+                        value={expectedDeliveryDate}
+                        onChange={(e) => setExpectedDeliveryDate(e.target.value)}
+                        className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 outline-none text-zinc-900 dark:text-zinc-100"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end pt-2">
+                    <button
+                      type="submit"
+                      disabled={updating}
+                      className="btn-gradient font-bold uppercase tracking-widest px-4 py-2.5 rounded-lg flex items-center"
                     >
-                      <option value="Confirmed">Confirmed</option>
-                      <option value="Packed">Packed</option>
-                      <option value="Shipped">Shipped</option>
-                      <option value="Out For Delivery">Out For Delivery</option>
-                      <option value="Delivered">Delivered</option>
-                      <option value="Cancelled">Cancelled</option>
-                    </select>
+                      {updating ? <Loader2 className="w-3.5 h-3.5 mr-2 animate-spin" /> : null}
+                      Update Dispatch Details
+                    </button>
                   </div>
-
-                  <div className="flex flex-col space-y-1">
-                    <label className="text-[9px] uppercase font-semibold text-zinc-500">Tracking Code</label>
-                    <input
-                      type="text"
-                      value={trackingNumber}
-                      onChange={(e) => setTrackingNumber(e.target.value)}
-                      placeholder="e.g. AAR-983427"
-                      className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 outline-none text-zinc-900 dark:text-zinc-100"
-                    />
-                  </div>
-
-                  <div className="flex flex-col space-y-1">
-                    <label className="text-[9px] uppercase font-semibold text-zinc-500">Shipping Carrier</label>
-                    <input
-                      type="text"
-                      value={carrier}
-                      onChange={(e) => setCarrier(e.target.value)}
-                      placeholder="e.g. Delhivery, Bluedart"
-                      className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 outline-none text-zinc-900 dark:text-zinc-100"
-                    />
-                  </div>
-
-                  <div className="flex flex-col space-y-1">
-                    <label className="text-[9px] uppercase font-semibold text-zinc-500">Expected Delivery</label>
-                    <input
-                      type="date"
-                      value={expectedDeliveryDate}
-                      onChange={(e) => setExpectedDeliveryDate(e.target.value)}
-                      className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 outline-none text-zinc-900 dark:text-zinc-100"
-                    />
-                  </div>
-                </div>
-
-                <div className="flex justify-end pt-2">
-                  <button
-                    type="submit"
-                    disabled={updating}
-                    className="btn-gradient font-bold uppercase tracking-widest px-4 py-2.5 rounded-lg flex items-center"
-                  >
-                    {updating ? <Loader2 className="w-3.5 h-3.5 mr-2 animate-spin" /> : null}
-                    Update Dispatch Details
-                  </button>
-                </div>
-              </form>
+                </form>
+              )}
 
               {/* Order Info & Items List */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">

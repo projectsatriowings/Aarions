@@ -48,6 +48,7 @@ export default function OrderDetails() {
       const res = await api.put(`/orders/${id}/cancel`);
       if (res.data.success) {
         setOrder(res.data.order);
+        alert(res.data.message || "Order cancelled successfully.");
       }
     } catch (err) {
       alert(err.response?.data?.error || "Order cancellation failed.");
@@ -195,7 +196,7 @@ export default function OrderDetails() {
             <AlertTriangle className="w-10 h-10 text-rose-500 mx-auto" />
             <h3 className="font-playfair text-lg font-bold text-rose-950">This order has been cancelled</h3>
             <p className="text-xs text-rose-700/85 font-light max-w-md mx-auto leading-relaxed">
-              We have restored the pantry stocks. Any captures on your payment card will be refunded automatically to your source account within 3-5 business days.
+              We have restored the pantry stocks. Any captures on your payment card will be refunded automatically to your source account within 5-7 business days.
             </p>
           </div>
         ) : (

@@ -46,8 +46,10 @@ export const updatePaymentSettings = async (req, res, next) => {
     if (isTestMode !== undefined) settings.isTestMode = isTestMode;
     if (isActive !== undefined) settings.isActive = isActive;
 
-    // Only update the secret if the user typed a new one (not masked or empty)
-    if (razorpayKeySecret && !razorpayKeySecret.startsWith("••••")) {
+    // Only update the secret if the user typed a new one (not masked) or cleared it
+    if (razorpayKeySecret === "") {
+      settings.razorpayKeySecret = "";
+    } else if (razorpayKeySecret && !razorpayKeySecret.startsWith("••••")) {
       settings.razorpayKeySecret = razorpayKeySecret;
     }
 

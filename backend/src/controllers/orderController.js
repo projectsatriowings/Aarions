@@ -4,6 +4,7 @@ import Product from "../models/Product.js";
 import AuditLog from "../models/AuditLog.js";
 import { ErrorResponse } from "../middleware/errorHandler.js";
 import { sendOrderConfirmationEmail, sendOrderStatusUpdateEmail } from "../utils/emailHelper.js";
+import { processOrderRefund } from "./paymentController.js";
 
 // @desc    Place new order (Customer)
 // @route   POST /api/orders
@@ -110,10 +111,28 @@ export const cancelOrder = async (req, res, next) => {
     }
 
     order.status = "Cancelled";
+
+    let message = "Order cancelled successfully.";
+    if (order.paymentMethod === "razorpay") {
+      try {
+        const refundResult = await processOrderRefund(order);
+        if (refundResult.success) {
+          message = `Order cancelled successfully. Your refund of ₹${order.totalAmount} has been initiated and will be credited to your account within 5-7 business days.`;
+        } else {
+          console.error("Auto-refund failed for order:", order._id, refundResult.message);
+          order.refundStatus = "failed";
+        }
+      } catch (refundErr) {
+        console.error("Auto-refund exception for order:", order._id, refundErr.message);
+        order.refundStatus = "failed";
+      }
+    }
+
     await order.save();
 
     res.status(200).json({
       success: true,
+      message,
       order,
     });
   } catch (error) {
@@ -218,6 +237,10 @@ export const updateOrderStatus = async (req, res, next) => {
 
     if (!order) {
       return next(new ErrorResponse("Order not found", 404));
+    }
+
+    if (order.status === "Cancelled") {
+      return next(new ErrorResponse("Cannot update dispatch details for a cancelled order", 400));
     }
 
     if (status) {
