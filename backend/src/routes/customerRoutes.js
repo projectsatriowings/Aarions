@@ -46,7 +46,7 @@ import { getBlogs, getBlogDetails } from "../controllers/blogController.js";
 import { submitQuery } from "../controllers/contactController.js";
 import { subscribeNewsletter, unsubscribeNewsletter } from "../controllers/newsletterController.js";
 import { getSettings } from "../controllers/settingsController.js";
-import { applyCoupon } from "../controllers/couponController.js";
+import { applyCoupon, getAvailableCoupons } from "../controllers/couponController.js";
 import {
   getAddresses,
   addAddress,
@@ -100,6 +100,7 @@ router.post("/payments/verify", protect, verifyPaymentSignature);
 
 // ---------------- COUPON ROUTES ----------------
 router.post("/coupons/apply", protect, applyCoupon);
+router.get("/coupons", protect, getAvailableCoupons);
 
 // ---------------- REVIEW ROUTES ----------------
 router.post("/reviews", protect, addReview);

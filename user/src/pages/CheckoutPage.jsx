@@ -30,6 +30,38 @@ export default function CheckoutPage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [createdOrder, setCreatedOrder] = useState(null);
+  const [availableCoupons, setAvailableCoupons] = useState([]);
+
+  // Fetch available coupons
+  useEffect(() => {
+    const fetchCoupons = async () => {
+      try {
+        const res = await api.get("/coupons");
+        if (res.data.success) {
+          setAvailableCoupons(res.data.coupons);
+        }
+      } catch (err) {
+        console.warn("Failed to fetch coupons:", err.message);
+      }
+    };
+    fetchCoupons();
+  }, []);
+
+  const applyCouponByCode = async (codeToApply) => {
+    setError("");
+    try {
+      const res = await api.post("/coupons/apply", {
+        code: codeToApply,
+        orderAmount: cartTotal,
+      });
+      if (res.data.success) {
+        setAppliedCoupon(res.data.code);
+        setDiscount(res.data.discount);
+      }
+    } catch (err) {
+      setError(err.response?.data?.error || "Invalid coupon code");
+    }
+  };
 
   useEffect(() => {
     if (isLoading) return;
@@ -48,21 +80,7 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (location.state?.couponCode) {
       setCouponCode(location.state.couponCode);
-      const autoApply = async () => {
-        try {
-          const res = await api.post("/coupons/apply", {
-            code: location.state.couponCode,
-            orderAmount: cartTotal,
-          });
-          if (res.data.success) {
-            setAppliedCoupon(res.data.code);
-            setDiscount(res.data.discount);
-          }
-        } catch (err) {
-          console.warn("Failed to auto-apply checkout coupon:", err.message);
-        }
-      };
-      autoApply();
+      applyCouponByCode(location.state.couponCode);
     }
   }, [location.state, cartTotal]);
 
@@ -73,19 +91,7 @@ export default function CheckoutPage() {
 
   const handleApplyCoupon = async (e) => {
     e.preventDefault();
-    setError("");
-    try {
-      const res = await api.post("/coupons/apply", {
-        code: couponCode,
-        orderAmount: cartTotal,
-      });
-      if (res.data.success) {
-        setAppliedCoupon(res.data.code);
-        setDiscount(res.data.discount);
-      }
-    } catch (err) {
-      setError(err.response?.data?.error || "Invalid coupon code");
-    }
+    await applyCouponByCode(couponCode);
   };
 
   const shippingPriceSetting = settings?.shippingFee !== undefined ? Number(settings.shippingFee) : 60;
@@ -391,22 +397,93 @@ export default function CheckoutPage() {
               <form onSubmit={handleApplyCoupon} className="flex gap-2">
                 <input
                   type="text"
-                  placeholder="WELCOME10"
+                  placeholder="Enter coupon code"
                   value={couponCode}
                   onChange={(e) => setCouponCode(e.target.value)}
-                  className="bg-brand-cream/20 border border-brand-gold/10 rounded-xl px-4 py-2.5 text-xs text-brand-brown outline-none flex-grow uppercase"
+                  className="bg-brand-cream/20 border border-brand-gold/10 rounded-xl px-4 py-2.5 text-xs text-brand-brown outline-none flex-grow uppercase placeholder:normal-case"
                 />
                 <button
                   type="submit"
-                  className="btn-gradient text-[10px] uppercase font-bold tracking-widest px-4 rounded-xl"
+                  className="btn-gradient text-[10px] uppercase font-bold tracking-widest px-4 rounded-xl cursor-pointer"
                 >
                   Apply
                 </button>
               </form>
               {appliedCoupon && (
-                <span className="text-[10px] text-green-600 bg-green-50 px-2 py-1 rounded-md inline-block font-semibold">
-                  Coupon "{appliedCoupon}" applied! Saved ₹{discount}
-                </span>
+                <div className="flex items-center justify-between bg-green-50/50 border border-green-200/50 rounded-xl p-2.5 mt-1.5">
+                  <span className="text-xs text-green-700 font-semibold flex items-center gap-1.5">
+                    <span className="font-mono bg-green-100 px-1.5 py-0.5 rounded uppercase border border-green-200">
+                      {appliedCoupon}
+                    </span>
+                    Applied Successfully!
+                  </span>
+                  <span className="text-xs font-bold text-green-700">
+                    Saved ₹{discount}
+                  </span>
+                </div>
+              )}
+
+              {/* Available Coupons list */}
+              {availableCoupons.length > 0 && (
+                <div className="pt-3 border-t border-brand-gold/10 space-y-2">
+                  <h4 className="text-[10px] uppercase tracking-wider font-semibold text-brand-brown/50">
+                    Available Coupons
+                  </h4>
+                  <div className="flex flex-col gap-2">
+                    {availableCoupons.map((coupon) => {
+                      const isEligible = cartTotal >= coupon.minOrderAmount;
+                      const missingAmount = coupon.minOrderAmount - cartTotal;
+                      
+                      return (
+                        <div 
+                          key={coupon._id}
+                          className={`flex items-center justify-between p-2.5 rounded-xl border text-xs transition-all duration-300 ${
+                            isEligible 
+                              ? "bg-brand-cream/15 border-brand-gold/15 hover:border-brand-gold/40 cursor-pointer" 
+                              : "bg-gray-50/50 border-gray-100 opacity-60"
+                          }`}
+                          onClick={() => {
+                            if (isEligible) {
+                              setCouponCode(coupon.code);
+                              applyCouponByCode(coupon.code);
+                            }
+                          }}
+                        >
+                          <div className="space-y-0.5">
+                            <div className="flex items-center gap-1.5">
+                              <span className="font-mono font-bold text-brand-brown bg-brand-gold/10 px-1.5 py-0.5 rounded border border-brand-gold/20 uppercase">
+                                {coupon.code}
+                              </span>
+                              <span className="font-medium text-brand-brown/80">
+                                {coupon.discountType === "percentage" 
+                                  ? `${coupon.discountValue}% Off` 
+                                  : `₹${coupon.discountValue} Off`}
+                              </span>
+                            </div>
+                            <p className="text-[10px] text-brand-brown/40">
+                              {coupon.minOrderAmount > 0 
+                                ? `Min purchase: ₹${coupon.minOrderAmount}` 
+                                : "No minimum purchase"}
+                              {coupon.maxDiscountAmount && ` • Max discount: ₹${coupon.maxDiscountAmount}`}
+                            </p>
+                          </div>
+                          
+                          <div>
+                            {isEligible ? (
+                              <span className="text-[10px] font-bold text-brand-gold tracking-wider uppercase bg-brand-gold/10 px-2 py-1 rounded-full hover:bg-brand-gold hover:text-white transition-colors duration-300">
+                                Apply
+                              </span>
+                            ) : (
+                              <span className="text-[10px] font-medium text-brand-brown/40 bg-gray-100 px-2 py-1 rounded-full">
+                                Add ₹{missingAmount} more
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               )}
             </div>
 

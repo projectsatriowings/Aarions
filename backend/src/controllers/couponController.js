@@ -144,3 +144,33 @@ export const deleteCoupon = async (req, res, next) => {
     next(error);
   }
 };
+
+// @desc    Get all active/available coupons (Customer)
+// @route   GET /api/coupons
+// @access  Private
+export const getAvailableCoupons = async (req, res, next) => {
+  try {
+    const now = new Date();
+    // Fetch coupons that are active, and within date range
+    const coupons = await Coupon.find({
+      isActive: true,
+      startDate: { $lte: now },
+      endDate: { $gte: now },
+    });
+
+    // Filter out coupons whose usageLimit is exceeded
+    const availableCoupons = coupons.filter((coupon) => {
+      if (coupon.usageLimit !== null && coupon.usageCount >= coupon.usageLimit) {
+        return false;
+      }
+      return true;
+    });
+
+    res.status(200).json({
+      success: true,
+      coupons: availableCoupons,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
