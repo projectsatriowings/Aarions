@@ -1,6 +1,7 @@
 import Order from "../models/Order.js";
 import Cart from "../models/Cart.js";
 import Product from "../models/Product.js";
+import Coupon from "../models/Coupon.js";
 import AuditLog from "../models/AuditLog.js";
 import { ErrorResponse } from "../middleware/errorHandler.js";
 import { sendOrderConfirmationEmail, sendOrderStatusUpdateEmail } from "../utils/emailHelper.js";
@@ -73,6 +74,17 @@ export const placeOrder = async (req, res, next) => {
     await Cart.findOneAndUpdate({ user: req.user.id }, { $set: { items: [] } });
 
     if (paymentMethod === "cod") {
+      // Increment coupon usage count for COD orders
+      if (couponApplied) {
+        try {
+          await Coupon.findOneAndUpdate(
+            { code: couponApplied.toUpperCase() },
+            { $inc: { usageCount: 1 } }
+          );
+        } catch (err) {
+          console.error("Failed to increment coupon usage count:", err.message);
+        }
+      }
       sendOrderConfirmationEmail(order, req.user);
     }
 
@@ -107,6 +119,18 @@ export const cancelOrder = async (req, res, next) => {
         product.inventory += item.quantity;
         product.inStock = true;
         await product.save();
+      }
+    }
+
+    // Restore coupon usage count
+    if (order.couponApplied) {
+      try {
+        await Coupon.findOneAndUpdate(
+          { code: order.couponApplied.toUpperCase() },
+          { $inc: { usageCount: -1 } }
+        );
+      } catch (err) {
+        console.error("Failed to restore coupon usage count on cancellation:", err.message);
       }
     }
 

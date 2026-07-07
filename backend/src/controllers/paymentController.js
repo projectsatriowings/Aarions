@@ -3,6 +3,7 @@ import PaymentSettings from "../models/PaymentSettings.js";
 import Payment from "../models/Payment.js";
 import Order from "../models/Order.js";
 import Product from "../models/Product.js";
+import Coupon from "../models/Coupon.js";
 import AuditLog from "../models/AuditLog.js";
 import { ErrorResponse } from "../middleware/errorHandler.js";
 import crypto from "crypto";
@@ -191,6 +192,18 @@ export const verifyPaymentSignature = async (req, res, next) => {
     };
     dbOrder.status = "Confirmed";
     await dbOrder.save();
+
+    // Increment coupon usage count for online orders
+    if (dbOrder.couponApplied) {
+      try {
+        await Coupon.findOneAndUpdate(
+          { code: dbOrder.couponApplied.toUpperCase() },
+          { $inc: { usageCount: 1 } }
+        );
+      } catch (err) {
+        console.error("Failed to increment coupon usage count:", err.message);
+      }
+    }
 
     // Send order placement email to customer
     sendOrderConfirmationEmail(dbOrder, req.user);
