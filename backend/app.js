@@ -47,11 +47,21 @@ const allowedOrigins = [
   "http://127.0.0.1:5174",
   "http://127.0.0.1:5175",
   "http://127.0.0.1:5176",
+  "https://aarions.in",
+  "http://aarions.in",
+  "https://www.aarions.in",
+  "http://www.aarions.in",
+  "https://admin.aarions.in",
+  "http://admin.aarions.in",
 ];
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      if (
+        !origin || 
+        allowedOrigins.indexOf(origin) !== -1 ||
+        /^https?:\/\/(?:[a-z0-9-]+\.)*aarions\.in$/i.test(origin)
+      ) {
         callback(null, true);
       } else {
         callback(new Error("Blocked by CORS policy"));

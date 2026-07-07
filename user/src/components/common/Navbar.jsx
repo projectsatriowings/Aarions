@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ShoppingBag, Heart, Menu, X, Search, ChevronRight, User, LogOut, LogIn } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "../../context/CartContext";
 import { useWishlist } from "../../context/WishlistContext";
 import { useAuth } from "../../context/AuthContext";
@@ -50,9 +51,10 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on route change
+  // Close mobile menu and search bar on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
+    setIsSearchOpen(false);
   }, [location]);
 
   const navLinks = [
@@ -68,7 +70,7 @@ export default function Navbar() {
   };
 
   const isHome = location.pathname === "/";
-  const showGlass = !isHome || isScrolled;
+  const showGlass = !isHome || isScrolled || isSearchOpen;
   const textColorClass = showGlass ? "text-brand-brown" : "text-white";
 
   return (
@@ -248,38 +250,46 @@ export default function Navbar() {
 
 
         {/* Desktop Search Bar (Expandable) */}
-        {isSearchOpen && (
-          <div className="absolute top-full left-0 w-full bg-brand-cream/95 backdrop-blur-md border-b border-brand-gold/15 py-4 px-6 shadow-md transition-all duration-300">
-            <form 
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (navbarSearchQuery.trim()) {
-                  navigate(`/shop?search=${encodeURIComponent(navbarSearchQuery.trim())}`);
-                  setIsSearchOpen(false);
-                  setNavbarSearchQuery("");
-                }
-              }}
-              className="max-w-3xl mx-auto flex items-center bg-white border border-brand-gold/20 rounded-full px-4 py-2"
+        <AnimatePresence>
+          {isSearchOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="absolute top-full left-0 w-full bg-brand-cream/95 backdrop-blur-md border-b border-brand-gold/15 py-3 sm:py-4 px-4 sm:px-6 shadow-md z-[90]"
             >
-              <Search className="w-5 h-5 text-brand-brown/50 mr-2" />
-              <input
-                type="text"
-                placeholder="Search premium honey, bilona ghee, traditional spices..."
-                value={navbarSearchQuery}
-                onChange={(e) => setNavbarSearchQuery(e.target.value)}
-                className="w-full bg-transparent outline-none text-brand-brown text-sm"
-                autoFocus
-              />
-              <button
-                type="button"
-                onClick={() => setIsSearchOpen(false)}
-                className="text-xs tracking-wider uppercase text-brand-brown/60 hover:text-brand-gold ml-2"
+              <form 
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (navbarSearchQuery.trim()) {
+                    navigate(`/shop?search=${encodeURIComponent(navbarSearchQuery.trim())}`);
+                    setIsSearchOpen(false);
+                    setNavbarSearchQuery("");
+                  }
+                }}
+                className="max-w-3xl mx-auto flex items-center bg-white border border-brand-gold/20 rounded-full px-3 py-1.5 sm:px-4 sm:py-2"
               >
-                Close
-              </button>
-            </form>
-          </div>
-        )}
+                <Search className="w-4 h-4 sm:w-5 h-5 text-brand-brown/50 mr-1.5 sm:mr-2 flex-shrink-0" />
+                <input
+                  type="text"
+                  placeholder="Search premium honey, bilona ghee, traditional spices..."
+                  value={navbarSearchQuery}
+                  onChange={(e) => setNavbarSearchQuery(e.target.value)}
+                  className="w-full bg-transparent outline-none text-brand-brown text-xs sm:text-sm"
+                  autoFocus
+                />
+                <button
+                  type="button"
+                  onClick={() => setIsSearchOpen(false)}
+                  className="text-[10px] sm:text-xs tracking-wider uppercase text-brand-brown/60 hover:text-brand-gold ml-1.5 sm:ml-2 cursor-pointer flex-shrink-0"
+                >
+                  Close
+                </button>
+              </form>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
       {/* Mobile Menu Drawer Overlay */}

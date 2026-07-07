@@ -1,4 +1,5 @@
 import { sendEmail } from "../config/nodemailer.js";
+import WebsiteSettings from "../models/WebsiteSettings.js";
 
 /**
  * Send order confirmation email to customer
@@ -6,6 +7,16 @@ import { sendEmail } from "../config/nodemailer.js";
  * @param {Object} user - User document
  */
 export const sendOrderConfirmationEmail = async (order, user) => {
+  // Get website settings for dynamic contact info
+  let settings;
+  try {
+    settings = await WebsiteSettings.findOne();
+  } catch (err) {
+    console.error("Failed to load website settings in emailHelper:", err.message);
+  }
+  const contactPhone = settings?.contactPhone || "+91 98432 70810";
+  const contactEmail = settings?.contactEmail || "info@aarions.in";
+
   const orderIdShort = order._id.toString().substring(18).toUpperCase();
   const itemsListHtml = order.items
     .map(
@@ -125,7 +136,7 @@ export const sendOrderConfirmationEmail = async (order, user) => {
 
         <!-- Footer -->
         <div style="background-color: #2D1F17; padding: 20px; text-align: center; font-size: 11px; color: #A89B93;">
-          <p style="margin: 0 0 10px 0;">Have queries? Reach us at support@aarions.com or call +91 98765 43210</p>
+          <p style="margin: 0 0 10px 0;">Have queries? Reach us at ${contactEmail} or call ${contactPhone}</p>
           <p style="margin: 0;">&copy; ${new Date().getFullYear()} Aarions. All rights reserved.</p>
         </div>
 
@@ -151,6 +162,16 @@ export const sendOrderConfirmationEmail = async (order, user) => {
  * @param {Object} user - User document
  */
 export const sendOrderStatusUpdateEmail = async (order, user) => {
+  // Get website settings for dynamic contact info
+  let settings;
+  try {
+    settings = await WebsiteSettings.findOne();
+  } catch (err) {
+    console.error("Failed to load website settings in emailHelper:", err.message);
+  }
+  const contactPhone = settings?.contactPhone || "+91 98432 70810";
+  const contactEmail = settings?.contactEmail || "info@aarions.in";
+
   const orderIdShort = order._id.toString().substring(18).toUpperCase();
   
   // Generate items HTML
@@ -304,7 +325,7 @@ export const sendOrderStatusUpdateEmail = async (order, user) => {
 
         <!-- Footer -->
         <div style="background-color: #2D1F17; padding: 20px; text-align: center; font-size: 11px; color: #A89B93;">
-          <p style="margin: 0 0 10px 0;">Have queries? Reach us at support@aarions.com or call +91 98765 43210</p>
+          <p style="margin: 0 0 10px 0;">Have queries? Reach us at ${contactEmail} or call ${contactPhone}</p>
           <p style="margin: 0;">&copy; ${new Date().getFullYear()} Aarions. All rights reserved.</p>
         </div>
 
