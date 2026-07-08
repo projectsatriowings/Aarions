@@ -915,12 +915,12 @@ function ProductModalTabs({
             Cancel
           </button>
           {activeTab < tabs.length - 1 ? (
-            <button type="button" onClick={() => setActiveTab(t => t + 1)}
+            <button key="next-btn" type="button" onClick={() => setActiveTab(t => t + 1)}
               style={{ fontSize:"11px", fontWeight:700, letterSpacing:"0.06em", textTransform:"uppercase", color:"#fff", background:"linear-gradient(135deg,#8B1E1A 0%,#C8870F 100%)", border:"none", borderRadius:"10px", padding:"9px 22px", cursor:"pointer", display:"flex", alignItems:"center", gap:"6px" }}>
               Next <ChevronRight style={{ width:"14px", height:"14px" }} />
             </button>
           ) : (
-            <button type="submit" disabled={submitting}
+            <button key="submit-btn" type="submit" disabled={submitting}
               style={{ fontSize:"11px", fontWeight:700, letterSpacing:"0.06em", textTransform:"uppercase", color:"#fff", background:"linear-gradient(135deg,#8B1E1A 0%,#C8870F 100%)", border:"none", borderRadius:"10px", padding:"9px 22px", cursor:"pointer", display:"flex", alignItems:"center", gap:"6px", opacity: submitting ? 0.6 : 1 }}>
               {submitting ? <><Loader2 style={{ width:"14px", height:"14px" }} className="animate-spin" /> Saving...</> : <>{editProduct ? "Update Product" : "Save Product"}</>}
             </button>
