@@ -70,10 +70,10 @@ export default function Contact() {
           className="text-center max-w-2xl mx-auto mb-16 space-y-3"
         >
           <span className="text-xs tracking-widest uppercase font-semibold text-brand-gold">
-            Get In Touch
+            {settings?.contactHeroSubtitle || "Get In Touch"}
           </span>
           <h1 className="text-4xl sm:text-5xl font-playfair font-semibold text-brand-brown">
-            Contact Aarions
+            {settings?.contactHeroTitle || "Contact Aarions"}
           </h1>
           <motion.div 
             initial={{ width: 0 }}
@@ -82,7 +82,7 @@ export default function Contact() {
             className="h-[1px] bg-brand-gold mx-auto mt-4" 
           />
           <p className="text-sm text-brand-brown/60 leading-relaxed font-light">
-            Have questions about our traditional processing, customized wellness honey, or bulk orders? Reach out to us.
+            {settings?.contactDescription || "Have questions about our traditional processing, customized wellness honey, or bulk orders? Reach out to us."}
           </p>
         </motion.div>
 

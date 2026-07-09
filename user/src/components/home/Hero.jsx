@@ -1,26 +1,30 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSettings } from "../../context/SettingsContext";
 
 export default function Hero() {
-  const bgImages = [
-    "/bg-ghee.png",
-    "/bg-honey.png",
-    "/bg-spices.png",
-    "/bg-masala.png",
-    "/auth-honey.jpg",
-    "/auth-spices-dark.jpg"
-  ];
+  const { settings } = useSettings();
+  const bgImages = settings?.heroImages
+    ? settings.heroImages.split(",").map(img => img.trim()).filter(Boolean)
+    : [
+        "/bg-ghee.png",
+        "/bg-honey.png",
+        "/bg-spices.png",
+        "/bg-masala.png",
+        "/auth-honey.jpg",
+        "/auth-spices-dark.jpg"
+      ];
 
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
   const sectionRef = useRef(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentBgIndex((prev) => (prev + 1) % bgImages.length);
+      setCurrentBgIndex((prev) => (prev + 1) % (bgImages.length || 1));
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [bgImages.length]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -127,7 +131,7 @@ export default function Hero() {
             >
               <span className="pulse-glow rounded-full bg-brand-gold" style={{ width: "0.5rem", height: "0.5rem", display: "inline-block" }} />
               <span style={{ color: "#E8A317", fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.06em" }}>
-                Premium Natural Products Since 2020
+                {settings?.heroBadgeText || "Premium Natural Products Since 2020"}
               </span>
             </div>
 
@@ -136,10 +140,11 @@ export default function Hero() {
               className="font-display font-bold text-white leading-tight tracking-tight animate-fade-up"
               style={{ fontSize: "clamp(2.25rem, 5.2vw, 4.25rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }}
             >
-              Pure Ingredients. <br />
-              <span className="text-gradient">Authentic</span> Flavors. <br />
+              {settings?.heroTitleLine1 || "Pure Ingredients."} <br />
+              <span className="text-gradient">{settings?.heroTitleLine2 || "Authentic"}</span>
+              {settings?.heroTitleLine2Suffix || " Flavors."} <br />
               <em className="not-italic" style={{ color: "rgba(255,248,236,0.88)", fontStyle: "italic" }}>
-                Healthy Living.
+                {settings?.heroTitleLine3 || "Healthy Living."}
               </em>
             </h1>
 
@@ -148,13 +153,13 @@ export default function Hero() {
               className="mb-8 font-light"
               style={{ color: "rgba(255,255,255,0.68)", fontSize: "clamp(0.95rem, 2vw, 1.1rem)", lineHeight: 1.75, maxWidth: "520px" }}
             >
-              Bringing nature's finest honey, ghee, masalas, and spices directly from farm to your family's kitchen.
+              {settings?.heroSubtitle || "Bringing nature's finest honey, ghee, masalas, and spices directly from farm to your family's kitchen."}
             </p>
 
             {/* Call to action buttons */}
             <div className="flex flex-wrap gap-4 items-center">
               <Link to="/shop" className="btn-primary">
-                <span>Shop Collection</span>
+                <span>{settings?.heroButtonText || "Shop Collection"}</span>
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>

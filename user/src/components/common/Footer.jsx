@@ -53,8 +53,12 @@ export default function Footer() {
 
   const activeSocialLinks = socialLinks.filter(s => s.href && s.href !== "#" && s.href.trim() !== "");
 
-  const certifications = ["FSSAI", "ISO 22000", "Organic India", "Non-GMO"];
-  const paymentMethods = ["Visa", "Mastercard", "UPI", "Razorpay", "PhonePe"];
+  const certifications = settings?.certifications
+    ? settings.certifications.split(",").map(c => c.trim()).filter(Boolean)
+    : ["FSSAI", "ISO 22000", "Organic India", "Non-GMO"];
+  const paymentMethods = settings?.paymentMethods
+    ? settings.paymentMethods.split(",").map(p => p.trim()).filter(Boolean)
+    : ["Visa", "Mastercard", "UPI", "Razorpay", "PhonePe"];
 
   return (
     <footer className="footer-shell text-white border-t border-brand-gold/15">
@@ -66,12 +70,12 @@ export default function Footer() {
           <div className="md:col-span-5 space-y-6">
             <Link to="/" className="inline-flex items-center">
               <span className="font-playfair text-2xl font-bold tracking-wider text-brand-gold uppercase">
-                Aarions Store
+                {settings?.brandName || "Aarions Store"}
               </span>
             </Link>
 
             <p className="text-white/60 text-sm sm:text-[0.95rem] leading-7 max-w-sm font-light">
-              Bringing nature's finest products to your family. Pure honey, ghee, masalas, and spices — crafted with tradition, tested with science.
+              {settings?.footerAboutText || "Bringing nature's finest products to your family. Pure honey, ghee, masalas, and spices — crafted with tradition, tested with science."}
             </p>
 
             {/* Socials */}
@@ -175,14 +179,14 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-light text-white/40">
             <p className="text-center sm:text-left leading-6">
-              © {new Date().getFullYear()} Aarions Store. All rights reserved. Designed & Developed by{" "}
+              © {new Date().getFullYear()} {settings?.footerCopyright || settings?.brandName || "Aarions"}. All rights reserved. Designed & Developed by{" "}
               <a
-                href="https://www.myyakobu.com/"
+                href={settings?.developerUrl || "https://www.myyakobu.com/"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-brand-gold transition-colors font-semibold"
               >
-                Yakobu Business Solutions
+                {settings?.developerName || "Yakobu Business Solutions"}
               </a>
             </p>
 

@@ -1,8 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ShieldCheck, Calendar, Heart, Award } from "lucide-react";
+import { useSettings } from "../context/SettingsContext";
 
 export default function About() {
+  const { settings } = useSettings();
   const values = [
     {
       title: "Sustainable Sourcing",
@@ -81,7 +83,7 @@ export default function About() {
               }}
               className="text-xs tracking-[0.25em] uppercase font-bold text-brand-red block"
             >
-              Our Story & Heritage
+              {settings?.aboutHeroSubtitle || "Our Story & Heritage"}
             </motion.span>
             <motion.h1 
               variants={{
@@ -90,8 +92,8 @@ export default function About() {
               }}
               className="text-4xl sm:text-5xl lg:text-6.5xl font-playfair font-bold text-brand-brown leading-[1.12]"
             >
-              Purity Sourced From <br />
-              <span className="text-gradient font-bold italic">Traditional Roots.</span>
+              {settings?.aboutHeroTitleLine1 || "Purity Sourced From"} <br />
+              <span className="text-gradient font-bold italic">{settings?.aboutHeroTitleLine2 || "Traditional Roots."}</span>
             </motion.h1>
             
             {/* Stylized wheat separator decoration */}
@@ -114,7 +116,7 @@ export default function About() {
               }}
               className="text-sm sm:text-base text-brand-brown/70 leading-relaxed font-light"
             >
-              Aarions was born out of a simple, personal quest: the search for real, unadulterated food. In a market flooded with chemically polished spices, syrup-diluted honey, and hydrogenated fats, we wanted to create a brand that acts as an honest gateway to ancient dietary wellness.
+              {settings?.aboutParagraph1 || "Aarions was born out of a simple, personal quest: the search for real, unadulterated food. In a market flooded with chemically polished spices, syrup-diluted honey, and hydrogenated fats, we wanted to create a brand that acts as an honest gateway to ancient dietary wellness."}
             </motion.p>
             
             <motion.p 
@@ -124,7 +126,7 @@ export default function About() {
               }}
               className="text-sm text-brand-brown/70 leading-relaxed font-normal border-l-[3.5px] border-brand-red pl-5 py-0.5"
             >
-              Our search took us from urban shelves to deep forest hives and rural cow sheds. We realized that the secret to health isn't in laboratories, but in preserving the slow, wise techniques developed by our grandparents.
+              {settings?.aboutParagraph2 || "Our search took us from urban shelves to deep forest hives and rural cow sheds. We realized that the secret to health isn't in laboratories, but in preserving the slow, wise techniques developed by our grandparents."}
             </motion.p>
           </motion.div>
           
@@ -139,7 +141,7 @@ export default function About() {
             <div className="absolute -top-3.5 -left-3.5 w-full h-full border border-brand-gold/25 rounded-3xl pointer-events-none translate-x-1 translate-y-1 hidden sm:block group-hover:border-brand-red/30 transition-colors duration-500" />
             <div className="overflow-hidden rounded-3xl border border-brand-gold/15 shadow-xl relative">
               <img
-                src="/about_hero_ghee_honey.png"
+                src={settings?.aboutHeroImage || "/about_hero_ghee_honey.png"}
                 alt="Aarions A2 Ghee and Forest Honey"
                 className="w-full object-cover h-[350px] sm:h-[430px] transition-transform duration-[1.2s] ease-out group-hover:scale-105"
               />

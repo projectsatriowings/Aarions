@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { useSettings } from "../context/SettingsContext";
 import Hero from "../components/home/Hero";
 import Certifications from "../components/home/Certifications";
 import FeaturedCategories from "../components/home/FeaturedCategories";
@@ -13,6 +14,7 @@ import Newsletter from "../components/home/Newsletter";
 import QuickViewModal from "../components/common/QuickViewModal";
 
 export default function Home() {
+  const { settings } = useSettings();
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const handleQuickView = (product) => {
@@ -21,6 +23,35 @@ export default function Home() {
 
   const handleCloseModal = () => {
     setSelectedProduct(null);
+  };
+
+  const sectionsOrder = settings?.homepageSectionOrder
+    ? settings.homepageSectionOrder.split(",").map(s => s.trim()).filter(Boolean)
+    : ["certifications", "categories", "featuredProducts", "whyChooseUs", "benefits", "bestSellers", "testimonials", "blogs", "newsletter"];
+
+  const renderSection = (key) => {
+    switch (key) {
+      case "certifications":
+        return settings?.showCertifications !== false ? <Certifications key="certifications" /> : null;
+      case "categories":
+        return settings?.showCategories !== false ? <FeaturedCategories key="categories" /> : null;
+      case "featuredProducts":
+        return settings?.showFeaturedProducts !== false ? <FeaturedProducts key="featuredProducts" onQuickView={handleQuickView} /> : null;
+      case "whyChooseUs":
+        return settings?.showWhyChooseUs !== false ? <WhyChooseUs key="whyChooseUs" /> : null;
+      case "benefits":
+        return settings?.showBenefits !== false ? <Benefits key="benefits" /> : null;
+      case "bestSellers":
+        return settings?.showBestSellers !== false ? <BestSellers key="bestSellers" onQuickView={handleQuickView} /> : null;
+      case "testimonials":
+        return settings?.showTestimonials !== false ? <Testimonials key="testimonials" /> : null;
+      case "blogs":
+        return settings?.showBlogs !== false ? <BlogSection key="blogs" /> : null;
+      case "newsletter":
+        return settings?.showNewsletter !== false ? <Newsletter key="newsletter" /> : null;
+      default:
+        return null;
+    }
   };
 
   return (
@@ -34,32 +65,8 @@ export default function Home() {
       {/* 1. Hero Showcase */}
       <Hero />
 
-      {/* 2. Certifications & Trust Pillars */}
-      <Certifications />
-
-      {/* 3. Featured Categories Grid */}
-      <FeaturedCategories />
-
-      {/* 4. Featured Products (8 Grid) */}
-      <FeaturedProducts onQuickView={handleQuickView} />
-
-      {/* 5. Why Choose Us (Bento Layout + Counters) */}
-      <WhyChooseUs />
-
-      {/* 6. Journey to Purity (Dark Timeline Section) */}
-      <Benefits />
-
-      {/* 7. Best Sellers Carousel Section */}
-      <BestSellers onQuickView={handleQuickView} />
-
-      {/* 8. Testimonials Section */}
-      <Testimonials />
-
-      {/* 9. Blog / Journal Section */}
-      <BlogSection />
-
-      {/* 10. Newsletter Card Section */}
-      <Newsletter />
+      {/* Dynamic Ordered Sections */}
+      {sectionsOrder.map((sectionKey) => renderSection(sectionKey))}
 
       {/* Quick View Modal Overlay */}
       {selectedProduct && (

@@ -68,3 +68,21 @@ export const updateSettings = async (req, res, next) => {
     next(error);
   }
 };
+
+// @desc    Upload general image (Admin)
+// @route   POST /api/admin/settings/upload
+// @access  Private/Admin
+export const uploadGeneralImage = async (req, res, next) => {
+  try {
+    if (!req.file) {
+      return next(new ErrorResponse("Please upload a file", 400));
+    }
+    const imageUrl = await uploadImage(req.file);
+    res.status(200).json({
+      success: true,
+      url: imageUrl,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
