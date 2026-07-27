@@ -53,12 +53,13 @@ const allowedOrigins = [
   "http://www.aarions.in",
   "https://admin.aarions.in",
   "http://admin.aarions.in",
+  "https://localhost",
 ];
 app.use(
   cors({
     origin: function (origin, callback) {
       if (
-        !origin || 
+        !origin ||
         allowedOrigins.indexOf(origin) !== -1 ||
         /^https?:\/\/(?:[a-z0-9-]+\.)*aarions\.in$/i.test(origin)
       ) {
