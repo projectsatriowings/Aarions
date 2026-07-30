@@ -31,7 +31,7 @@ import CheckoutPage from "./pages/CheckoutPage";
 import OrderHistory from "./pages/OrderHistory";
 import OrderDetails from "./pages/OrderDetails";
 import AccountSettings from "./pages/AccountSettings";
-
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 // Auth pages that should NOT show navbar/footer
 const AUTH_ROUTES = ["/login", "/signup"];
 
@@ -73,6 +73,7 @@ function AppShell() {
                 <Route path="/orders" element={<OrderHistory />} />
                 <Route path="/orders/:id" element={<OrderDetails />} />
                 <Route path="/profile" element={<AccountSettings />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               </Routes>
             </AnimatePresence>
           </main>
