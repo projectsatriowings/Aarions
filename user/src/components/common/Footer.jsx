@@ -10,6 +10,7 @@ export default function Footer() {
     { label: "Blog", to: "/blog" },
     { label: "Track Order", to: "/orders" },
     { label: "Contact Us", to: "/contact" },
+    { label: "Privacy Policy", to: "/privacy-policy" },
   ];
 
   const socialLinks = [
@@ -65,7 +66,7 @@ export default function Footer() {
       {/* Main Footer Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
-          
+
           {/* Brand Column */}
           <div className="md:col-span-5 space-y-6">
             <Link to="/" className="inline-flex items-center">
