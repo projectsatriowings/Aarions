@@ -23,6 +23,9 @@ export const getPaymentSettings = async (req, res, next) => {
         razorpayKeySecret: maskedSecret,
         isTestMode: settings.isTestMode,
         isActive: settings.isActive,
+        codEnabled: settings.codEnabled,
+        upiEnabled: settings.upiEnabled,
+        upiId: settings.upiId,
       },
     });
   } catch (error) {
@@ -34,7 +37,7 @@ export const getPaymentSettings = async (req, res, next) => {
 // @route   PUT /api/admin/payments/settings
 // @access  Private/Admin
 export const updatePaymentSettings = async (req, res, next) => {
-  const { razorpayKeyId, razorpayKeySecret, isTestMode, isActive } = req.body;
+  const { razorpayKeyId, razorpayKeySecret, isTestMode, isActive, codEnabled, upiEnabled, upiId } = req.body;
 
   try {
     let settings = await PaymentSettings.findOne();
@@ -45,6 +48,9 @@ export const updatePaymentSettings = async (req, res, next) => {
     settings.razorpayKeyId = razorpayKeyId;
     if (isTestMode !== undefined) settings.isTestMode = isTestMode;
     if (isActive !== undefined) settings.isActive = isActive;
+    if (codEnabled !== undefined) settings.codEnabled = codEnabled;
+    if (upiEnabled !== undefined) settings.upiEnabled = upiEnabled;
+    if (upiId !== undefined) settings.upiId = upiId;
 
     // Only update the secret if the user typed a new one (not masked) or cleared it
     if (razorpayKeySecret === "") {
@@ -79,6 +85,33 @@ export const updatePaymentSettings = async (req, res, next) => {
         razorpayKeySecret: maskedSecret,
         isTestMode: settings.isTestMode,
         isActive: settings.isActive,
+        codEnabled: settings.codEnabled,
+        upiEnabled: settings.upiEnabled,
+        upiId: settings.upiId,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Get public payment settings (No Auth)
+// @route   GET /api/payments/public-settings
+// @access  Public
+export const getPublicPaymentSettings = async (req, res, next) => {
+  try {
+    let settings = await PaymentSettings.findOne();
+    if (!settings) {
+      settings = await PaymentSettings.create({});
+    }
+
+    res.status(200).json({
+      success: true,
+      settings: {
+        codEnabled: settings.codEnabled,
+        razorpayEnabled: settings.isActive,
+        upiEnabled: settings.upiEnabled,
+        upiId: settings.upiId,
       },
     });
   } catch (error) {

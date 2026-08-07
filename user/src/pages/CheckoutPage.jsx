@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ShieldCheck, Tag, CreditCard, Loader2, ArrowLeft, CheckCircle2 } from "lucide-react";
+import { ShieldCheck, Tag, CreditCard, Loader2, ArrowLeft, CheckCircle2, Check, Copy, ChevronRight } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import { useSettings } from "../context/SettingsContext";
 import api from "../services/api";
+import { QRCodeSVG } from "qrcode.react";
 
 export default function CheckoutPage() {
   const { cartItems, cartTotal, clearCart } = useCart();
@@ -31,20 +32,43 @@ export default function CheckoutPage() {
   const [success, setSuccess] = useState(false);
   const [createdOrder, setCreatedOrder] = useState(null);
   const [availableCoupons, setAvailableCoupons] = useState([]);
+  
+  const [paymentSettings, setPaymentSettings] = useState({
+    codEnabled: true,
+    razorpayEnabled: true,
+    upiEnabled: false,
+    upiId: "",
+  });
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
+  const [upiTransactionId, setUpiTransactionId] = useState("");
+  const [currentStep, setCurrentStep] = useState(1);
+  const [copiedUpi, setCopiedUpi] = useState(false);
 
-  // Fetch available coupons
+  // Fetch available coupons and payment settings
   useEffect(() => {
-    const fetchCoupons = async () => {
+    const fetchData = async () => {
       try {
-        const res = await api.get("/coupons");
-        if (res.data.success) {
-          setAvailableCoupons(res.data.coupons);
+        const [couponsRes, settingsRes] = await Promise.all([
+          api.get("/coupons").catch(() => ({ data: { success: false } })),
+          api.get("/payments/public-settings").catch(() => ({ data: { success: false } }))
+        ]);
+        
+        if (couponsRes.data.success) {
+          setAvailableCoupons(couponsRes.data.coupons);
+        }
+        
+        if (settingsRes.data.success) {
+          setPaymentSettings(settingsRes.data.settings);
+          // Auto-select first available method
+          if (settingsRes.data.settings.razorpayEnabled) setSelectedPaymentMethod("razorpay");
+          else if (settingsRes.data.settings.upiEnabled) setSelectedPaymentMethod("upi");
+          else if (settingsRes.data.settings.codEnabled) setSelectedPaymentMethod("cod");
         }
       } catch (err) {
-        console.warn("Failed to fetch coupons:", err.message);
+        console.warn("Failed to fetch checkout data:", err.message);
       }
     };
-    fetchCoupons();
+    fetchData();
   }, []);
 
   const applyCouponByCode = async (codeToApply) => {
@@ -100,6 +124,25 @@ export default function CheckoutPage() {
   const taxPrice = cartTotal === 0 ? 0 : Math.round(cartTotal * (gstPercentage / 100));
   const finalAmount = cartTotal + shippingPrice + taxPrice - discount;
 
+  const handleContinueToPayment = () => {
+    if (!address.street || !address.city || !address.state || !address.postalCode || !address.phone) {
+      setError("Please fill in all shipping fields before continuing.");
+      window.scrollTo(0, 0);
+      return;
+    }
+    setError("");
+    setCurrentStep(2);
+    window.scrollTo(0, 0);
+  };
+
+  const handleCopyUpi = () => {
+    if (paymentSettings.upiId) {
+      navigator.clipboard.writeText(paymentSettings.upiId);
+      setCopiedUpi(true);
+      setTimeout(() => setCopiedUpi(false), 2000);
+    }
+  };
+
   // Dynamically load Razorpay SDK script
   const loadRazorpayScript = () => {
     return new Promise((resolve) => {
@@ -133,7 +176,8 @@ export default function CheckoutPage() {
           selectedVariant: item.weight || "100g",
         })),
         shippingAddress: address,
-        paymentMethod: "razorpay",
+        paymentMethod: selectedPaymentMethod,
+        paymentInfo: selectedPaymentMethod === "upi" ? { id: upiTransactionId.trim(), status: "Submitted by customer" } : undefined,
         itemsPrice: cartTotal,
         taxPrice,
         shippingPrice,
@@ -144,6 +188,14 @@ export default function CheckoutPage() {
 
       const orderRes = await api.post("/orders", orderPayload);
       const orderData = orderRes.data.order;
+
+      if (selectedPaymentMethod === "cod" || selectedPaymentMethod === "upi") {
+        setCreatedOrder(orderData);
+        clearCart();
+        setSuccess(true);
+        setSubmitting(false);
+        return;
+      }
 
       // 2. Call backend to fetch Razorpay Order ID
       const paymentRes = await api.post("/payments/create-order", {
@@ -307,82 +359,182 @@ export default function CheckoutPage() {
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          
-          {/* Shipping form (Left Column) */}
+                    {/* Main Content (Left Column) */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="p-6 sm:p-8 space-y-6 premium-card">
-              <h2 className="font-playfair text-xl font-semibold text-brand-brown border-b border-brand-gold/10 pb-4">
-                Shipping Details
-              </h2>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="flex flex-col space-y-1">
-                  <label className="text-[10px] uppercase tracking-wider font-semibold text-brand-brown/50">Recipient Phone</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={address.phone}
-                    onChange={handleInputChange}
-                    placeholder="+91 98765 43210"
-                    className="bg-brand-cream/20 border border-brand-gold/10 rounded-xl px-4 py-3 text-xs text-brand-brown outline-none focus:border-brand-gold/60"
-                  />
-                </div>
-                <div className="flex flex-col space-y-1">
-                  <label className="text-[10px] uppercase tracking-wider font-semibold text-brand-brown/50">Street Address</label>
-                  <input
-                    type="text"
-                    name="street"
-                    value={address.street}
-                    onChange={handleInputChange}
-                    placeholder="Apartment, plot, door number"
-                    className="bg-brand-cream/20 border border-brand-gold/10 rounded-xl px-4 py-3 text-xs text-brand-brown outline-none focus:border-brand-gold/60"
-                  />
-                </div>
-                <div className="flex flex-col space-y-1">
-                  <label className="text-[10px] uppercase tracking-wider font-semibold text-brand-brown/50">City</label>
-                  <input
-                    type="text"
-                    name="city"
-                    value={address.city}
-                    onChange={handleInputChange}
-                    placeholder="Chennai / Delhi"
-                    className="bg-brand-cream/20 border border-brand-gold/10 rounded-xl px-4 py-3 text-xs text-brand-brown outline-none focus:border-brand-gold/60"
-                  />
-                </div>
-                <div className="flex flex-col space-y-1">
-                  <label className="text-[10px] uppercase tracking-wider font-semibold text-brand-brown/50">State</label>
-                  <input
-                    type="text"
-                    name="state"
-                    value={address.state}
-                    onChange={handleInputChange}
-                    placeholder="Tamil Nadu"
-                    className="bg-brand-cream/20 border border-brand-gold/10 rounded-xl px-4 py-3 text-xs text-brand-brown outline-none focus:border-brand-gold/60"
-                  />
-                </div>
-                <div className="flex flex-col space-y-1">
-                  <label className="text-[10px] uppercase tracking-wider font-semibold text-brand-brown/50">Postal Code</label>
-                  <input
-                    type="text"
-                    name="postalCode"
-                    value={address.postalCode}
-                    onChange={handleInputChange}
-                    placeholder="600001"
-                    className="bg-brand-cream/20 border border-brand-gold/10 rounded-xl px-4 py-3 text-xs text-brand-brown outline-none focus:border-brand-gold/60"
-                  />
-                </div>
-                <div className="flex flex-col space-y-1">
-                  <label className="text-[10px] uppercase tracking-wider font-semibold text-brand-brown/50">Country</label>
-                  <input
-                    type="text"
-                    name="country"
-                    value={address.country}
-                    readOnly
-                    className="bg-brand-cream/10 border border-brand-gold/10 rounded-xl px-4 py-3 text-xs text-brand-brown/50 outline-none"
-                  />
+            {currentStep === 1 ? (
+              <div className="p-6 sm:p-8 space-y-6 premium-card">
+                <h2 className="font-playfair text-xl font-semibold text-brand-brown border-b border-brand-gold/10 pb-4">
+                  Shipping Details
+                </h2>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="flex flex-col space-y-1">
+                    <label className="text-[10px] uppercase tracking-wider font-semibold text-brand-brown/50">Recipient Phone</label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={address.phone}
+                      onChange={handleInputChange}
+                      placeholder="+91 98765 43210"
+                      className="bg-brand-cream/20 border border-brand-gold/10 rounded-xl px-4 py-3 text-xs text-brand-brown outline-none focus:border-brand-gold/60"
+                    />
+                  </div>
+                  <div className="flex flex-col space-y-1">
+                    <label className="text-[10px] uppercase tracking-wider font-semibold text-brand-brown/50">Street Address</label>
+                    <input
+                      type="text"
+                      name="street"
+                      value={address.street}
+                      onChange={handleInputChange}
+                      placeholder="Apartment, plot, door number"
+                      className="bg-brand-cream/20 border border-brand-gold/10 rounded-xl px-4 py-3 text-xs text-brand-brown outline-none focus:border-brand-gold/60"
+                    />
+                  </div>
+                  <div className="flex flex-col space-y-1">
+                    <label className="text-[10px] uppercase tracking-wider font-semibold text-brand-brown/50">City</label>
+                    <input
+                      type="text"
+                      name="city"
+                      value={address.city}
+                      onChange={handleInputChange}
+                      placeholder="Chennai / Delhi"
+                      className="bg-brand-cream/20 border border-brand-gold/10 rounded-xl px-4 py-3 text-xs text-brand-brown outline-none focus:border-brand-gold/60"
+                    />
+                  </div>
+                  <div className="flex flex-col space-y-1">
+                    <label className="text-[10px] uppercase tracking-wider font-semibold text-brand-brown/50">State</label>
+                    <input
+                      type="text"
+                      name="state"
+                      value={address.state}
+                      onChange={handleInputChange}
+                      placeholder="Tamil Nadu"
+                      className="bg-brand-cream/20 border border-brand-gold/10 rounded-xl px-4 py-3 text-xs text-brand-brown outline-none focus:border-brand-gold/60"
+                    />
+                  </div>
+                  <div className="flex flex-col space-y-1">
+                    <label className="text-[10px] uppercase tracking-wider font-semibold text-brand-brown/50">Postal Code</label>
+                    <input
+                      type="text"
+                      name="postalCode"
+                      value={address.postalCode}
+                      onChange={handleInputChange}
+                      placeholder="600001"
+                      className="bg-brand-cream/20 border border-brand-gold/10 rounded-xl px-4 py-3 text-xs text-brand-brown outline-none focus:border-brand-gold/60"
+                    />
+                  </div>
+                  <div className="flex flex-col space-y-1">
+                    <label className="text-[10px] uppercase tracking-wider font-semibold text-brand-brown/50">Country</label>
+                    <input
+                      type="text"
+                      name="country"
+                      value={address.country}
+                      readOnly
+                      className="bg-brand-cream/10 border border-brand-gold/10 rounded-xl px-4 py-3 text-xs text-brand-brown/50 outline-none"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div className="space-y-6">
+                <button 
+                  onClick={() => setCurrentStep(1)} 
+                  className="inline-flex items-center space-x-2 text-xs uppercase font-semibold text-brand-brown/60 hover:text-brand-gold transition-colors"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  <span>Edit Shipping Details</span>
+                </button>
+
+                <div className="p-6 sm:p-8 space-y-6 premium-card">
+                  <h2 className="font-playfair text-xl font-semibold text-brand-brown border-b border-brand-gold/10 pb-4">
+                    Payment Method
+                  </h2>
+
+                  <div className="space-y-3">
+                    {paymentSettings.razorpayEnabled && (
+                      <label className={`flex items-center p-3 rounded-xl border cursor-pointer transition-all ${selectedPaymentMethod === "razorpay" ? "bg-brand-cream/30 border-brand-gold/40" : "bg-transparent border-brand-gold/10 hover:border-brand-gold/20"}`}>
+                        <input type="radio" name="paymentMethod" value="razorpay" checked={selectedPaymentMethod === "razorpay"} onChange={() => setSelectedPaymentMethod("razorpay")} className="text-brand-gold focus:ring-brand-gold" />
+                        <span className="ml-3 text-xs font-semibold text-brand-brown flex-grow">Credit/Debit Card, Netbanking (Razorpay)</span>
+                      </label>
+                    )}
+                    {paymentSettings.upiEnabled && (
+                      <label className={`flex items-center p-3 rounded-xl border cursor-pointer transition-all ${selectedPaymentMethod === "upi" ? "bg-brand-cream/30 border-brand-gold/40" : "bg-transparent border-brand-gold/10 hover:border-brand-gold/20"}`}>
+                        <input type="radio" name="paymentMethod" value="upi" checked={selectedPaymentMethod === "upi"} onChange={() => setSelectedPaymentMethod("upi")} className="text-brand-gold focus:ring-brand-gold" />
+                        <span className="ml-3 text-xs font-semibold text-brand-brown flex-grow">UPI QR Payment</span>
+                      </label>
+                    )}
+                    {paymentSettings.codEnabled && (
+                      <label className={`flex items-center p-3 rounded-xl border cursor-pointer transition-all ${selectedPaymentMethod === "cod" ? "bg-brand-cream/30 border-brand-gold/40" : "bg-transparent border-brand-gold/10 hover:border-brand-gold/20"}`}>
+                        <input type="radio" name="paymentMethod" value="cod" checked={selectedPaymentMethod === "cod"} onChange={() => setSelectedPaymentMethod("cod")} className="text-brand-gold focus:ring-brand-gold" />
+                        <span className="ml-3 text-xs font-semibold text-brand-brown flex-grow">Cash on Delivery (COD)</span>
+                      </label>
+                    )}
+                  </div>
+
+                  {/* UPI QR Display */}
+                  {selectedPaymentMethod === "upi" && paymentSettings.upiId && (
+                    <div className="flex flex-col items-center justify-center p-6 bg-brand-cream/10 border border-brand-gold/10 rounded-xl space-y-4">
+                      <div className="bg-white p-3 rounded-xl shadow-sm">
+                        <QRCodeSVG 
+                          value={`upi://pay?pa=${paymentSettings.upiId}&pn=Aarions&am=${finalAmount.toFixed(2)}&cu=INR&tn=Order-${Date.now()}`} 
+                          size={220}
+                        />
+                      </div>
+                      <div className="text-center space-y-3 w-full max-w-[280px]">
+                        <p className="text-xs font-semibold text-brand-brown">Scan to pay <span className="text-brand-gold text-sm font-bold">₹{finalAmount}</span></p>
+                        
+                        <div className="relative flex items-center justify-center space-x-4 py-2">
+                          <div className="h-px bg-brand-gold/20 flex-grow" />
+                          <span className="text-[10px] uppercase font-bold text-brand-brown/40 tracking-wider">Or pay manually</span>
+                          <div className="h-px bg-brand-gold/20 flex-grow" />
+                        </div>
+
+                        {/* Copy UPI ID Block */}
+                        <div className="flex flex-col space-y-2">
+                          <div className="flex items-center justify-between bg-white border border-brand-gold/20 rounded-lg p-2">
+                            <span className="font-mono text-xs text-brand-brown font-semibold ml-2">
+                              {paymentSettings.upiId}
+                            </span>
+                            <button
+                              onClick={handleCopyUpi}
+                              className={`flex items-center px-3 py-1.5 rounded text-[10px] uppercase tracking-wider font-bold transition-colors ${
+                                copiedUpi ? "bg-green-100 text-green-700" : "bg-brand-cream text-brand-brown hover:bg-brand-cream/80"
+                              }`}
+                            >
+                              {copiedUpi ? (
+                                <>
+                                  <Check className="w-3 h-3 mr-1" /> Copied!
+                                </>
+                              ) : (
+                                <>
+                                  <Copy className="w-3 h-3 mr-1" /> Copy
+                                </>
+                              )}
+                            </button>
+                          </div>
+                          <p className="text-[9px] text-brand-brown/60 leading-relaxed text-left pb-1">
+                            Open any UPI app, choose 'Pay to UPI ID', paste this ID, and enter the exact amount <strong className="text-brand-brown text-[10px]">₹{finalAmount}</strong> to complete payment.
+                          </p>
+                        </div>
+                        
+                        <div className="flex flex-col space-y-1 text-left w-full pt-3 border-t border-brand-gold/10">
+                          <label className="text-[10px] uppercase tracking-wider font-semibold text-brand-brown/50">UPI Transaction ID *</label>
+                          <input
+                            type="text"
+                            value={upiTransactionId}
+                            onChange={(e) => setUpiTransactionId(e.target.value)}
+                            placeholder="Enter the transaction/reference ID from your UPI app"
+                            className="bg-brand-cream/20 border border-brand-gold/10 rounded-xl px-4 py-3 text-xs text-brand-brown outline-none focus:border-brand-gold/60 w-full"
+                          />
+                          <p className="text-[10px] text-brand-brown/60 pt-1 leading-tight">Found in your UPI app's payment confirmation screen, right after paying.</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Checkout Summary (Right Column) */}
@@ -533,33 +685,46 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              {/* Payment button */}
-              <button
-                onClick={handlePayment}
-                disabled={submitting}
-                className="w-full flex items-center justify-center btn-gradient text-xs font-semibold uppercase tracking-widest py-4 rounded-xl mt-4 disabled:opacity-50"
-              >
-                {submitting ? (
-                  <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    <span>Processing Gateway...</span>
-                  </>
-                ) : (
-                  <>
-                    <CreditCard className="w-4 h-4 mr-2" />
-                    <span>Pay with Razorpay (₹{finalAmount})</span>
-                  </>
-                )}
-              </button>
-
-              <div className="flex items-center justify-center space-x-2 text-[10px] text-brand-brown/45 font-medium pt-2">
-                <ShieldCheck className="w-4 h-4 text-brand-gold" />
-                <span>256-bit Secure SSL checkout gateway</span>
-              </div>
+              {/* Transition / Payment Action Button */}
+              {currentStep === 1 ? (
+                <button
+                  onClick={handleContinueToPayment}
+                  className="w-full flex items-center justify-center btn-gradient text-xs font-semibold uppercase tracking-widest py-4 rounded-xl mt-4 transition-all"
+                >
+                  <span>Continue to Payment</span>
+                  <ChevronRight className="w-4 h-4 ml-2" />
+                </button>
+              ) : (
+                <>
+                  <button
+                    onClick={handlePayment}
+                    disabled={submitting || !selectedPaymentMethod || (selectedPaymentMethod === "upi" && !upiTransactionId.trim())}
+                    className="w-full flex items-center justify-center btn-gradient text-xs font-semibold uppercase tracking-widest py-4 rounded-xl mt-4 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                  >
+                    {submitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        <span>Processing...</span>
+                      </>
+                    ) : (
+                      <>
+                        <CreditCard className="w-4 h-4 mr-2" />
+                        <span>
+                          {selectedPaymentMethod === "upi" ? "I've Paid — Place Order" : 
+                           selectedPaymentMethod === "cod" ? "Place Order (COD)" : 
+                           `Pay with Razorpay (₹${finalAmount})`}
+                        </span>
+                      </>
+                    )}
+                  </button>
+                  <div className="flex items-center justify-center space-x-2 text-[10px] text-brand-brown/45 font-medium pt-2">
+                    <ShieldCheck className="w-4 h-4 text-brand-gold" />
+                    <span>256-bit Secure SSL checkout gateway</span>
+                  </div>
+                </>
+              )}
             </div>
-
           </div>
-
         </div>
       </div>
     </motion.div>

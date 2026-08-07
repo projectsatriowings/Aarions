@@ -28,6 +28,10 @@ export const placeOrder = async (req, res, next) => {
     if (!items || items.length === 0) {
       return next(new ErrorResponse("No order items provided", 400));
     }
+    
+    if (paymentMethod === "upi" && (!paymentInfo || !paymentInfo.id || !paymentInfo.id.trim())) {
+      return next(new ErrorResponse("Please enter your UPI transaction ID before placing the order", 400));
+    }
 
     // 1. Verify stock levels for each item
     for (const item of items) {
@@ -40,8 +44,8 @@ export const placeOrder = async (req, res, next) => {
       }
     }
 
-    // 2. Reduce stock ONLY if the order is confirmed immediately (COD)
-    if (paymentMethod === "cod") {
+    // 2. Reduce stock ONLY if the order is confirmed immediately (COD or UPI)
+    if (paymentMethod === "cod" || paymentMethod === "upi") {
       for (const item of items) {
         const product = await Product.findById(item.product);
         if (product) {
@@ -67,14 +71,14 @@ export const placeOrder = async (req, res, next) => {
       discountPrice,
       totalAmount,
       couponApplied,
-      status: paymentMethod === "cod" ? "Confirmed" : "Pending",
+      status: (paymentMethod === "cod" || paymentMethod === "upi") ? "Confirmed" : "Pending",
     });
 
     // 3. Clear user's cart
     await Cart.findOneAndUpdate({ user: req.user.id }, { $set: { items: [] } });
 
-    if (paymentMethod === "cod") {
-      // Increment coupon usage count for COD orders
+    if (paymentMethod === "cod" || paymentMethod === "upi") {
+      // Increment coupon usage count for COD/UPI orders
       if (couponApplied) {
         try {
           await Coupon.findOneAndUpdate(
@@ -225,6 +229,13 @@ export const getAdminOrders = async (req, res, next) => {
       }
     }
 
+    if (status === "unverified_upi") {
+      delete query.status; // Remove the default not-Pending status check if we only want this specific filter, or keep it, but here it's cleaner to just override
+      query.status = { $ne: "Pending" }; 
+      query.paymentMethod = "upi";
+      query["paymentVerified.verified"] = { $ne: true };
+    }
+
     const skip = (Number(page) - 1) * Number(limit);
 
     const orders = await Order.find(query)
@@ -267,6 +278,10 @@ export const updateOrderStatus = async (req, res, next) => {
       return next(new ErrorResponse("Cannot update dispatch details for a cancelled order", 400));
     }
 
+    if (order.paymentMethod === "upi" && (!order.paymentVerified || !order.paymentVerified.verified)) {
+      return next(new ErrorResponse("Payment not yet verified", 403));
+    }
+
     if (status) {
       order.status = status;
     }
@@ -300,6 +315,50 @@ export const updateOrderStatus = async (req, res, next) => {
       targetModel: "Order",
       targetId: order._id,
       details: `Updated order #${order._id} status to: "${status}". Tracking: ${trackingNumber || "N/A"}`,
+      ipAddress: req.ip,
+      userAgent: req.headers["user-agent"],
+    });
+
+    res.status(200).json({
+      success: true,
+      order,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Verify UPI Payment (Admin)
+// @route   PATCH /api/admin/orders/:id/verify-payment
+// @access  Private/Admin
+export const verifyPayment = async (req, res, next) => {
+  try {
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+      return next(new ErrorResponse("Order not found", 404));
+    }
+
+    if (order.paymentMethod !== "upi") {
+      return next(new ErrorResponse("Only UPI orders require manual verification", 400));
+    }
+
+    order.paymentVerified = {
+      verified: true,
+      verifiedBy: req.admin._id,
+      verifiedAt: new Date(),
+      note: req.body.note || "",
+    };
+
+    await order.save();
+
+    // Audit Log
+    await AuditLog.create({
+      adminUser: req.admin._id,
+      action: "verify_payment",
+      targetModel: "Order",
+      targetId: order._id,
+      details: `Verified UPI payment for order #${order._id}. Note: ${req.body.note || "N/A"}`,
       ipAddress: req.ip,
       userAgent: req.headers["user-agent"],
     });

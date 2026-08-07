@@ -41,6 +41,7 @@ import {
   createRazorpayOrder,
   verifyPaymentSignature,
 } from "../controllers/paymentController.js";
+import { getPublicPaymentSettings } from "../controllers/paymentSettingsController.js";
 import { addReview, getProductReviews } from "../controllers/reviewController.js";
 import { getBlogs, getBlogDetails } from "../controllers/blogController.js";
 import { submitQuery } from "../controllers/contactController.js";
@@ -95,6 +96,7 @@ router.get("/orders/:id", protect, getOrderDetails);
 router.put("/orders/:id/cancel", protect, cancelOrder);
 
 // ---------------- PAYMENT ROUTES ----------------
+router.get("/payments/public-settings", getPublicPaymentSettings);
 router.post("/payments/create-order", protect, createRazorpayOrder);
 router.post("/payments/verify", protect, verifyPaymentSignature);
 
