@@ -20,6 +20,19 @@ const paymentSettingsSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    codEnabled: {
+      type: Boolean,
+      default: true,
+    },
+    upiEnabled: {
+      type: Boolean,
+      default: false,
+    },
+    upiId: {
+      type: String,
+      default: "",
+      trim: true,
+    },
   },
   {
     timestamps: true,

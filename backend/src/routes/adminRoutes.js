@@ -24,6 +24,7 @@ import {
 import {
   getAdminOrders,
   updateOrderStatus,
+  verifyPayment,
 } from "../controllers/orderController.js";
 import {
   getAdminPayments,
@@ -111,6 +112,7 @@ router.delete("/categories/:id", authorizePermissions("manage_categories"), dele
 // Orders Management
 router.get("/orders", authorizePermissions("manage_orders"), getAdminOrders);
 router.put("/orders/:id/status", authorizePermissions("manage_orders"), updateOrderStatus);
+router.patch("/orders/:id/verify-payment", authorizePermissions("manage_orders"), verifyPayment);
 
 // Payments & Transactions
 router.get("/payments", authorizePermissions("manage_orders"), getAdminPayments);

@@ -1,7 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { Search, Eye, Edit3, X, Loader2, Truck, ClipboardList, DollarSign, ShoppingBag, Users, AlertTriangle, TrendingUp } from "lucide-react";
+import React, { useState, useEffect, Fragment } from "react";
+import { Search, Eye, Edit3, X, Loader2, Truck, ClipboardList, DollarSign, ShoppingBag, Users, AlertTriangle, TrendingUp, ChevronDown, Check } from "lucide-react";
 import { motion } from "framer-motion";
+import { Listbox, Transition } from "@headlessui/react";
 import api, { getImageUrl } from "../services/api";
+
+const STATUS_COLORS = {
+  "Confirmed": "bg-blue-500",
+  "Packed": "bg-violet-500",
+  "Shipped": "bg-indigo-500",
+  "Out For Delivery": "bg-amber-500",
+  "Delivered": "bg-green-500",
+  "Cancelled": "bg-red-500",
+  "Pending": "bg-zinc-500"
+};
+
+const STATUS_BG_TINTS = {
+  "Confirmed": "bg-blue-50 text-blue-900 dark:bg-blue-900/20 dark:text-blue-100",
+  "Packed": "bg-violet-50 text-violet-900 dark:bg-violet-900/20 dark:text-violet-100",
+  "Shipped": "bg-indigo-50 text-indigo-900 dark:bg-indigo-900/20 dark:text-indigo-100",
+  "Out For Delivery": "bg-amber-50 text-amber-900 dark:bg-amber-900/20 dark:text-amber-100",
+  "Delivered": "bg-green-50 text-green-900 dark:bg-green-900/20 dark:text-green-100",
+  "Cancelled": "bg-red-50 text-red-900 dark:bg-red-900/20 dark:text-red-100",
+  "Pending": "bg-zinc-50 text-zinc-900 dark:bg-zinc-900/20 dark:text-zinc-100"
+};
 
 const containerVariants = {
   hidden: {},
@@ -33,6 +54,9 @@ export default function Orders() {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [updating, setUpdating] = useState(false);
+  const [verifyNote, setVerifyNote] = useState("");
+  const [verifying, setVerifying] = useState(false);
+  const [showVerifyConfirm, setShowVerifyConfirm] = useState(false);
   
   // Tracking inputs
   const [statusInput, setStatusInput] = useState("");
@@ -118,16 +142,33 @@ export default function Orders() {
     }
   };
 
+  const handleVerifyPayment = async () => {
+    setVerifying(true);
+    try {
+      const res = await api.patch(`/orders/${selectedOrder._id}/verify-payment`, { note: verifyNote });
+      if (res.data.success) {
+        setSelectedOrder(res.data.order);
+        setShowVerifyConfirm(false);
+        setVerifyNote("");
+        fetchOrders(); // refresh background table
+      }
+    } catch (err) {
+      alert(err.response?.data?.error || "Failed to verify payment.");
+    } finally {
+      setVerifying(false);
+    }
+  };
+
   const getStatusColor = (status) => {
     switch (status) {
-      case "Pending":
-        return "bg-amber-500/10 text-amber-500 border border-amber-500/20";
       case "Confirmed":
-      case "Packed":
         return "bg-blue-500/10 text-blue-500 border border-blue-500/20";
+      case "Packed":
+        return "bg-violet-500/10 text-violet-500 border border-violet-500/20";
       case "Shipped":
-      case "Out For Delivery":
         return "bg-indigo-500/10 text-indigo-500 border border-indigo-500/20";
+      case "Out For Delivery":
+        return "bg-amber-500/10 text-amber-500 border border-amber-500/20";
       case "Delivered":
         return "bg-green-500/10 text-green-500 border border-green-500/20";
       case "Cancelled":
@@ -264,6 +305,7 @@ export default function Orders() {
           className="bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 outline-none text-xs"
         >
           <option value="">All Statuses</option>
+          <option value="unverified_upi">Unverified UPI</option>
           <option value="Confirmed">Confirmed</option>
           <option value="Packed">Packed</option>
           <option value="Shipped">Shipped</option>
@@ -313,9 +355,14 @@ export default function Orders() {
                     <td className="py-3 px-4 text-right font-medium text-zinc-500">₹{ord.itemsPrice}</td>
                     <td className="py-3 px-4 text-right font-bold">₹{ord.totalAmount}</td>
                     <td className="py-3 px-4 text-center">
-                      <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase ${getStatusColor(ord.status)}`}>
-                        {ord.status}
-                      </span>
+                      <div className="flex items-center justify-center gap-2">
+                        <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase ${getStatusColor(ord.status)}`}>
+                          {ord.status}
+                        </span>
+                        {ord.paymentMethod === "upi" && (!ord.paymentVerified || !ord.paymentVerified.verified) && (
+                          <AlertTriangle className="w-3.5 h-3.5 text-amber-500" title="Unverified UPI Payment" />
+                        )}
+                      </div>
                     </td>
                     <td className="py-3 px-4 text-right">
                       <button
@@ -386,7 +433,9 @@ export default function Orders() {
             <div className="p-6 space-y-6 text-xs">
               
               {/* Order Status Controls */}
-              {selectedOrder.status === "Cancelled" ? (
+              {(() => {
+                const isUnverifiedUpi = selectedOrder.paymentMethod === "upi" && (!selectedOrder.paymentVerified || !selectedOrder.paymentVerified.verified);
+                return selectedOrder.status === "Cancelled" ? (
                 <div className="bg-rose-50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900/40 p-5 rounded-xl flex items-center gap-3">
                   <AlertTriangle className="w-5 h-5 text-rose-500 flex-shrink-0" />
                   <div>
@@ -403,21 +452,77 @@ export default function Orders() {
                     Override Delivery Status
                   </h4>
                   
+                  {isUnverifiedUpi && (
+                    <div className="text-[10px] text-amber-600 bg-amber-50 dark:bg-amber-900/20 px-3 py-2 rounded border border-amber-200 dark:border-amber-900/40 font-medium">
+                      Verify the UPI payment before updating dispatch details.
+                    </div>
+                  )}
+                  
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="flex flex-col space-y-1">
+                    <div className="flex flex-col space-y-1 z-20">
                       <label className="text-[9px] uppercase font-semibold text-zinc-500">Order State</label>
-                      <select
-                        value={statusInput}
-                        onChange={(e) => setStatusInput(e.target.value)}
-                        className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 outline-none text-zinc-900 dark:text-zinc-100"
-                      >
-                        <option value="Confirmed">Confirmed</option>
-                        <option value="Packed">Packed</option>
-                        <option value="Shipped">Shipped</option>
-                        <option value="Out For Delivery">Out For Delivery</option>
-                        <option value="Delivered">Delivered</option>
-                        <option value="Cancelled">Cancelled</option>
-                      </select>
+                      <Listbox value={statusInput} onChange={setStatusInput} disabled={updating || isUnverifiedUpi}>
+                        {({ open }) => (
+                          <div className="relative">
+                            <Listbox.Button
+                              className={`relative w-full cursor-default rounded-lg bg-white dark:bg-zinc-800 border ${
+                                (updating || isUnverifiedUpi) 
+                                  ? "border-zinc-200 dark:border-zinc-700 opacity-50 cursor-not-allowed" 
+                                  : "border-[#8C7A6B]/30 hover:border-[#8C7A6B]/50 focus:outline-none focus:border-[#8C7A6B]/50"
+                              } py-[9px] pl-3 pr-8 text-left shadow-sm sm:text-xs text-zinc-900 dark:text-zinc-100 transition-colors duration-200`}
+                            >
+                              <span className="flex items-center">
+                                <span className={`w-2 h-2 rounded-full mr-2 ${STATUS_COLORS[statusInput] || STATUS_COLORS["Pending"]}`} />
+                                <span className="block truncate font-medium">{statusInput}</span>
+                              </span>
+                              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                <ChevronDown
+                                  className={`h-4 w-4 text-[#8C7A6B] transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+                                  aria-hidden="true"
+                                />
+                              </span>
+                            </Listbox.Button>
+                            <Transition
+                              as={Fragment}
+                              show={open}
+                              enter="transition ease-out duration-150"
+                              enterFrom="opacity-0 scale-95 -translate-y-2"
+                              enterTo="opacity-100 scale-100 translate-y-0"
+                              leave="transition ease-in duration-100"
+                              leaveFrom="opacity-100 scale-100"
+                              leaveTo="opacity-0 scale-95"
+                            >
+                              <Listbox.Options className="absolute z-50 mt-1 max-h-60 min-w-[180px] w-full overflow-auto rounded-xl bg-white dark:bg-[#1A1A1A] py-1 text-xs shadow-lg ring-1 ring-[#8C7A6B]/20 focus:outline-none">
+                                {["Confirmed", "Packed", "Shipped", "Out For Delivery", "Delivered", "Cancelled"].map((status) => (
+                                  <Listbox.Option
+                                    key={status}
+                                    className={({ active }) =>
+                                      `relative cursor-default select-none py-2.5 pl-3 pr-8 transition-colors ${
+                                        active ? 'bg-zinc-50 dark:bg-zinc-800' : 'text-zinc-900 dark:text-zinc-100'
+                                      }`
+                                    }
+                                    value={status}
+                                  >
+                                    {({ selected }) => (
+                                      <div className={`flex items-center rounded-md px-2 py-1.5 -ml-2 -my-1 ${selected ? STATUS_BG_TINTS[status] : ''}`}>
+                                        <span className={`w-1.5 h-1.5 rounded-full mr-2.5 ${STATUS_COLORS[status]}`} />
+                                        <span className={`block truncate ${selected ? 'font-bold' : 'font-medium'}`}>
+                                          {status}
+                                        </span>
+                                        {selected ? (
+                                          <span className={`absolute inset-y-0 right-0 flex items-center pr-3 ${STATUS_COLORS[status].replace('bg-', 'text-')}`}>
+                                            <Check className="h-3.5 w-3.5" aria-hidden="true" />
+                                          </span>
+                                        ) : null}
+                                      </div>
+                                    )}
+                                  </Listbox.Option>
+                                ))}
+                              </Listbox.Options>
+                            </Transition>
+                          </div>
+                        )}
+                      </Listbox>
                     </div>
 
                     <div className="flex flex-col space-y-1">
@@ -427,7 +532,8 @@ export default function Orders() {
                         value={trackingNumber}
                         onChange={(e) => setTrackingNumber(e.target.value)}
                         placeholder="e.g. AAR-983427"
-                        className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 outline-none text-zinc-900 dark:text-zinc-100"
+                        disabled={updating || isUnverifiedUpi}
+                        className={`bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 outline-none text-zinc-900 dark:text-zinc-100 ${(updating || isUnverifiedUpi) ? "opacity-50 cursor-not-allowed" : ""}`}
                       />
                     </div>
 
@@ -438,7 +544,8 @@ export default function Orders() {
                         value={carrier}
                         onChange={(e) => setCarrier(e.target.value)}
                         placeholder="e.g. Delhivery, Bluedart"
-                        className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 outline-none text-zinc-900 dark:text-zinc-100"
+                        disabled={updating || isUnverifiedUpi}
+                        className={`bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 outline-none text-zinc-900 dark:text-zinc-100 ${(updating || isUnverifiedUpi) ? "opacity-50 cursor-not-allowed" : ""}`}
                       />
                     </div>
 
@@ -448,7 +555,8 @@ export default function Orders() {
                         type="date"
                         value={expectedDeliveryDate}
                         onChange={(e) => setExpectedDeliveryDate(e.target.value)}
-                        className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 outline-none text-zinc-900 dark:text-zinc-100"
+                        disabled={updating || isUnverifiedUpi}
+                        className={`bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg px-3 py-2 outline-none text-zinc-900 dark:text-zinc-100 ${(updating || isUnverifiedUpi) ? "opacity-50 cursor-not-allowed" : ""}`}
                       />
                     </div>
                   </div>
@@ -456,15 +564,16 @@ export default function Orders() {
                   <div className="flex justify-end pt-2">
                     <button
                       type="submit"
-                      disabled={updating}
-                      className="btn-gradient font-bold uppercase tracking-widest px-4 py-2.5 rounded-lg flex items-center"
+                      disabled={updating || isUnverifiedUpi}
+                      className={`btn-gradient font-bold uppercase tracking-widest px-4 py-2.5 rounded-lg flex items-center ${(updating || isUnverifiedUpi) ? "opacity-50 cursor-not-allowed" : ""}`}
                     >
                       {updating ? <Loader2 className="w-3.5 h-3.5 mr-2 animate-spin" /> : null}
                       Update Dispatch Details
                     </button>
                   </div>
                 </form>
-              )}
+              )
+              })()}
 
               {/* Order Info & Items List */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
@@ -478,6 +587,74 @@ export default function Orders() {
                     <p>Phone Contact: {selectedOrder.shippingAddress.phone}</p>
                     <p className="pt-2 border-t border-zinc-200/50 dark:border-zinc-850"><span className="font-semibold text-zinc-900 dark:text-zinc-100">Gateway:</span> {selectedOrder.paymentMethod.toUpperCase()}</p>
                     <p>Transaction ID: <span className="font-mono">{selectedOrder.paymentInfo?.id || "N/A"}</span></p>
+
+                    {selectedOrder.paymentMethod === "upi" && (
+                      <div className="pt-3 mt-3 border-t border-zinc-200/50 dark:border-zinc-850">
+                        {(!selectedOrder.paymentVerified || !selectedOrder.paymentVerified.verified) ? (
+                          <div className="space-y-3">
+                            <span className="inline-block bg-amber-100 text-amber-700 text-[10px] font-bold px-2 py-1 rounded">Payment Not Verified</span>
+                            {!showVerifyConfirm ? (
+                              <button
+                                onClick={() => setShowVerifyConfirm(true)}
+                                className="block w-full py-2 text-xs font-bold text-white bg-amber-500 hover:bg-amber-600 rounded-lg transition-colors"
+                              >
+                                Verify Transaction
+                              </button>
+                            ) : (
+                              <div className="space-y-2 border border-amber-200 p-2 rounded-lg bg-amber-50/50 dark:bg-amber-900/10">
+                                <label className="flex items-start gap-2 cursor-pointer">
+                                  <input type="checkbox" className="mt-1" required id="verify-confirm-check" />
+                                  <span className="text-[10px] font-medium text-amber-900 dark:text-amber-500">
+                                    I confirm ₹{selectedOrder.totalAmount} was received for transaction {selectedOrder.paymentInfo?.id}.
+                                  </span>
+                                </label>
+                                <input
+                                  type="text"
+                                  placeholder="Verification Note (optional)"
+                                  value={verifyNote}
+                                  onChange={(e) => setVerifyNote(e.target.value)}
+                                  className="w-full bg-white dark:bg-zinc-800 border border-amber-200 dark:border-amber-900/50 rounded px-2 py-1.5 text-[10px] outline-none text-zinc-900 dark:text-zinc-100"
+                                />
+                                <div className="flex gap-2 pt-1">
+                                  <button
+                                    type="button"
+                                    disabled={verifying}
+                                    className="flex-1 bg-green-600 hover:bg-green-700 text-white text-[10px] font-bold py-1.5 rounded transition-colors disabled:opacity-50 flex items-center justify-center"
+                                    onClick={(e) => {
+                                      if (!document.getElementById("verify-confirm-check").checked) {
+                                        alert("Please confirm the checkbox.");
+                                        e.preventDefault();
+                                      } else {
+                                        handleVerifyPayment();
+                                      }
+                                    }}
+                                  >
+                                    {verifying ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : "Confirm Verification"}
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => setShowVerifyConfirm(false)}
+                                    className="px-3 bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300 dark:hover:bg-zinc-600 text-zinc-700 dark:text-zinc-200 text-[10px] font-bold rounded transition-colors"
+                                  >
+                                    Cancel
+                                  </button>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <div className="space-y-1">
+                            <span className="inline-block bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded">Payment Verified</span>
+                            <p className="text-[9px] text-zinc-500">
+                              Verified on {new Date(selectedOrder.paymentVerified.verifiedAt).toLocaleDateString()}
+                            </p>
+                            {selectedOrder.paymentVerified.note && (
+                              <p className="text-[9px] text-zinc-500 mt-1 italic">Note: {selectedOrder.paymentVerified.note}</p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
 
