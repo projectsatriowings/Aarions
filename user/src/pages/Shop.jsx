@@ -201,7 +201,7 @@ export default function Shop() {
         }}
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="site-container relative z-10">
         
         {/* Banner/Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 relative z-10 flex flex-col items-center">
@@ -229,10 +229,10 @@ export default function Shop() {
         </div>
 
         {/* Filter Controls Panel */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 2xl:grid-cols-5 gap-8">
           
           {/* Sidebar Filters (Desktop) */}
-          <div className="lg:col-span-1 space-y-8 bg-gradient-to-br from-white/95 to-brand-cream/15 border border-brand-gold/15 p-6 rounded-3xl h-fit shadow-md shadow-brand-brown/5 backdrop-blur-md relative overflow-hidden">
+          <div className="lg:col-span-1 2xl:col-span-1 space-y-8 bg-gradient-to-br from-white/95 to-brand-cream/15 border border-brand-gold/15 p-6 rounded-3xl h-fit shadow-md shadow-brand-brown/5 backdrop-blur-md relative overflow-hidden">
             {/* Inner luxury border */}
             <div className="absolute inset-2 rounded-[1.5rem] border border-brand-gold/5 pointer-events-none z-0" />
             
@@ -319,7 +319,7 @@ export default function Shop() {
           </div>
 
           {/* Products Grid + Sorting (Right Column) */}
-          <div className="lg:col-span-3 space-y-6">
+          <div className="lg:col-span-3 2xl:col-span-4 space-y-6">
             
             {/* Header info / Sorting select */}
             <div className="flex flex-col sm:flex-row items-center justify-between bg-white border border-brand-gold/10 px-6 py-4 rounded-2xl shadow-sm gap-4 relative overflow-hidden">
@@ -353,7 +353,7 @@ export default function Shop() {
                   variants={containerVariants}
                   initial="hidden"
                   animate="visible"
-                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-6"
                 >
                   {displayedProducts.map((product) => (
                     <motion.div

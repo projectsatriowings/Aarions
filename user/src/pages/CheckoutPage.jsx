@@ -344,7 +344,7 @@ export default function CheckoutPage() {
       transition={{ duration: 0.4 }}
       className="min-h-screen pt-40 pb-24 bg-transparent"
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         
         {/* Back Link */}
         <Link to="/cart" className="inline-flex items-center space-x-2 text-xs uppercase tracking-wider font-semibold text-brand-brown/50 hover:text-brand-gold mb-8 transition-colors">

@@ -121,7 +121,7 @@ export default function OrderHistory() {
       transition={{ duration: 0.4 }}
       className="min-h-screen pt-40 pb-24 bg-transparent"
     >
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container-prose">
         
         {/* Header Section */}
         <div className="text-center max-w-xl mx-auto mb-16 space-y-3">

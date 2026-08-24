@@ -54,7 +54,7 @@ export default function About() {
       exit={{ opacity: 0 }}
       className="min-h-screen pt-40 pb-24 bg-transparent"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         
         {/* Editorial Hero Banner Section */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center mb-28 relative">
@@ -158,7 +158,7 @@ export default function About() {
         </div>
 
         {/* Pillars / Core Principles Bento Grid */}
-        <div className="mb-28 max-w-6xl mx-auto">
+        <div className="mb-28 w-full mx-auto">
           <div className="text-center max-w-xl mx-auto mb-14 space-y-2">
             <span className="text-[10px] text-brand-red font-bold uppercase tracking-[0.25em] block">
               Our Foundation
@@ -211,7 +211,7 @@ export default function About() {
         </div>
 
         {/* Alternating Interactive Timeline */}
-        <div className="mb-28 max-w-5xl mx-auto">
+        <div className="mb-28 max-w-5xl 2xl:max-w-6xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -300,7 +300,7 @@ export default function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center bg-gradient-to-br from-[#2D1F17] via-[#221711] to-[#3A0C08] text-brand-cream py-16 px-6 sm:px-12 rounded-[2.5rem] border border-brand-gold/20 shadow-2xl max-w-4xl mx-auto space-y-8 relative overflow-hidden"
+          className="text-center bg-gradient-to-br from-[#2D1F17] via-[#221711] to-[#3A0C08] text-brand-cream py-16 px-6 sm:px-12 rounded-[2.5rem] border border-brand-gold/20 shadow-2xl max-w-5xl 2xl:max-w-6xl mx-auto space-y-8 relative overflow-hidden"
         >
           {/* Ambient lighting inside dark card */}
           <div className="absolute top-[-30%] right-[-30%] w-[35rem] aspect-square rounded-full bg-brand-gold/10 blur-[120px] pointer-events-none" />

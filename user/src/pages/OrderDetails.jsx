@@ -137,7 +137,7 @@ export default function OrderDetails() {
       transition={{ duration: 0.4 }}
       className="min-h-screen pt-40 pb-24 bg-transparent"
     >
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container-prose">
         
         {/* Back Link */}
         <Link 

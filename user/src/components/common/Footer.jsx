@@ -64,7 +64,7 @@ export default function Footer() {
   return (
     <footer className="footer-shell text-white border-t border-brand-gold/15">
       {/* Main Footer Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="site-container-fluid py-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
 
           {/* Brand Column */}
@@ -177,7 +177,7 @@ export default function Footer() {
 
       {/* Bottom Footer Bar */}
       <div className="footer-bottom border-t border-white/10 py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container-fluid">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-light text-white/40">
             <p className="text-center sm:text-left leading-6">
               © {new Date().getFullYear()} {settings?.footerCopyright || settings?.brandName || "Aarions"}. All rights reserved. Designed & Developed by{" "}

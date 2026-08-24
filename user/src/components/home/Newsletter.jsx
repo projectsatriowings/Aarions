@@ -35,7 +35,7 @@ export default function Newsletter() {
         <div className="absolute bottom-[-20%] left-[-10%] w-[45%] aspect-square rounded-full bg-brand-gold/5 blur-[120px]" />
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="site-container relative z-10">
         <div className="relative bg-gradient-to-br from-[#2D1F17] to-[#1A0E08] border border-brand-gold/25 rounded-[40px] p-8 md:p-12 lg:p-16 overflow-hidden shadow-2xl shadow-brand-brown/40">
           
           {/* Subtle inset border overlay */}

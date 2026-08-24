@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default function PrivacyPolicy() {
     return (
         <div className="min-h-screen pt-32 pb-24 bg-brand-cream/10">
-            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="site-container-prose">
                 <div className="mb-10">
                     <h1 className="font-display text-3xl sm:text-4xl font-bold text-brand-brown mb-2">
                         Privacy Policy

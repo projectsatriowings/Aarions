@@ -144,7 +144,7 @@ export default function Layout({ children }) {
         }`}
       >
         {/* Top Navbar */}
-        <header className={`h-16 fixed top-0 right-0 bg-[#FFF8EC]/90 backdrop-blur-md border-b border-[#E8A317]/15 flex items-center justify-between px-6 z-20 transition-all duration-300 ${
+        <header className={`h-16 fixed top-0 right-0 bg-[#FFF8EC]/90 backdrop-blur-md border-b border-[#E8A317]/15 flex items-center justify-between px-4 sm:px-6 lg:px-8 xl:px-10 z-20 transition-all duration-300 ${
           sidebarOpen ? "left-64" : "left-16"
         }`}>
           
@@ -182,8 +182,10 @@ export default function Layout({ children }) {
         </header>
 
         {/* Content Body */}
-        <main className="flex-grow pt-24 px-6 pb-12 overflow-y-auto bg-zinc-50 dark:bg-zinc-950">
-          {children}
+        <main className="flex-grow pt-24 px-4 sm:px-6 lg:px-8 xl:px-10 pb-12 overflow-y-auto bg-zinc-50 dark:bg-zinc-950">
+          <div className="w-full max-w-[1920px] mx-auto">
+            {children}
+          </div>
         </main>
       </div>
 

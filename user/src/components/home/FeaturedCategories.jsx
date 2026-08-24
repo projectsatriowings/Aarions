@@ -96,7 +96,7 @@ export default function FeaturedCategories() {
       ref={sectionRef}
       className="py-16 md:py-20 bg-transparent overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         
         {/* Section Header */}
         <div className="text-center mb-12 lg:mb-16 reveal">

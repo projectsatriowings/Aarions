@@ -119,7 +119,7 @@ export default function PaymentGateway() {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="space-y-8 max-w-5xl mx-auto"
+      className="space-y-8 max-w-6xl 2xl:max-w-7xl mx-auto"
     >
       {/* Page Title & Breadcrumb */}
       <motion.div variants={itemVariants} className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">

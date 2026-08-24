@@ -17,7 +17,7 @@ export default function WishlistPage() {
       exit={{ opacity: 0 }}
       className="min-h-screen pt-40 pb-24 bg-transparent"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         
         {/* Header Title */}
         <div className="mb-12 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -37,7 +37,7 @@ export default function WishlistPage() {
         </div>
 
         {wishlistItems.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 gap-6">
             {wishlistItems.map((product) => (
               <motion.div
                 key={product.id || product._id}

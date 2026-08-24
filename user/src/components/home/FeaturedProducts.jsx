@@ -142,7 +142,7 @@ export default function FeaturedProducts({ onQuickView }) {
         <LuxuryLeaf className="absolute bottom-24 right-[-4rem] w-64 h-64 text-brand-gold/3 rotate-[-75deg]" />
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="site-container relative z-10">
         
         {/* ================= 1. PREMIUM HEADER ================= */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
@@ -336,7 +336,7 @@ export default function FeaturedProducts({ onQuickView }) {
 
         {styleBlock}
 
-        <div className="max-w-7xl mx-auto relative z-10">
+        <div className="site-container relative z-10">
           
           {/* Header */}
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">

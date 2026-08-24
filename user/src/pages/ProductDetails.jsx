@@ -155,7 +155,7 @@ export default function ProductDetails() {
       exit={{ opacity: 0 }}
       className="min-h-screen pt-40 pb-24 bg-transparent"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         {/* Breadcrumbs */}
         <div className="mb-8 flex items-center space-x-2 text-xs uppercase tracking-wider font-semibold text-brand-brown/50">
           <Link to="/" className="hover:text-brand-gold transition-colors">Home</Link>
@@ -312,7 +312,7 @@ export default function ProductDetails() {
         </div>
 
         {/* Tab specifications section (Details, Churning method, nutrients) */}
-        <div className="mt-16 p-6 sm:p-10 max-w-4xl mx-auto premium-card">
+        <div className="mt-16 p-6 sm:p-10 max-w-5xl 2xl:max-w-6xl mx-auto premium-card">
           {/* Tab buttons */}
           <div className="flex border-b border-brand-gold/10 pb-4 overflow-x-auto no-scrollbar gap-6">
             {[
@@ -594,7 +594,7 @@ export default function ProductDetails() {
             <h2 className="font-playfair text-2xl font-bold text-brand-brown text-center mb-10">
               Related Organic Products
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto px-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8 mx-auto">
               {relatedProducts.map((p) => {
                 const discountPercent = p.originalPrice
                   ? Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100)

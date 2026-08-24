@@ -16,6 +16,8 @@ dist-ssr
 .env.local
 .env.*.local
 *.local
+env
+**/env
 
 # Media uploads fallback directory
 backend/uploads/

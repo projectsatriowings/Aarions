@@ -60,7 +60,7 @@ export default function Contact() {
       exit={{ opacity: 0 }}
       className="min-h-screen pt-40 pb-24 bg-transparent"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         
         {/* Title */}
         <motion.div 
@@ -87,7 +87,7 @@ export default function Contact() {
         </motion.div>
 
         {/* Contact info grid & form */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start max-w-6xl 2xl:max-w-7xl mx-auto">
           
           {/* Left Column: Coordinates & Addresses */}
           <div className="lg:col-span-5 space-y-8">
@@ -248,8 +248,8 @@ export default function Contact() {
           </motion.div>
         </div>
 
-        {/* FAQs Accordion */}
-        <div className="mt-24 max-w-4xl mx-auto border-t border-brand-gold/10 pt-16">
+        {/* FAQ Preview or Support Note */}
+        <div className="mt-24 max-w-5xl 2xl:max-w-6xl mx-auto border-t border-brand-gold/10 pt-16">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
