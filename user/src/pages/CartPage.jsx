@@ -112,7 +112,7 @@ export default function CartPage() {
       exit={{ opacity: 0 }}
       className="min-h-screen pt-40 pb-24 bg-transparent"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         
         {/* Title */}
         <div className="mb-12">

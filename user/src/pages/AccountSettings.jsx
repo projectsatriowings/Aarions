@@ -154,7 +154,7 @@ export default function AccountSettings() {
       transition={{ duration: 0.4 }}
       className="min-h-screen pt-40 pb-24 bg-transparent"
     >
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container-prose">
         
         {/* Header */}
         <div className="text-center max-w-xl mx-auto mb-12 space-y-2">

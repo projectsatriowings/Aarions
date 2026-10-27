@@ -122,8 +122,8 @@ export default function Hero() {
       </div>
 
       {/* Main Hero Content Grid */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div className="relative z-10 site-container-fluid py-24 md:py-32 lg:py-36">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-center">
           
           {/* Left Column: Headline and Call-to-Actions */}
           <div className="lg:col-span-7 text-left space-y-6">
@@ -142,7 +142,7 @@ export default function Hero() {
             {/* Heading */}
             <h1 
               className="font-display font-bold text-white leading-tight tracking-tight animate-fade-up"
-              style={{ fontSize: "clamp(2.25rem, 5.2vw, 4.25rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }}
+              style={{ fontSize: "clamp(2.25rem, 5.2vw, 4.5rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }}
             >
               {settings?.heroTitleLine1 || "Pure Organic Honey,"} <br />
               <span className="text-gradient">{settings?.heroTitleLine2 || "A2 Ghee"}</span>
@@ -155,7 +155,7 @@ export default function Hero() {
             {/* Supporting paragraph */}
             <p 
               className="mb-8 font-light"
-              style={{ color: "rgba(255,255,255,0.68)", fontSize: "clamp(0.95rem, 2vw, 1.1rem)", lineHeight: 1.75, maxWidth: "520px" }}
+              style={{ color: "rgba(255,255,255,0.68)", fontSize: "clamp(0.95rem, 2vw, 1.15rem)", lineHeight: 1.75, maxWidth: "620px" }}
             >
               {settings?.heroSubtitle || "Bringing nature's finest honey, ghee, masalas, and spices directly from farm to your family's kitchen."}
             </p>

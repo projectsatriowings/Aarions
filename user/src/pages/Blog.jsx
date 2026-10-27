@@ -35,7 +35,7 @@ export default function Blog() {
       exit={{ opacity: 0 }}
       className="min-h-screen pt-40 pb-24 bg-transparent"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         
         {/* Header Banner */}
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
@@ -55,7 +55,7 @@ export default function Blog() {
         {loading ? (
           <Loader />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8">
             {blogs.map((blog, idx) => (
               <motion.article
                 key={blog._id || blog.id}

@@ -62,13 +62,19 @@ const orderSchema = new mongoose.Schema(
     paymentMethod: {
       type: String,
       required: true,
-      enum: ["razorpay", "cod"],
+      enum: ["razorpay", "cod", "upi"],
       default: "razorpay",
     },
     paymentInfo: {
       id: { type: String }, // Razorpay Payment ID or Transaction ID
       orderId: { type: String }, // Razorpay Order ID
       status: { type: String, default: "pending" },
+    },
+    paymentVerified: {
+      verified: { type: Boolean, default: false },
+      verifiedBy: { type: mongoose.Schema.Types.ObjectId, ref: "AdminUser" },
+      verifiedAt: { type: Date },
+      note: { type: String },
     },
     itemsPrice: {
       type: Number,

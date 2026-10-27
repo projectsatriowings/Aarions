@@ -16,6 +16,12 @@ dist-ssr
 .env.local
 .env.*.local
 *.local
+env
+**/env
+
+# Database backups
+backend/database_backups/
+database_backups/
 
 # Media uploads fallback directory
 backend/uploads/

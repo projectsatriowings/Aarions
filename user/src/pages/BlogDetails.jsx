@@ -63,7 +63,7 @@ export default function BlogDetails() {
       exit={{ opacity: 0 }}
       className="min-h-screen pt-40 pb-12 bg-transparent"
     >
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container-prose">
         
         {/* Back button */}
         <Link
