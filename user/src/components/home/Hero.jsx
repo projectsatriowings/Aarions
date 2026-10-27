@@ -8,12 +8,12 @@ export default function Hero() {
   const bgImages = settings?.heroImages
     ? settings.heroImages.split(",").map(img => img.trim()).filter(Boolean)
     : [
-        "/bg-ghee.png",
-        "/bg-honey.png",
-        "/bg-spices.png",
-        "/bg-masala.png",
-        "/auth-honey.jpg",
-        "/auth-spices-dark.jpg"
+        "/bg-ghee.webp",
+        "/bg-honey.webp",
+        "/bg-spices.webp",
+        "/bg-masala.webp",
+        "/auth-honey.webp",
+        "/auth-spices-dark.webp"
       ];
 
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
@@ -65,6 +65,10 @@ export default function Hero() {
             <img
               src={bgImages[currentBgIndex]}
               alt="Organic Farm Background"
+              width="1920"
+              height="1080"
+              loading="eager"
+              fetchpriority="high"
               className="w-full h-full object-cover"
             />
           </motion.div>
@@ -140,11 +144,11 @@ export default function Hero() {
               className="font-display font-bold text-white leading-tight tracking-tight animate-fade-up"
               style={{ fontSize: "clamp(2.25rem, 5.2vw, 4.25rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }}
             >
-              {settings?.heroTitleLine1 || "Pure Ingredients."} <br />
-              <span className="text-gradient">{settings?.heroTitleLine2 || "Authentic"}</span>
-              {settings?.heroTitleLine2Suffix || " Flavors."} <br />
+              {settings?.heroTitleLine1 || "Pure Organic Honey,"} <br />
+              <span className="text-gradient">{settings?.heroTitleLine2 || "A2 Ghee"}</span>
+              {settings?.heroTitleLine2Suffix || " & Authentic Spices."} <br />
               <em className="not-italic" style={{ color: "rgba(255,248,236,0.88)", fontStyle: "italic" }}>
-                {settings?.heroTitleLine3 || "Healthy Living."}
+                {settings?.heroTitleLine3 || "Healthy Living Products."}
               </em>
             </h1>
 
@@ -180,8 +184,11 @@ export default function Hero() {
                   style={{ width: "8.5rem", height: "8.5rem", borderColor: "rgba(232, 163, 23, 0.2)", boxShadow: "0 10px 30px rgba(232,163,23,0.15)" }}
                 >
                   <img 
-                    src="/ghee-hero.png" 
+                    src="/ghee-hero.webp" 
                     alt="Gir Cow Ghee" 
+                    width="136"
+                    height="136"
+                    loading="eager"
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -202,8 +209,11 @@ export default function Hero() {
                   style={{ width: "10rem", height: "10rem", borderColor: "rgba(232, 163, 23, 0.2)", boxShadow: "0 10px 30px rgba(232,163,23,0.15)" }}
                 >
                   <img 
-                    src="/honey-hero.png" 
+                    src="/honey-hero.webp" 
                     alt="Forest Honey" 
+                    width="160"
+                    height="160"
+                    loading="eager"
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -225,8 +235,11 @@ export default function Hero() {
                   style={{ width: "7rem", height: "7rem", borderColor: "rgba(178,58,46,0.25)", boxShadow: "0 10px 30px rgba(178,58,46,0.15)" }}
                 >
                   <img 
-                    src="/spices-hero.png" 
+                    src="/spices-hero.webp" 
                     alt="Organic Spices" 
+                    width="112"
+                    height="112"
+                    loading="eager"
                     className="w-full h-full object-cover"
                   />
                 </div>

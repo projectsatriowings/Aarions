@@ -76,7 +76,7 @@ export default function WhyChooseUs() {
       desc: "Carefully sourced from trusted farms. No fillers, no adulterants — only nature's finest.",
       color: "#355E3B",
       bg: "#EAF2ED",
-      imgSrc: "/pure_ingredients.png",
+      imgSrc: "/pure_ingredients.webp",
       imgType: "transparent"
     },
     {
@@ -85,7 +85,7 @@ export default function WhyChooseUs() {
       desc: "Every batch is lab-tested for purity, potency and safety. Because you deserve the best.",
       color: "#C8870F",
       bg: "#FCF4E5",
-      imgSrc: "/quality_tested.png",
+      imgSrc: "/quality_tested.webp",
       imgType: "transparent"
     },
     {
@@ -94,7 +94,7 @@ export default function WhyChooseUs() {
       desc: "Our products follow ancient recipes and time-honored methods for maximum goodness.",
       color: "#8A5E48",
       bg: "#F6EFEB",
-      imgSrc: "/traditional_recipes.png",
+      imgSrc: "/traditional_recipes.webp",
       imgType: "transparent"
     },
     {
@@ -103,7 +103,7 @@ export default function WhyChooseUs() {
       desc: "From Chennai to Mumbai, thousands of families rely on Aarions for pure wellness.",
       color: "#A07050",
       bg: "#F9EFE5",
-      imgSrc: "/happy_families.png",
+      imgSrc: "/happy_families.webp",
       imgType: "family-card"
     },
     {
@@ -112,7 +112,7 @@ export default function WhyChooseUs() {
       desc: "We work directly with farmers and beekeepers who share our values and vision.",
       color: "#2E5E4E",
       bg: "#E8F0EC",
-      imgSrc: "/ethically_sourced.png",
+      imgSrc: "/ethically_sourced.webp",
       imgType: "farmer-cutout"
     },
     {
@@ -121,7 +121,7 @@ export default function WhyChooseUs() {
       desc: "Designed to preserve freshness, nutrition and crafted to make an impression.",
       color: "#5D4E43",
       bg: "#F3EDE6",
-      imgSrc: "/premium_packaging.png",
+      imgSrc: "/premium_packaging.webp",
       imgType: "transparent"
     }
   ];
@@ -345,6 +345,7 @@ export default function WhyChooseUs() {
                         }}
                         src={item.imgSrc} 
                         alt={item.title}
+                        loading="lazy"
                         className="max-w-full max-h-full object-contain relative z-10" 
                       />
                     </div>
@@ -358,6 +359,7 @@ export default function WhyChooseUs() {
                         }}
                         src={item.imgSrc} 
                         alt={item.title}
+                        loading="lazy"
                         className="w-full h-full object-cover rounded-2xl border-2 border-brand-gold/15 group-hover:border-brand-gold/30 transition-colors duration-500 shadow-sm"
                       />
                       {/* Badge overlay at bottom */}
@@ -376,6 +378,7 @@ export default function WhyChooseUs() {
                         }}
                         src={item.imgSrc} 
                         alt={item.title}
+                        loading="lazy"
                         className="w-full h-full object-cover"
                       />
                     </div>

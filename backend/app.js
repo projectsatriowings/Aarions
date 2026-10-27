@@ -35,6 +35,11 @@ if (process.env.NODE_ENV === "development") {
 app.use(helmet({
   crossOriginResourcePolicy: false, // allows serving local static uploads
   crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" },
+  hsts: {
+    maxAge: 31536000,
+    includeSubDomains: true,
+    preload: true,
+  },
 }));
 
 // CORS Configuration
@@ -87,9 +92,19 @@ const limiter = rateLimit({
 app.use("/api", limiter);
 
 // ---------------- STATIC UPLOADS DIRECTORY ----------------
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-app.use("/spices", express.static(path.join(__dirname, "../user/public/spices")));
-app.use("/", express.static(path.join(__dirname, "../user/public")));
+const staticCacheOptions = {
+  maxAge: "30d",
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith(".html")) {
+      res.setHeader("Cache-Control", "public, max-age=0, must-revalidate");
+    } else {
+      res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+    }
+  },
+};
+app.use("/uploads", express.static(path.join(__dirname, "uploads"), staticCacheOptions));
+app.use("/spices", express.static(path.join(__dirname, "../user/public/spices"), staticCacheOptions));
+app.use("/", express.static(path.join(__dirname, "../user/public"), staticCacheOptions));
 
 // ---------------- ROUTE MOUNTING ----------------
 app.use("/api", customerRoutes);

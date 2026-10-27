@@ -4,19 +4,125 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png?v=4" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aarions | Premium Organic Ghee, Pure Honey & Traditional Spices</title>
+    <title>Aarions | Pure Honey, A2 Ghee & Organic Products</title>
     
     <!-- Meta tags for SEO -->
-    <meta name="description" content="Aarions brings you the finest selection of A2 Ghee, Buffalo Ghee, raw Forest Honey, traditional hand-pounded masalas, and organic wellness products. Authentically sourced, naturally processed." />
-    <meta name="keywords" content="Aarions, organic ghee, A2 cow ghee, forest honey, traditional masalas, organic spices, Chennai organic store, raw honey, wellness products" />
+    <meta name="description" content="Discover Aarions: 100% pure raw honey, organic A2 ghee, authentic spices, and natural wellness products sourced traditionally from local Indian farms." />
+    <meta name="keywords" content="Aarions, pure honey, organic ghee, A2 cow ghee, raw forest honey, traditional spices, organic products, herbal wellness, Chennai organic store" />
     <meta name="author" content="Aarions" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://www.aarions.in/" />
 
-    <!-- Google Fonts: Playfair Display (Serif) & Inter (Sans-serif) -->
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.aarions.in/" />
+    <meta property="og:site_name" content="Aarions" />
+    <meta property="og:title" content="Aarions | Pure Honey, A2 Ghee & Organic Products" />
+    <meta property="og:description" content="Discover Aarions: 100% pure raw honey, organic A2 ghee, authentic spices, and natural wellness products sourced traditionally from local Indian farms." />
+    <meta property="og:image" content="https://www.aarions.in/logo.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_IN" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://www.aarions.in/" />
+    <meta name="twitter:title" content="Aarions | Pure Honey, A2 Ghee & Organic Products" />
+    <meta name="twitter:description" content="Discover Aarions: 100% pure raw honey, organic A2 ghee, authentic spices, and natural wellness products." />
+    <meta name="twitter:image" content="https://www.aarions.in/logo.png" />
+
+    <!-- Preconnect to external font origins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Preload LCP Hero Image -->
+    <link rel="preload" as="image" href="/bg-ghee.webp" fetchpriority="high" type="image/webp" />
+
+    <!-- Non-blocking Google Fonts loading -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" />
+    </noscript>
+
+    <!-- Critical responsive media queries -->
+    <style>
+      @media (max-width: 640px) { :root { --viewport-breakpoint: 'mobile'; } }
+      @media (min-width: 641px) and (max-width: 1024px) { :root { --viewport-breakpoint: 'tablet'; } }
+      @media (min-width: 1025px) { :root { --viewport-breakpoint: 'desktop'; } }
+    </style>
+
     <!-- Google Identity Services (GSI) script -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PLACEHOLDER"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-PLACEHOLDER');
+    </script>
+
+    <!-- JSON-LD Structured Data Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://www.aarions.in/#organization",
+          "name": "Aarions",
+          "url": "https://www.aarions.in/",
+          "logo": "https://www.aarions.in/logo.png",
+          "description": "Premium organic ghee, raw forest honey, authentic hand-pounded spices, and natural wellness products.",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+91-98432-70810",
+            "contactType": "Customer Support",
+            "email": "info@aarions.in",
+            "areaServed": "IN",
+            "availableLanguage": ["English", "Tamil"]
+          },
+          "sameAs": [
+            "https://www.facebook.com/aarions",
+            "https://www.instagram.com/aarions"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://www.aarions.in/#website",
+          "url": "https://www.aarions.in/",
+          "name": "Aarions",
+          "publisher": {
+            "@id": "https://www.aarions.in/#organization"
+          },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://www.aarions.in/shop?search={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "Store",
+          "@id": "https://www.aarions.in/#store",
+          "name": "Aarions Store",
+          "url": "https://www.aarions.in/",
+          "image": "https://www.aarions.in/logo.png",
+          "telephone": "+91-98432-70810",
+          "priceRange": "₹₹",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "No.1A, G1, Ground Floor, Gurudev Complex, 57th St, Venkatraman Nagar, Korattur",
+            "addressLocality": "Chennai",
+            "addressRegion": "Tamil Nadu",
+            "postalCode": "600080",
+            "addressCountry": "IN"
+          }
+        }
+      ]
+    }
+    </script>
   </head>
   <body class="bg-brand-cream text-brand-brown font-inter antialiased min-h-screen">
     <div id="root"></div>

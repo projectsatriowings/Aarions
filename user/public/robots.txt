@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /profile
+Disallow: /orders
+Disallow: /cart
+Disallow: /checkout
+Disallow: /login
+Disallow: /signup
+
+Sitemap: https://www.aarions.in/sitemap.xml
+

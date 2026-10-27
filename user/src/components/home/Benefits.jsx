@@ -40,7 +40,7 @@ export default function Benefits() {
       step: "Step 5",
       title: "Swift Delivery",
       desc: "Orders processed same-day and delivered across India. Temperature-controlled for delicate products.",
-      image: "/delivery.png",
+      image: "/delivery.webp",
       color: "#4A3428",
       icon: TruckIcon
     },
@@ -252,6 +252,7 @@ export default function Benefits() {
                       <img
                         src={step.image}
                         alt={step.title}
+                        loading="lazy"
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                       {/* Hover subtle glow overlay */}

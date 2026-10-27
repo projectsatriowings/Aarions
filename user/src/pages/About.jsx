@@ -10,21 +10,21 @@ export default function About() {
       title: "Sustainable Sourcing",
       desc: "By collaborating with wild honey hunters and small village dairy farmers, we promote fair wages and protect natural ecosystems.",
       icon: <Heart className="w-5.5 h-5.5 text-brand-gold" />,
-      imgSrc: "/ethically_sourced.png",
+      imgSrc: "/ethically_sourced.webp",
       badgeText: "Ethically Sourced"
     },
     {
       title: "Ancient Wooden Churning",
       desc: "Our A2 Ghee is prepared strictly via the wooden Bilona method. We boil the milk, set curd, churn butter, and clarify it slowly on firewood.",
       icon: <Award className="w-5.5 h-5.5 text-brand-gold" />,
-      imgSrc: "/traditional_recipes.png",
+      imgSrc: "/traditional_recipes.webp",
       badgeText: "Bilona Tradition"
     },
     {
       title: "Zero Chemical Policy",
       desc: "No preservatives, synthetic colorants, starch fillers, or high-fructose corn syrup. We preserve the organic signature of our ingredients.",
       icon: <ShieldCheck className="w-5.5 h-5.5 text-brand-gold" />,
-      imgSrc: "/quality_tested.png",
+      imgSrc: "/quality_tested.webp",
       badgeText: "Lab Certified"
     },
   ];
@@ -141,7 +141,7 @@ export default function About() {
             <div className="absolute -top-3.5 -left-3.5 w-full h-full border border-brand-gold/25 rounded-3xl pointer-events-none translate-x-1 translate-y-1 hidden sm:block group-hover:border-brand-red/30 transition-colors duration-500" />
             <div className="overflow-hidden rounded-3xl border border-brand-gold/15 shadow-xl relative">
               <img
-                src={settings?.aboutHeroImage || "/about_hero_ghee_honey.png"}
+                src={settings?.aboutHeroImage || "/about_hero_ghee_honey.webp"}
                 alt="Aarions A2 Ghee and Forest Honey"
                 className="w-full object-cover h-[350px] sm:h-[430px] transition-transform duration-[1.2s] ease-out group-hover:scale-105"
               />

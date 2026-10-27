@@ -246,9 +246,9 @@ export const products = [
     ],
     "ingredients": "100% Raw Wild Forest Honey",
     "weight": "100g",
-    "image": "/aarions-raw-honey.png",
+    "image": "/aarions-raw-honey.webp",
     "images": [
-      "/aarions-raw-honey.png"
+      "/aarions-raw-honey.webp"
     ],
     "inStock": true,
     "variants": [
@@ -531,9 +531,9 @@ export const products = [
     ],
     "ingredients": "Coriander, Cumin, Chilli, Pepper, Cloves, Cinnamon, Cardamom, Fennel, Star Anise, Nutmeg",
     "weight": "100g",
-    "image": "/spices/spice_3.jpg",
+    "image": "/spices/spice_3.webp",
     "images": [
-      "/spices/spice_3.jpg"
+      "/spices/spice_3.webp"
     ],
     "inStock": true,
     "variants": [
@@ -584,9 +584,9 @@ export const products = [
     ],
     "ingredients": "Coriander, Cumin, Chilli, Black Pepper, Turmeric, Ginger, Garlic, Cloves, Cinnamon, Cardamom",
     "weight": "100g",
-    "image": "/spices/chicken_masala.jpg",
+    "image": "/spices/chicken_masala.webp",
     "images": [
-      "/spices/chicken_masala.jpg"
+      "/spices/chicken_masala.webp"
     ],
     "inStock": true,
     "variants": [
@@ -639,9 +639,9 @@ export const products = [
     ],
     "ingredients": "100% Pure Slow-Ground Turmeric Rhizome",
     "weight": "100g",
-    "image": "/spices/spice_6.jpg",
+    "image": "/spices/spice_6.webp",
     "images": [
-      "/spices/spice_6.jpg"
+      "/spices/spice_6.webp"
     ],
     "inStock": true,
     "variants": [
@@ -694,9 +694,9 @@ export const products = [
     ],
     "ingredients": "100% Pure Kashmiri Red Chillies",
     "weight": "100g",
-    "image": "/spices/spice_1.jpg",
+    "image": "/spices/spice_1.webp",
     "images": [
-      "/spices/spice_1.jpg"
+      "/spices/spice_1.webp"
     ],
     "inStock": true,
     "variants": [
@@ -745,9 +745,9 @@ export const products = [
     ],
     "ingredients": "Cinnamon, Cardamom, Cloves, Cumin, Coriander, Black Pepper, Nutmeg, Mace",
     "weight": "100g",
-    "image": "/spices/spice_2.jpg",
+    "image": "/spices/spice_2.webp",
     "images": [
-      "/spices/spice_2.jpg"
+      "/spices/spice_2.webp"
     ],
     "inStock": true,
     "variants": [
@@ -798,9 +798,9 @@ export const products = [
     ],
     "ingredients": "100% Ground Red Chillies",
     "weight": "100g",
-    "image": "/spices/chilli_powder.jpg",
+    "image": "/spices/chilli_powder.webp",
     "images": [
-      "/spices/chilli_powder.jpg"
+      "/spices/chilli_powder.webp"
     ],
     "inStock": true,
     "variants": [
@@ -851,9 +851,9 @@ export const products = [
     ],
     "ingredients": "Cumin, Coriander, Saffron, Cardamom, Cloves, Cinnamon, Bay Leaves, Mace, Nutmeg, Star Anise",
     "weight": "100g",
-    "image": "/spices/spice_5.jpg",
+    "image": "/spices/spice_5.webp",
     "images": [
-      "/spices/spice_5.jpg"
+      "/spices/spice_5.webp"
     ],
     "inStock": true,
     "variants": [
@@ -902,9 +902,9 @@ export const products = [
     ],
     "ingredients": "Coriander Seeds, Red Chillies, Toor Dal, Chana Dal, Fenugreek, Cumin, Black Pepper, Turmeric, Asafoetida",
     "weight": "100g",
-    "image": "/spices/spice_7.jpg",
+    "image": "/spices/spice_7.webp",
     "images": [
-      "/spices/spice_7.jpg"
+      "/spices/spice_7.webp"
     ],
     "inStock": true,
     "variants": [
@@ -955,9 +955,9 @@ export const products = [
     ],
     "ingredients": "Red Chilli, Coriander, Ginger, Garlic, Corn Flour, Cumin, Pepper, Salt, Acidifying Agent",
     "weight": "100g",
-    "image": "/spices/spice_4.jpg",
+    "image": "/spices/spice_4.webp",
     "images": [
-      "/spices/spice_4.jpg"
+      "/spices/spice_4.webp"
     ],
     "inStock": true,
     "variants": [

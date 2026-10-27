@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useSettings } from "../context/SettingsContext";
 import Hero from "../components/home/Hero";
@@ -12,6 +12,45 @@ import Testimonials from "../components/home/Testimonials";
 import BlogSection from "../components/home/BlogSection";
 import Newsletter from "../components/home/Newsletter";
 import QuickViewModal from "../components/common/QuickViewModal";
+
+function LazySection({ children, minHeight = "350px" }) {
+  const [isVisible, setIsVisible] = useState(() => {
+    if (typeof navigator !== "undefined" && /bot|crawl|slurp|spider/i.test(navigator.userAgent)) {
+      return true;
+    }
+    return false;
+  });
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (isVisible) return;
+    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
+      setIsVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "400px 0px" }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+    return () => observer.disconnect();
+  }, [isVisible]);
+
+  return (
+    <div ref={ref} style={{ minHeight: isVisible ? undefined : minHeight }}>
+      {isVisible ? children : null}
+    </div>
+  );
+}
 
 export default function Home() {
   const { settings } = useSettings();
@@ -42,13 +81,29 @@ export default function Home() {
       case "benefits":
         return settings?.showBenefits !== false ? <Benefits key="benefits" /> : null;
       case "bestSellers":
-        return settings?.showBestSellers !== false ? <BestSellers key="bestSellers" onQuickView={handleQuickView} /> : null;
+        return settings?.showBestSellers !== false ? (
+          <LazySection key="bestSellers">
+            <BestSellers onQuickView={handleQuickView} />
+          </LazySection>
+        ) : null;
       case "testimonials":
-        return settings?.showTestimonials !== false ? <Testimonials key="testimonials" /> : null;
+        return settings?.showTestimonials !== false ? (
+          <LazySection key="testimonials">
+            <Testimonials />
+          </LazySection>
+        ) : null;
       case "blogs":
-        return settings?.showBlogs !== false ? <BlogSection key="blogs" /> : null;
+        return settings?.showBlogs !== false ? (
+          <LazySection key="blogs">
+            <BlogSection />
+          </LazySection>
+        ) : null;
       case "newsletter":
-        return settings?.showNewsletter !== false ? <Newsletter key="newsletter" /> : null;
+        return settings?.showNewsletter !== false ? (
+          <LazySection key="newsletter" minHeight="250px">
+            <Newsletter />
+          </LazySection>
+        ) : null;
       default:
         return null;
     }

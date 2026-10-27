@@ -114,7 +114,7 @@ export default function LoginPage() {
         {/* Single, beautiful, relevant image */}
         <img
           className="auth-hero-img"
-          src="/auth-honey.jpg"
+          src="/auth-honey.webp"
           alt="Premium honey jar"
         />
         <div className="auth-hero-grad" />
@@ -122,7 +122,7 @@ export default function LoginPage() {
         {/* Logo badge top-left */}
         <div className="absolute top-10 left-14">
           <img 
-            src="/logo.png?v=3" 
+            src="/logo.webp?v=3" 
             alt="Aarions Logo" 
             className="h-16 w-auto object-contain brightness-0 invert"
           />
@@ -167,7 +167,7 @@ export default function LoginPage() {
             <>
               {/* Brand + heading */}
               <div className="auth-logo-ring">
-                <img src="/logo.png?v=3" alt="Aarions" className="w-full h-full object-contain" />
+                <img src="/logo.webp?v=3" alt="Aarions" className="w-full h-full object-contain" />
               </div>
               <h1 className="auth-title">Welcome Back</h1>
               <p className="auth-subtitle">Sign in to your Aarions account</p>

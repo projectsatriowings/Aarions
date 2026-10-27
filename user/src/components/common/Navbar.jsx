@@ -90,7 +90,7 @@ export default function Navbar() {
             <div className="flex-shrink-0 flex items-center">
               <Link to="/" className="flex items-center">
                 <img 
-                  src="/logo.png?v=3" 
+                  src="/logo.webp?v=3" 
                   alt="Aarions Logo" 
                   className={`h-14 w-auto object-contain transition-all duration-300 ${
                     showGlass ? "" : "brightness-0 invert"

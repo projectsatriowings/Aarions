@@ -146,11 +146,17 @@ export default function Footer() {
                 <svg className="w-5 h-5 text-brand-gold flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L22 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                <span>
-                  {(!settings?.contactEmail || settings.contactEmail === "support@aarions.com")
-                    ? "info@aarions.in"
-                    : settings.contactEmail}
-                </span>
+                <a
+                  href={`mailto:${settings?.contactEmail || "info@aarions.in"}`}
+                  className="hover:text-brand-gold transition-colors"
+                  title="Contact Aarions Support"
+                  dangerouslySetInnerHTML={{
+                    __html: (settings?.contactEmail || "info@aarions.in")
+                      .split("")
+                      .map((c) => "&#" + c.charCodeAt(0) + ";")
+                      .join("")
+                  }}
+                />
               </li>
             </ul>
 

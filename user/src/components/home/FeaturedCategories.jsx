@@ -24,7 +24,7 @@ export default function FeaturedCategories() {
       slug: "honey",
       count: 6,
       description: "Pure raw honey sourced from forests and mountains",
-      image: "/aarions-raw-honey.png",
+      image: "/aarions-raw-honey.webp",
       color: "#E8A317"
     },
     {
@@ -58,7 +58,7 @@ export default function FeaturedCategories() {
             slug: cat.slug,
             count: cat.productCount !== undefined ? cat.productCount : 0,
             description: cat.description || `Premium organic ${cat.name.toLowerCase()} sourced traditionally.`,
-            image: cat.image || "/logo.png?v=3",
+            image: cat.image || "/logo.webp?v=3",
           }));
           setCategories(mapped);
         }
@@ -104,7 +104,7 @@ export default function FeaturedCategories() {
             Our Range
           </span>
           <h2 className="font-display font-bold text-brand-brown mb-3 text-3xl sm:text-4xl lg:text-5xl">
-            Shop By Category
+            Shop Organic Categories: Pure Honey, Ghee & Spices
           </h2>
           <p className="text-brand-brown/60 text-base lg:text-lg max-w-xl mx-auto font-light">
             From wild-harvested honeys to stone-ground spices — every category crafted with intention.
@@ -127,6 +127,7 @@ export default function FeaturedCategories() {
                   <img
                     src={getImageUrl(cat.image)}
                     alt={cat.name}
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-brand-brown/95 via-brand-brown/50 to-brand-brown/10" />

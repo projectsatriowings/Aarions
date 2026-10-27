@@ -151,14 +151,14 @@ export default function SignupPage() {
       <div className="auth-hero">
         <img
           className="auth-hero-img"
-          src="/auth-spices-dark.jpg"
+          src="/auth-spices-dark.webp"
           alt="Authentic Indian spices"
         />
         <div className="auth-hero-grad" />
 
         <div className="absolute top-10 left-14">
           <img 
-            src="/logo.png?v=3" 
+            src="/logo.webp?v=3" 
             alt="Aarions Logo" 
             className="h-16 w-auto object-contain brightness-0 invert"
           />
@@ -217,7 +217,7 @@ export default function SignupPage() {
           ) : (
             <>
               <div className="auth-logo-ring">
-                <img src="/logo.png?v=3" alt="Aarions" className="w-full h-full object-contain" />
+                <img src="/logo.webp?v=3" alt="Aarions" className="w-full h-full object-contain" />
               </div>
               <h1 className="auth-title">Create Account</h1>
               <p className="auth-subtitle">Join Aarions — pure, natural, trusted</p>
