@@ -13,7 +13,6 @@ import AnnouncementBar from "./components/common/AnnouncementBar";
 import Navbar from "./components/common/Navbar";
 import Footer from "./components/common/Footer";
 import ScrollToTop from "./components/common/ScrollToTop";
-import CustomCursor from "./components/common/CustomCursor";
 
 // Pages
 import Home from "./pages/Home";
@@ -42,7 +41,6 @@ function AppShell() {
 
   return (
     <>
-      <CustomCursor />
       <ScrollToTop />
 
       {isAuthPage ? (
