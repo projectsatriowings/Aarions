@@ -32,7 +32,7 @@ export default function Benefits() {
       step: "Step 4",
       title: "Premium Packaging",
       desc: "Packed in premium, airtight containers designed to preserve freshness and reflect the quality within.",
-      image: "https://aarions.netlify.app/ghee.png",
+      image: "/products/a2_cow_ghee.webp",
       color: "#C8870F",
       icon: Gift
     },

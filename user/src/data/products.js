@@ -30,9 +30,9 @@ export const products = [
     ],
     "ingredients": "100% Pure Gir Cow Milk Fat",
     "weight": "250 ml",
-    "image": "https://aarions.in/img/honey/ghir%20ghee.jpg",
+    "image": "/products/ghir_ghee.webp",
     "images": [
-      "https://aarions.in/img/honey/ghir%20ghee.jpg"
+      "/products/ghir_ghee.webp"
     ],
     "inStock": true,
     "variants": [
@@ -83,9 +83,9 @@ export const products = [
     ],
     "ingredients": "100% Pure Buffalo Milk Fat",
     "weight": "250 ml",
-    "image": "https://aarions.in/img/honey/Buflow%20honey.png",
+    "image": "/products/buflow_honey.webp",
     "images": [
-      "https://aarions.in/img/honey/Buflow%20honey.png"
+      "/products/buflow_honey.webp"
     ],
     "inStock": true,
     "variants": [
@@ -136,9 +136,9 @@ export const products = [
     ],
     "ingredients": "100% Pure Country Cow Milk Fat",
     "weight": "250 ml",
-    "image": "https://aarions.in/img/honey/A2%20cow%20ghee.png",
+    "image": "/products/a2_cow_ghee.webp",
     "images": [
-      "https://aarions.in/img/honey/A2%20cow%20ghee.png"
+      "/products/a2_cow_ghee.webp"
     ],
     "inStock": true,
     "variants": [
@@ -189,9 +189,9 @@ export const products = [
     ],
     "ingredients": "100% Pure Drumstick Flower Honey",
     "weight": "100g",
-    "image": "https://aarions.in/img/honey/drumstick.jpg",
+    "image": "/products/drumstick_honey.webp",
     "images": [
-      "https://aarions.in/img/honey/drumstick.jpg"
+      "/products/drumstick_honey.webp"
     ],
     "inStock": true,
     "variants": [
@@ -303,9 +303,9 @@ export const products = [
     ],
     "ingredients": "100% Pure Stingless Small Bee Honey",
     "weight": "100g",
-    "image": "https://aarions.in/img/honey/smallbees.jpg",
+    "image": "/products/smallbees_honey.webp",
     "images": [
-      "https://aarions.in/img/honey/smallbees.jpg"
+      "/products/smallbees_honey.webp"
     ],
     "inStock": true,
     "variants": [
@@ -360,9 +360,9 @@ export const products = [
     ],
     "ingredients": "100% Raw Mountain Flower Honey",
     "weight": "100g",
-    "image": "https://aarions.in/img/honey/Mountain%20honey%20M.jpg",
+    "image": "/products/mountain_honey.webp",
     "images": [
-      "https://aarions.in/img/honey/Mountain%20honey%20M.jpg"
+      "/products/mountain_honey.webp"
     ],
     "inStock": true,
     "variants": [
@@ -417,9 +417,9 @@ export const products = [
     ],
     "ingredients": "100% Pure Himalayan Wildflower Honey",
     "weight": "100g",
-    "image": "https://aarions.in/img/honey/himalayaas.jpg",
+    "image": "/products/himalayas_honey.webp",
     "images": [
-      "https://aarions.in/img/honey/himalayaas.jpg"
+      "/products/himalayas_honey.webp"
     ],
     "inStock": true,
     "variants": [
@@ -474,9 +474,9 @@ export const products = [
     ],
     "ingredients": "100% Organic Sidr Tree Honey",
     "weight": "100g",
-    "image": "https://aarions.in/img/honey/sidr.jpg",
+    "image": "/products/sidr_honey.webp",
     "images": [
-      "https://aarions.in/img/honey/sidr.jpg"
+      "/products/sidr_honey.webp"
     ],
     "inStock": true,
     "variants": [

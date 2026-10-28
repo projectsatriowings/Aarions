@@ -396,7 +396,17 @@ export default function Navbar() {
               <div className="text-xs text-brand-brown/50 uppercase tracking-widest">Support & Contact</div>
               <p className="text-sm text-brand-brown">
                 {settings?.contactPhone || "+91 98432 70810"} <br />
-                {settings?.contactEmail || "info@aarions.in"}
+                <a
+                  href={`mailto:${settings?.contactEmail || "info@aarions.in"}`}
+                  className="hover:text-brand-gold transition-colors"
+                  title="Aarions Customer Support"
+                  dangerouslySetInnerHTML={{
+                    __html: (settings?.contactEmail || "info@aarions.in")
+                      .split("")
+                      .map((c) => "&#" + c.charCodeAt(0) + ";")
+                      .join("")
+                  }}
+                />
               </p>
             </div>
           </div>

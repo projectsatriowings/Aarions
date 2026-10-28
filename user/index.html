@@ -20,7 +20,7 @@
     <meta property="og:site_name" content="Aarions" />
     <meta property="og:title" content="Aarions | Pure Honey, A2 Ghee & Organic Products" />
     <meta property="og:description" content="Discover Aarions: 100% pure raw honey, organic A2 ghee, authentic spices, and natural wellness products sourced traditionally from local Indian farms." />
-    <meta property="og:image" content="https://www.aarions.in/logo.png" />
+    <meta property="og:image" content="https://www.aarions.in/logo.webp" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="en_IN" />
@@ -30,7 +30,7 @@
     <meta name="twitter:url" content="https://www.aarions.in/" />
     <meta name="twitter:title" content="Aarions | Pure Honey, A2 Ghee & Organic Products" />
     <meta name="twitter:description" content="Discover Aarions: 100% pure raw honey, organic A2 ghee, authentic spices, and natural wellness products." />
-    <meta name="twitter:image" content="https://www.aarions.in/logo.png" />
+    <meta name="twitter:image" content="https://www.aarions.in/logo.webp" />
 
     <!-- Preconnect to external font origins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,9 +53,6 @@
       @media (min-width: 1025px) { :root { --viewport-breakpoint: 'desktop'; } }
     </style>
 
-    <!-- Google Identity Services (GSI) script -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-
     <!-- Google Analytics (GA4) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-PLACEHOLDER"></script>
     <script>
@@ -75,13 +72,12 @@
           "@id": "https://www.aarions.in/#organization",
           "name": "Aarions",
           "url": "https://www.aarions.in/",
-          "logo": "https://www.aarions.in/logo.png",
+          "logo": "https://www.aarions.in/logo.webp",
           "description": "Premium organic ghee, raw forest honey, authentic hand-pounded spices, and natural wellness products.",
           "contactPoint": {
             "@type": "ContactPoint",
             "telephone": "+91-98432-70810",
             "contactType": "Customer Support",
-            "email": "info@aarions.in",
             "areaServed": "IN",
             "availableLanguage": ["English", "Tamil"]
           },
@@ -109,7 +105,7 @@
           "@id": "https://www.aarions.in/#store",
           "name": "Aarions Store",
           "url": "https://www.aarions.in/",
-          "image": "https://www.aarions.in/logo.png",
+          "image": "https://www.aarions.in/logo.webp",
           "telephone": "+91-98432-70810",
           "priceRange": "₹₹",
           "address": {
@@ -128,5 +124,7 @@
   <body class="bg-brand-cream text-brand-brown font-inter antialiased min-h-screen">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <!-- Non-blocking Google Identity Services (GSI) script loaded at end of body -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
   </body>
 </html>

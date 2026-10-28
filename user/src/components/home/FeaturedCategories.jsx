@@ -15,7 +15,7 @@ export default function FeaturedCategories() {
       slug: "ghee",
       count: 3,
       description: "Traditional clarifying butter churned from pure cream",
-      image: "https://aarions.in/img/honey/ghir%20ghee.jpg",
+      image: "/products/ghir_ghee.webp",
       color: "#E8A317"
     },
     {
@@ -33,7 +33,7 @@ export default function FeaturedCategories() {
       slug: "masala",
       count: 6,
       description: "Authentic spice blends crafted from traditional recipes",
-      image: "https://aarions.in/img/about/Masala/Masala/mutton.jpg",
+      image: "/products/mutton_masala.webp",
       color: "#E8A317"
     },
     {
@@ -42,7 +42,7 @@ export default function FeaturedCategories() {
       slug: "spices",
       count: 3,
       description: "Single-origin premium spices slow-ground to preserve oils",
-      image: "https://aarions.in/img/about/Masala/Masala/tumeric.jpg",
+      image: "/products/turmeric_powder.webp",
       color: "#E8A317"
     }
   ];
