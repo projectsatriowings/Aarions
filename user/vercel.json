@@ -80,6 +80,7 @@
     }
   ],
   "rewrites": [
+    { "source": "/googled830f38830b0a3b5.html", "destination": "/googled830f38830b0a3b5.html" },
     { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
     { "source": "/robots.txt", "destination": "/robots.txt" },
     { "source": "/ads.txt", "destination": "/ads.txt" },
