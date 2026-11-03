@@ -46,7 +46,6 @@ function AppShell() {
 
   return (
     <>
-      <CustomCursor />
       <ScrollToTop />
 
       {isAuthPage ? (
