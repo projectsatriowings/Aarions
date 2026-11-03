@@ -245,6 +245,8 @@ export default function BestSellers({ onQuickView }) {
                           <img
                             src={getImageUrl(product.image)}
                             alt={product.name}
+                            width="300"
+                            height="300"
                             loading="lazy"
                             className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-108"
                           />

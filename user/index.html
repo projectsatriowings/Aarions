@@ -5,7 +5,7 @@
     <link rel="icon" type="image/webp" href="/favicon.webp" />
     <link rel="icon" type="image/png" href="/favicon.png?v=4" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aarions | Pure Honey, A2 Ghee, Organic Masalas & Natural Spices</title>
+    <title>Aarions | Pure Honey, A2 Ghee & Organic Masalas</title>
     
     <!-- Meta tags for SEO -->
     <meta name="description" content="Discover Aarions: 100% pure raw honey, organic A2 ghee, authentic masalas, spices, and natural wellness products sourced traditionally from local Indian farms." />
@@ -20,7 +20,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.aarions.in/" />
     <meta property="og:site_name" content="Aarions" />
-    <meta property="og:title" content="Aarions | Pure Honey, A2 Ghee, Organic Masalas & Natural Spices" />
+    <meta property="og:title" content="Aarions | Pure Honey, A2 Ghee & Organic Masalas" />
     <meta property="og:description" content="Discover Aarions: 100% pure raw honey, organic A2 ghee, authentic masalas, spices, and natural wellness products sourced traditionally from local Indian farms." />
     <meta property="og:image" content="https://www.aarions.in/logo.webp" />
     <meta property="og:image:width" content="1200" />
@@ -30,7 +30,7 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://www.aarions.in/" />
-    <meta name="twitter:title" content="Aarions | Pure Honey, A2 Ghee, Organic Masalas & Natural Spices" />
+    <meta name="twitter:title" content="Aarions | Pure Honey, A2 Ghee & Organic Masalas" />
     <meta name="twitter:description" content="Discover Aarions: 100% pure raw honey, organic A2 ghee, authentic masalas, spices, and natural wellness products." />
     <meta name="twitter:image" content="https://www.aarions.in/logo.webp" />
 
@@ -89,31 +89,13 @@
       @media (min-width: 1025px) { :root { --viewport-breakpoint: 'desktop'; } }
     </style>
 
-    <!-- Non-blocking Google Analytics Initialization -->
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-E6M9R9B2V5"></script>
     <script>
-      (function() {
-        var gaId = 'G-PLACEHOLDER';
-        if (gaId && gaId !== 'G-PLACEHOLDER') {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          window.gtag = gtag;
-          gtag('js', new Date());
-          gtag('config', gaId);
-
-          var loadGA = function() {
-            var s = document.createElement('script');
-            s.async = true;
-            s.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaId;
-            document.head.appendChild(s);
-          };
-
-          if ('requestIdleCallback' in window) {
-            requestIdleCallback(loadGA);
-          } else {
-            window.addEventListener('load', loadGA);
-          }
-        }
-      })();
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-E6M9R9B2V5', { 'anonymize_ip': true });
     </script>
 
     <!-- JSON-LD Structured Data Schema -->

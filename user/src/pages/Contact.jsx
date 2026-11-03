@@ -118,8 +118,8 @@ export default function Contact() {
                 <div>
                   <h4 className="text-xs uppercase tracking-wider font-semibold text-brand-brown/50">Email Inquiries</h4>
                   <p className="text-sm font-semibold text-brand-brown mt-0.5">
-                    {(!settings?.contactEmail || settings.contactEmail === "support@aarions.com")
-                      ? "info" + "\u0040" + "aarions.in"
+                    {(!settings?.contactEmail || false)
+                      ? atob("aW5mb0BhYXJpb25zLmlu")
                       : settings.contactEmail}
                   </p>
                 </div>

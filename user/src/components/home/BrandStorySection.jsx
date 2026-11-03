@@ -26,6 +26,8 @@ export default function BrandStorySection() {
                 loading="lazy"
                 decoding="async"
                 alt="Aarions Organic Farming"
+                width="800"
+                height="450"
                 className="w-full object-cover h-[350px] sm:h-[450px]"
               />
               {/* Soft overlay gradient */}

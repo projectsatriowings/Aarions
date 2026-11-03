@@ -65,8 +65,8 @@ export default function Hero() {
             <img
               src={bgImages[currentBgIndex]}
               alt="Organic Farm Background"
-              width="1920"
-              height="1080"
+              width="1000"
+              height="1000"
               loading="eager"
               fetchpriority="high"
               className="w-full h-full object-cover"

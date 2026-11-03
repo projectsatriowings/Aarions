@@ -127,7 +127,10 @@ export default function FeaturedCategories() {
                   <img
                     src={getImageUrl(cat.image)}
                     alt={cat.name}
+                    width="500"
+                    height="500"
                     loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-brand-brown/95 via-brand-brown/50 to-brand-brown/10" />

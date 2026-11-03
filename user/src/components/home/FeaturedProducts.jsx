@@ -193,6 +193,8 @@ export default function FeaturedProducts({ onQuickView }) {
                   <img
                     src={getImageUrl(heroProduct.image)}
                     alt={heroProduct.name}
+                    width="420"
+                    height="420"
                     loading="lazy"
                     decoding="async"
                     className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
@@ -377,6 +379,8 @@ export default function FeaturedProducts({ onQuickView }) {
                             <img
                               src={getImageUrl(product.image)}
                               alt={product.name}
+                              width="300"
+                              height="375"
                               loading="lazy"
                               className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
                             />

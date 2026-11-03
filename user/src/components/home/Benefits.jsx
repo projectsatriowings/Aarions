@@ -8,7 +8,7 @@ export default function Benefits() {
       step: "Step 1",
       title: "Farm & Source",
       desc: "We partner with verified organic farms and trusted beekeepers across India who follow sustainable practices.",
-      image: "/bg-farm.webp",
+      image: "/bg-farm-sm.webp",
       color: "#355E3B",
       icon: Trees
     },
@@ -16,7 +16,7 @@ export default function Benefits() {
       step: "Step 2",
       title: "Harvest & Collect",
       desc: "Honey is extracted using traditional cold-spinning methods. Spices are hand-harvested at peak potency.",
-      image: "/pure_ingredients.webp",
+      image: "/pure_ingredients-sm.webp",
       color: "#E8A317",
       icon: Leaf
     },
@@ -24,7 +24,7 @@ export default function Benefits() {
       step: "Step 3",
       title: "Lab Testing",
       desc: "Every batch undergoes rigorous quality testing. We check purity, potency, and compliance with FSSAI standards.",
-      image: "/quality_tested.webp",
+      image: "/quality_tested-sm.webp",
       color: "#B23A2E",
       icon: ShieldAlert
     },
@@ -32,7 +32,7 @@ export default function Benefits() {
       step: "Step 4",
       title: "Premium Packaging",
       desc: "Packed in premium, airtight containers designed to preserve freshness and reflect the quality within.",
-      image: "/premium_packaging.webp",
+      image: "/premium_packaging-sm.webp",
       color: "#C8870F",
       icon: Gift
     },
@@ -40,7 +40,7 @@ export default function Benefits() {
       step: "Step 5",
       title: "Swift Delivery",
       desc: "Orders processed same-day and delivered across India. Temperature-controlled for delicate products.",
-      image: "/delivery.webp",
+      image: "/delivery-sm.webp",
       color: "#4A3428",
       icon: TruckIcon
     },
@@ -48,7 +48,7 @@ export default function Benefits() {
       step: "Step 6",
       title: "Happy Families",
       desc: "Pure, natural products that your family can trust — from our farm, directly to your kitchen.",
-      image: "/happy_families.webp",
+      image: "/happy_families-sm.webp",
       color: "#355E3B",
       icon: Heart
     }
@@ -246,13 +246,16 @@ export default function Benefits() {
                     <motion.div 
                       whileHover={{ y: -6, scale: 1.02 }}
                       transition={{ type: "spring", stiffness: 100, damping: 15 }}
-                      className="relative rounded-3xl overflow-hidden aspect-video shadow-2xl border border-white/10 group cursor-pointer"
+                      className="relative rounded-3xl overflow-hidden aspect-square sm:aspect-[4/3] max-w-[360px] mx-auto shadow-2xl border border-white/10 group cursor-pointer"
                       style={{ minHeight: "220px" }}
                     >
                       <img
                         src={step.image}
                         alt={step.title}
                         loading="lazy"
+                        width="288"
+                        height="288"
+                        decoding="async"
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                       {/* Hover subtle glow overlay */}

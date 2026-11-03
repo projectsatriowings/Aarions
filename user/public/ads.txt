@@ -1,4 +1,4 @@
 # Aarions ads.txt - Authorized Digital Sellers
 # Domain: aarions.in
-contact=info@aarions.in
+contact=https://www.aarions.in/contact
 

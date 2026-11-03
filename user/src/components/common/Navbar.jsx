@@ -398,17 +398,14 @@ export default function Navbar() {
               <div className="text-xs text-brand-brown/50 uppercase tracking-widest">Support & Contact</div>
               <p className="text-sm text-brand-brown">
                 {settings?.contactPhone || "+91 98432 70810"} <br />
-                <a
-                  href={`mailto:${settings?.contactEmail || "info@aarions.in"}`}
-                  className="hover:text-brand-gold transition-colors"
-                  title="Aarions Customer Support"
-                  dangerouslySetInnerHTML={{
-                    __html: (settings?.contactEmail || "info@aarions.in")
-                      .split("")
-                      .map((c) => "&#" + c.charCodeAt(0) + ";")
-                      .join("")
-                  }}
-                />
+                <Link
+                  to="/contact"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="hover:text-brand-gold transition-colors block text-brand-gold font-medium mt-0.5"
+                  title="Contact Aarions Support Desk"
+                >
+                  Contact Support Desk
+                </Link>
               </p>
             </div>
           </div>

@@ -93,6 +93,8 @@ export default function BlogSection() {
                   <img
                     src={getImageUrl(blog.image)}
                     alt={blog.title}
+                    width="400"
+                    height="224"
                     loading="lazy"
                     decoding="async"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
