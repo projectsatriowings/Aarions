@@ -1,0 +1,106 @@
+# ══════════════════════════════════════════════════════════════════════
+# AARIONS PRODUCTION WEB SERVER CONFIGURATION (.htaccess)
+# Optimized for Hostinger (Apache & OpenLiteSpeed)
+# ══════════════════════════════════════════════════════════════════════
+
+# 1. SECURITY & HTTPS CANONICAL REDIRECTION
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Force HTTPS
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Enforce Canonical www.aarions.in (matches canonical tags)
+  RewriteCond %{HTTP_HOST} ^aarions\.in$ [NC]
+  RewriteRule ^(.*)$ https://www.aarions.in/$1 [R=301,L]
+</IfModule>
+
+# 2. CUSTOM 404 ERROR DOCUMENT (Resolves SEO Checkup 404 Test)
+ErrorDocument 404 /404.html
+
+# 3. SINGLE PAGE APPLICATION (SPA) ROUTING (React Router)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+
+  # If file or directory physically exists, serve it directly
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Allow explicit requests to static special files
+  RewriteRule ^(robots\.txt|sitemap\.xml|rss\.xml|feed\.xml|ads\.txt|404\.html)$ - [L]
+
+  # Fallback all other client-side routes to index.html
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# 4. MIME TYPES FOR MODERN ASSETS & WEBP
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+  AddType image/avif .avif
+  AddType image/svg+xml .svg
+  AddType font/woff2 .woff2
+  AddType font/woff .woff
+  AddType application/rss+xml .xml
+</IfModule>
+
+# 5. BROWSER CACHE HEADERS (1-Year Immutable for Compressed Assets)
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 month"
+
+  # HTML: Revalidate quickly to receive new deployments
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType application/json "access plus 0 seconds"
+  ExpiresByType application/xml "access plus 1 hour"
+  ExpiresByType text/xml "access plus 1 hour"
+
+  # Static Media & Fonts: Cache for 1 Year
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/avif "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+  # Far-future caching for versioned assets and modern images
+  <FilesMatch "\.(ico|pdf|jpg|jpeg|png|gif|webp|avif|js|css|woff2|woff)$">
+    Header set Cache-Control "max-age=31536000, public, immutable"
+  </FilesMatch>
+
+  # Ensure HTML is never stale
+  <FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+  </FilesMatch>
+
+  # Security headers
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# 6. GZIP COMPRESSION (Reduces payload for HTML, CSS, JS, SVG)
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/xml
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE application/xml
+  AddOutputFilterByType DEFLATE application/xhtml+xml
+  AddOutputFilterByType DEFLATE application/rss+xml
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/x-javascript
+  AddOutputFilterByType DEFLATE application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
