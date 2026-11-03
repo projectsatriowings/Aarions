@@ -31,7 +31,7 @@
       ]
     },
     {
-      "source": "/(.*)\\.(ico|png|jpg|jpeg|webp|avif|svg|woff|woff2)",
+      "source": "/(.*)\\.(ico|png|jpg|jpeg|webp|avif|svg|woff|woff2|js|css)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -66,6 +66,19 @@
       ]
     },
     {
+      "source": "/(rss\\.xml|feed\\.xml)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/rss+xml; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
+      ]
+    },
+    {
       "source": "/robots.txt",
       "headers": [
         {
@@ -82,8 +95,12 @@
   "rewrites": [
     { "source": "/googled830f38830b0a3b5.html", "destination": "/googled830f38830b0a3b5.html" },
     { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+    { "source": "/rss.xml", "destination": "/rss.xml" },
+    { "source": "/feed.xml", "destination": "/feed.xml" },
     { "source": "/robots.txt", "destination": "/robots.txt" },
     { "source": "/ads.txt", "destination": "/ads.txt" },
+    { "source": "/404.html", "destination": "/404.html" },
+    { "source": "/404", "destination": "/404.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

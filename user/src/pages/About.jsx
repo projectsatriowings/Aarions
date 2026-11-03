@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ShieldCheck, Calendar, Heart, Award } from "lucide-react";
+import { ShieldCheck, Calendar, Heart, Award, Mail, Download, Newspaper } from "lucide-react";
 import { useSettings } from "../context/SettingsContext";
 
 export default function About() {
@@ -10,21 +10,21 @@ export default function About() {
       title: "Sustainable Sourcing",
       desc: "By collaborating with wild honey hunters and small village dairy farmers, we promote fair wages and protect natural ecosystems.",
       icon: <Heart className="w-5.5 h-5.5 text-brand-gold" />,
-      imgSrc: "/ethically_sourced.webp",
+      imgSrc: "/ethically_sourced-sm.webp",
       badgeText: "Ethically Sourced"
     },
     {
       title: "Ancient Wooden Churning",
       desc: "Our A2 Ghee is prepared strictly via the wooden Bilona method. We boil the milk, set curd, churn butter, and clarify it slowly on firewood.",
       icon: <Award className="w-5.5 h-5.5 text-brand-gold" />,
-      imgSrc: "/traditional_recipes.webp",
+      imgSrc: "/traditional_recipes-sm.webp",
       badgeText: "Bilona Tradition"
     },
     {
       title: "Zero Chemical Policy",
       desc: "No preservatives, synthetic colorants, starch fillers, or high-fructose corn syrup. We preserve the organic signature of our ingredients.",
       icon: <ShieldCheck className="w-5.5 h-5.5 text-brand-gold" />,
-      imgSrc: "/quality_tested.webp",
+      imgSrc: "/quality_tested-sm.webp",
       badgeText: "Lab Certified"
     },
   ];
@@ -202,6 +202,8 @@ export default function About() {
                   <img 
                     src={val.imgSrc} 
                     alt={val.title} 
+                    loading="lazy"
+                    decoding="async" 
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-106"
                   />
                 </div>
@@ -338,6 +340,45 @@ export default function About() {
                 <span className="text-[9px] uppercase tracking-wider text-brand-cream/40 mt-1.5 font-bold">{cert.desc}</span>
               </motion.div>
             ))}
+          </div>
+        </motion.div>
+
+        {/* Media & Press Kit / Backlink Resource Portal */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="mt-20 max-w-5xl 2xl:max-w-6xl mx-auto p-8 sm:p-12 rounded-[2.5rem] bg-white border border-brand-gold/20 shadow-sm flex flex-col md:flex-row items-center justify-between gap-8"
+        >
+          <div className="space-y-3 max-w-xl text-center md:text-left">
+            <span className="text-[10px] tracking-[0.25em] uppercase font-bold text-brand-gold block">
+              Press, Collaborations &amp; Citations
+            </span>
+            <h3 className="font-playfair text-2xl sm:text-3xl font-bold text-brand-brown">
+              Writing About Traditional Foods or Ayurveda?
+            </h3>
+            <p className="text-xs sm:text-sm text-brand-brown/70 leading-relaxed font-light">
+              We collaborate with food writers, wellness publications, registered Ayurvedic doctors, and nutrition bloggers. We provide high-resolution brand assets, lab-verified honey/ghee testing data, and expert commentary.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
+            <Link
+              to="/contact"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 btn-gradient text-xs font-semibold px-6 py-3.5 rounded-xl shadow-md uppercase tracking-wider"
+            >
+              <Mail className="w-4 h-4" />
+              <span>Contact Press Team</span>
+            </Link>
+            <a
+              href="/logo.png"
+              download="Aarions_Brand_Logo.png"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-brand-gold/30 hover:border-brand-gold text-brand-brown px-5 py-3.5 rounded-xl text-xs font-semibold tracking-wider transition-colors bg-brand-cream/30"
+            >
+              <Download className="w-4 h-4 text-brand-gold" />
+              <span>Brand Assets</span>
+            </a>
           </div>
         </motion.div>
 

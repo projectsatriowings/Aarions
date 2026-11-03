@@ -22,7 +22,9 @@ export default function BrandStorySection() {
               className="relative z-10 rounded-3xl overflow-hidden shadow-xl"
             >
               <img
-                src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=800&q=80" // High-end organic agricultural farm
+                src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=800&q=80&fm=webp" // High-end organic agricultural farm
+                loading="lazy"
+                decoding="async"
                 alt="Aarions Organic Farming"
                 className="w-full object-cover h-[350px] sm:h-[450px]"
               />

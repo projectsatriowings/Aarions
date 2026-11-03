@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Page Not Found | Aarions Pure Honey & Organic Ghee</title>
+  <meta name="description" content="Sorry, the page you are looking for does not exist on Aarions. Discover our 100% pure raw honey, organic A2 ghee, and traditional spices.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="canonical" href="https://www.aarions.in/404">
+  <link rel="icon" type="image/webp" href="/favicon.webp">
+  <link rel="icon" type="image/png" href="/favicon.png?v=4">
+  
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(180deg, #FFF8EC 0%, #FFFDF9 50%, #FFF8EC 100%);
+      color: #2D1F17;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    /* Top Brand Navigation */
+    .header {
+      border-bottom: 1px solid rgba(232, 163, 23, 0.2);
+      background: rgba(255, 248, 236, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 0.85rem 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .logo-img {
+      height: 48px;
+      width: auto;
+      object-contain: contain;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .nav-link {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #2D1F17;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: #E8A317; }
+
+    /* Main Container */
+    .main {
+      flex: 1;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 3.5rem 1.5rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      background: rgba(232, 163, 23, 0.15);
+      border: 1px solid rgba(232, 163, 23, 0.3);
+      color: #2D1F17;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 1.25rem;
+    }
+    h1 {
+      font-family: Georgia, serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      color: #2D1F17;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .lead {
+      font-size: 1.1rem;
+      color: rgba(45, 31, 23, 0.75);
+      max-width: 620px;
+      margin: 0 auto 2rem auto;
+      font-weight: 400;
+    }
+
+    /* Search Box */
+    .search-box {
+      width: 100%;
+      max-width: 540px;
+      margin: 0 auto 2.5rem auto;
+      position: relative;
+    }
+    .search-form {
+      display: flex;
+      background: #FFFFFF;
+      border: 1px solid rgba(232, 163, 23, 0.35);
+      border-radius: 9999px;
+      box-shadow: 0 8px 24px rgba(45, 31, 23, 0.06);
+      overflow: hidden;
+      padding: 0.3rem 0.3rem 0.3rem 1.25rem;
+    }
+    .search-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 0.95rem;
+      color: #2D1F17;
+      background: transparent;
+    }
+    .search-input::placeholder { color: rgba(45, 31, 23, 0.4); }
+    .search-btn {
+      background: #2D1F17;
+      color: #FFF8EC;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .search-btn:hover { background: #E8A317; color: #2D1F17; }
+
+    /* Action Buttons */
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 3rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.75rem;
+      border-radius: 9999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: #2D1F17;
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(45, 31, 23, 0.2);
+    }
+    .btn-primary:hover {
+      background: #8B1E1A;
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      background: #E8A317;
+      color: #2D1F17;
+      box-shadow: 0 4px 14px rgba(232, 163, 23, 0.25);
+    }
+    .btn-secondary:hover {
+      background: #C8870F;
+      transform: translateY(-1px);
+    }
+
+    /* Popular Collections */
+    .collections {
+      width: 100%;
+      border-top: 1px solid rgba(232, 163, 23, 0.2);
+      padding-top: 2rem;
+      margin-bottom: 2.5rem;
+    }
+    .collections-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: rgba(45, 31, 23, 0.6);
+      margin-bottom: 1.25rem;
+    }
+    .pill-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+    .pill {
+      background: #FFFFFF;
+      border: 1px solid rgba(232, 163, 23, 0.25);
+      padding: 0.5rem 1.25rem;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #2D1F17;
+      box-shadow: 0 2px 6px rgba(45, 31, 23, 0.04);
+      transition: all 0.2s;
+    }
+    .pill:hover {
+      border-color: #E8A317;
+      background: rgba(232, 163, 23, 0.1);
+      transform: translateY(-1px);
+    }
+
+    /* Product Cards */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      width: 100%;
+      margin-top: 1rem;
+    }
+    .card {
+      background: #FFFFFF;
+      border: 1px solid rgba(232, 163, 23, 0.18);
+      border-radius: 1rem;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-align: left;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(45, 31, 23, 0.03);
+    }
+    .card:hover {
+      border-color: #E8A317;
+      box-shadow: 0 8px 20px rgba(232, 163, 23, 0.15);
+      transform: translateY(-2px);
+    }
+    .card-thumb {
+      width: 60px;
+      height: 60px;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: rgba(255, 248, 236, 0.5);
+    }
+    .card-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .card-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .card-category {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #E8A317;
+      display: block;
+    }
+    .card-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #2D1F17;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 0.15rem 0;
+    }
+    .card-price {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #2D1F17;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid rgba(232, 163, 23, 0.15);
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: rgba(45, 31, 23, 0.5);
+      background: #FFFFFF;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .footer-links a { color: #2D1F17; font-weight: 500; }
+    .footer-links a:hover { color: #E8A317; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .main { padding: 2.5rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Site Header Chrome -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="/" class="logo-link" aria-label="Aarions Homepage">
+        <img src="/logo-nav.webp" alt="Aarions Logo" width="66" height="56" class="logo-img">
+      </a>
+      <ul class="nav-links">
+        <li><a href="/" class="nav-link">Home</a></li>
+        <li><a href="/shop" class="nav-link">Shop</a></li>
+        <li><a href="/shop?category=honey" class="nav-link">Raw Honey</a></li>
+        <li><a href="/shop?category=ghee" class="nav-link">A2 Ghee</a></li>
+        <li><a href="/shop?category=masala" class="nav-link">Masalas</a></li>
+        <li><a href="/shop?category=spices" class="nav-link">Spices</a></li>
+        <li><a href="/about" class="nav-link">About</a></li>
+        <li><a href="/blog" class="nav-link">Journal</a></li>
+        <li><a href="/contact" class="nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Main Error & Exploration Hub -->
+  <main class="main">
+    <div class="badge">
+      <span>●</span> Error 404 • Page Not Found
+    </div>
+
+    <h1>Lost in the Fields?</h1>
+    <p class="lead">
+      The page you were searching for does not exist, was renamed, or has been moved. Let us help you find nature's purest organic staples.
+    </p>
+
+    <!-- Search Form -->
+    <div class="search-box">
+      <form action="/shop" method="GET" class="search-form">
+        <input 
+          type="text" 
+          name="search" 
+          placeholder="Search for honey, ghee, spices, masalas..." 
+          class="search-input"
+          aria-label="Search Aarions catalog"
+        >
+        <button type="submit" class="search-btn">Search Shop</button>
+      </form>
+    </div>
+
+    <!-- Quick Navigation Actions -->
+    <div class="actions">
+      <a href="/" class="btn btn-primary">
+        <span>←</span> Return to Homepage
+      </a>
+      <a href="/shop" class="btn btn-secondary">
+        Explore All Products <span>→</span>
+      </a>
+    </div>
+
+    <!-- Popular Categories -->
+    <div class="collections">
+      <p class="collections-title">Popular Organic Collections</p>
+      <div class="pill-grid">
+        <a href="/shop?category=honey" class="pill">Raw Forest Honey</a>
+        <a href="/shop?category=ghee" class="pill">A2 Gir Cow Desi Ghee</a>
+        <a href="/shop?category=masala" class="pill">Traditional Masalas</a>
+        <a href="/shop?category=spices" class="pill">Stone-Ground Spices</a>
+        <a href="/blog" class="pill">Wellness Journal</a>
+        <a href="/contact" class="pill">Customer Support</a>
+      </div>
+    </div>
+
+    <!-- Customer Favorites Spotlight -->
+    <div class="collections" style="border: none; padding-top: 0.5rem;">
+      <p class="collections-title">Customer Favorites</p>
+      <div class="cards-grid">
+        <a href="/product/1" class="card">
+          <div class="card-thumb">
+            <img src="/ghee-hero-sm.webp" alt="Gir Cow Ghee" width="60" height="60" loading="lazy">
+          </div>
+          <div class="card-info">
+            <span class="card-category">A2 Desi Ghee</span>
+            <div class="card-title">Gir Cow Ghee (Bilona)</div>
+            <div class="card-price">₹300</div>
+          </div>
+        </a>
+
+        <a href="/product/4" class="card">
+          <div class="card-thumb">
+            <img src="/honey-hero-sm.webp" alt="Wild Forest Honey" width="60" height="60" loading="lazy">
+          </div>
+          <div class="card-info">
+            <span class="card-category">Raw Honey</span>
+            <div class="card-title">Wild Forest Honey</div>
+            <div class="card-price">₹180</div>
+          </div>
+        </a>
+
+        <a href="/product/7" class="card">
+          <div class="card-thumb">
+            <img src="/spices-hero-sm.webp" alt="Lakadong Turmeric" width="60" height="60" loading="lazy">
+          </div>
+          <div class="card-info">
+            <span class="card-category">Organic Spices</span>
+            <div class="card-title">Lakadong Turmeric Powder</div>
+            <div class="card-price">₹180</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/shop">Shop</a>
+      <a href="/about">About Us</a>
+      <a href="/blog">Journal</a>
+      <a href="/contact">Help & Support</a>
+      <a href="/privacy-policy">Privacy Policy</a>
+    </div>
+    <p>© 2026 Aarions. All rights reserved. Sourced with pure intention.</p>
+  </footer>
+
+</body>
+</html>
+

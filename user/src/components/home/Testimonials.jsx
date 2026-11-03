@@ -13,7 +13,7 @@ export default function Testimonials() {
       location: "Bengaluru",
       rating: 5,
       review: "The Sidr honey is absolutely extraordinary. I've never tasted anything like it. Rich, complex, and medicinal — completely worth every rupee. Aarions has become my go-to for premium natural products.",
-      image: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?w=150",
+      image: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?w=150&auto=compress,format&fm=webp",
       product: "Sidr Honey",
       verified: true
     },
@@ -23,7 +23,7 @@ export default function Testimonials() {
       location: "Chennai",
       rating: 5,
       review: "The Gir Cow Ghee is as pure as it gets. You can smell the difference the moment you open the jar. My family has been using it for 6 months and we won't go back to anything else.",
-      image: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?w=150",
+      image: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?w=150&auto=compress,format&fm=webp",
       product: "Gir Cow Ghee",
       verified: true
     },
@@ -33,7 +33,7 @@ export default function Testimonials() {
       location: "Hyderabad",
       rating: 5,
       review: "Mutton masala changed the way I cook! Restaurant quality at home, no exaggeration. Fast delivery, beautiful packaging, and the quality is unmatched. Highly recommend Aarions.",
-      image: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?w=150",
+      image: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?w=150&auto=compress,format&fm=webp",
       product: "Mutton Masala",
       verified: true
     },
@@ -43,7 +43,7 @@ export default function Testimonials() {
       location: "Kochi",
       rating: 5,
       review: "The Lakadong turmeric has the most intense golden color I've seen. Lab certified 5% curcumin content is real. I've noticed significant anti-inflammatory benefits after regular use.",
-      image: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?w=150",
+      image: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?w=150&auto=compress,format&fm=webp",
       product: "Turmeric Powder",
       verified: true
     },
@@ -53,7 +53,7 @@ export default function Testimonials() {
       location: "Coimbatore",
       rating: 5,
       review: "Forest honey is my morning ritual now. No sugar, just this with warm water. My energy levels have improved and it tastes heavenly. The packaging is also premium and gift-worthy.",
-      image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?w=150",
+      image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?w=150&auto=compress,format&fm=webp",
       product: "Forest Honey",
       verified: true
     }
@@ -174,6 +174,10 @@ export default function Testimonials() {
                     <img
                       src={rev.image}
                       alt={rev.name}
+                      width="40"
+                      height="40"
+                      loading="lazy"
+                      decoding="async"
                       className="w-10 h-10 rounded-full object-cover flex-shrink-0"
                     />
                     <div>

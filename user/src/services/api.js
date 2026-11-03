@@ -74,8 +74,12 @@ export const getImageUrl = (url) => {
   ) {
     return url;
   }
+  // Local frontend public assets
+  if (url.startsWith("/") && !url.startsWith("/uploads/")) {
+    return url;
+  }
   const serverRoot = API_BASE_URL.replace(/\/api$/, "");
-  return `${serverRoot}${url}`;
+  return `${serverRoot}${url.startsWith("/") ? "" : "/"}${url}`;
 };
 
 export default api;

@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Eye, EyeOff, ArrowRight, ArrowLeft } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { motion } from "framer-motion";
+import { loadGoogleGsi } from "../services/googleAuth";
 
 export default function LoginPage() {
   const navigate  = useNavigate();
@@ -18,7 +19,14 @@ export default function LoginPage() {
   const from = location.state?.from?.pathname || "/";
   useEffect(() => { if (user) navigate(from, { replace: true }); }, [user]);
 
-  const handleGoogleLogin = () => {
+  const handleGoogleLogin = async () => {
+    try {
+      await loadGoogleGsi();
+    } catch {
+      setErrors({ form: "Could not load Google Sign-In. Please check your network connection." });
+      return;
+    }
+
     if (!window.google) {
       setErrors({ form: "Google client is not loaded. Please refresh the page." });
       return;
@@ -122,7 +130,7 @@ export default function LoginPage() {
         {/* Logo badge top-left */}
         <div className="absolute top-10 left-14">
           <img 
-            src="/logo.webp?v=3" 
+            src="/logo-nav.webp" 
             alt="Aarions Logo" 
             className="h-16 w-auto object-contain brightness-0 invert"
           />
@@ -167,7 +175,7 @@ export default function LoginPage() {
             <>
               {/* Brand + heading */}
               <div className="auth-logo-ring">
-                <img src="/logo.webp?v=3" alt="Aarions" className="w-full h-full object-contain" />
+                <img src="/logo-nav.webp" alt="Aarions" width="56" height="56" className="w-full h-full object-contain" />
               </div>
               <h1 className="auth-title">Welcome Back</h1>
               <p className="auth-subtitle">Sign in to your Aarions account</p>

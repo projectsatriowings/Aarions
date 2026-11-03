@@ -15,7 +15,7 @@ export default function FeaturedCategories() {
       slug: "ghee",
       count: 3,
       description: "Traditional clarifying butter churned from pure cream",
-      image: "https://aarions.in/img/honey/ghir%20ghee.jpg",
+      image: "/ghee-cat.webp",
       color: "#E8A317"
     },
     {
@@ -24,7 +24,7 @@ export default function FeaturedCategories() {
       slug: "honey",
       count: 6,
       description: "Pure raw honey sourced from forests and mountains",
-      image: "/aarions-raw-honey.webp",
+      image: "/honey-cat.webp",
       color: "#E8A317"
     },
     {
@@ -33,7 +33,7 @@ export default function FeaturedCategories() {
       slug: "masala",
       count: 6,
       description: "Authentic spice blends crafted from traditional recipes",
-      image: "https://aarions.in/img/about/Masala/Masala/mutton.jpg",
+      image: "/masala-cat.webp",
       color: "#E8A317"
     },
     {
@@ -42,7 +42,7 @@ export default function FeaturedCategories() {
       slug: "spices",
       count: 3,
       description: "Single-origin premium spices slow-ground to preserve oils",
-      image: "https://aarions.in/img/about/Masala/Masala/tumeric.jpg",
+      image: "/spices-cat.webp",
       color: "#E8A317"
     }
   ];
@@ -104,7 +104,7 @@ export default function FeaturedCategories() {
             Our Range
           </span>
           <h2 className="font-display font-bold text-brand-brown mb-3 text-3xl sm:text-4xl lg:text-5xl">
-            Shop Organic Categories: Pure Honey, Ghee & Spices
+            Shop Organic Categories: Pure Honey, A2 Ghee, Masalas & Spices
           </h2>
           <p className="text-brand-brown/60 text-base lg:text-lg max-w-xl mx-auto font-light">
             From wild-harvested honeys to stone-ground spices — every category crafted with intention.

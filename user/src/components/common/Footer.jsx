@@ -4,6 +4,12 @@ import { useSettings } from "../../context/SettingsContext";
 
 export default function Footer() {
   const { settings } = useSettings();
+  const [emailHref, setEmailHref] = React.useState("/contact");
+
+  React.useEffect(() => {
+    const raw = settings?.contactEmail || ("info" + "@" + "aarions.in");
+    setEmailHref("mailto:" + raw);
+  }, [settings?.contactEmail]);
   const quickLinks = [
     { label: "About Us", to: "/about" },
     { label: "Shop", to: "/shop" },
@@ -147,7 +153,7 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L22 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
                 <a
-                  href={`mailto:${settings?.contactEmail || "info@aarions.in"}`}
+                  href={emailHref}
                   className="hover:text-brand-gold transition-colors"
                   title="Contact Aarions Support"
                   dangerouslySetInnerHTML={{

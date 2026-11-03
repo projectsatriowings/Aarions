@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, ArrowRight, ArrowLeft, Check } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { motion } from "framer-motion";
+import { loadGoogleGsi } from "../services/googleAuth";
 
 const pwScore = pwd => {
   let s = 0;
@@ -36,7 +37,14 @@ export default function SignupPage() {
 
   useEffect(() => { if (user) navigate("/", { replace: true }); }, [user]);
 
-  const handleGoogleLogin = () => {
+  const handleGoogleLogin = async () => {
+    try {
+      await loadGoogleGsi();
+    } catch {
+      setErrors({ form: "Could not load Google Sign-In. Please check your network connection." });
+      return;
+    }
+
     if (!window.google) {
       setErrors({ form: "Google client is not loaded. Please refresh the page." });
       return;
@@ -158,7 +166,7 @@ export default function SignupPage() {
 
         <div className="absolute top-10 left-14">
           <img 
-            src="/logo.webp?v=3" 
+            src="/logo-nav.webp" 
             alt="Aarions Logo" 
             className="h-16 w-auto object-contain brightness-0 invert"
           />
@@ -217,7 +225,7 @@ export default function SignupPage() {
           ) : (
             <>
               <div className="auth-logo-ring">
-                <img src="/logo.webp?v=3" alt="Aarions" className="w-full h-full object-contain" />
+                <img src="/logo-nav.webp" alt="Aarions" width="56" height="56" className="w-full h-full object-contain" />
               </div>
               <h1 className="auth-title">Create Account</h1>
               <p className="auth-subtitle">Join Aarions — pure, natural, trusted</p>

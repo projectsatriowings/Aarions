@@ -2,25 +2,27 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/webp" href="/favicon.webp" />
     <link rel="icon" type="image/png" href="/favicon.png?v=4" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aarions | Pure Honey, A2 Ghee & Organic Products</title>
+    <title>Aarions | Pure Honey, A2 Ghee, Organic Masalas & Natural Spices</title>
     
     <!-- Meta tags for SEO -->
-    <meta name="description" content="Discover Aarions: 100% pure raw honey, organic A2 ghee, authentic spices, and natural wellness products sourced traditionally from local Indian farms." />
-    <meta name="keywords" content="Aarions, pure honey, organic ghee, A2 cow ghee, raw forest honey, traditional spices, organic products, herbal wellness, Chennai organic store" />
+    <meta name="description" content="Discover Aarions: 100% pure raw honey, organic A2 ghee, authentic masalas, spices, and natural wellness products sourced traditionally from local Indian farms." />
+    <meta name="keywords" content="Aarions, pure honey, organic ghee, A2 cow ghee, raw forest honey, authentic masalas, traditional spices, organic products, herbal wellness, Chennai organic store" />
     <meta name="author" content="Aarions" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://www.aarions.in/" />
+    <link rel="alternate" type="application/rss+xml" title="Aarions Journal RSS Feed" href="https://www.aarions.in/rss.xml" />
     <meta name="google-site-verification" content="googled830f38830b0a3b5" />
 
     <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.aarions.in/" />
     <meta property="og:site_name" content="Aarions" />
-    <meta property="og:title" content="Aarions | Pure Honey, A2 Ghee & Organic Products" />
-    <meta property="og:description" content="Discover Aarions: 100% pure raw honey, organic A2 ghee, authentic spices, and natural wellness products sourced traditionally from local Indian farms." />
-    <meta property="og:image" content="https://www.aarions.in/logo.png" />
+    <meta property="og:title" content="Aarions | Pure Honey, A2 Ghee, Organic Masalas & Natural Spices" />
+    <meta property="og:description" content="Discover Aarions: 100% pure raw honey, organic A2 ghee, authentic masalas, spices, and natural wellness products sourced traditionally from local Indian farms." />
+    <meta property="og:image" content="https://www.aarions.in/logo.webp" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="en_IN" />
@@ -28,41 +30,90 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://www.aarions.in/" />
-    <meta name="twitter:title" content="Aarions | Pure Honey, A2 Ghee & Organic Products" />
-    <meta name="twitter:description" content="Discover Aarions: 100% pure raw honey, organic A2 ghee, authentic spices, and natural wellness products." />
-    <meta name="twitter:image" content="https://www.aarions.in/logo.png" />
+    <meta name="twitter:title" content="Aarions | Pure Honey, A2 Ghee, Organic Masalas & Natural Spices" />
+    <meta name="twitter:description" content="Discover Aarions: 100% pure raw honey, organic A2 ghee, authentic masalas, spices, and natural wellness products." />
+    <meta name="twitter:image" content="https://www.aarions.in/logo.webp" />
 
-    <!-- Preconnect to external font origins -->
+    <!-- Preconnect & DNS prefetch to external font origins -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Preload LCP Hero Image -->
     <link rel="preload" as="image" href="/bg-ghee.webp" fetchpriority="high" type="image/webp" />
 
-    <!-- Non-blocking Google Fonts loading -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" media="print" onload="this.media='all'" />
+    <!-- Non-blocking Google Fonts loading (optimized essential weights) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" media="print" onload="this.media='all'" />
     <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" />
     </noscript>
 
-    <!-- Critical responsive media queries -->
+    <!-- Critical CSS for instant above-the-fold render and zero layout shift -->
     <style>
+      *, *::before, *::after { box-sizing: border-box; }
+      html {
+        -webkit-text-size-adjust: 100%;
+        tab-size: 4;
+        font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
+      body {
+        margin: 0;
+        line-height: 1.5;
+        background: linear-gradient(180deg, #FFF8EC 0%, #FFFDF9 35%, #FFF2D6 70%, #FFF0EA 100%) fixed;
+        background-color: #FFF8EC;
+        color: #2D1F17;
+        font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        overflow-x: hidden;
+      }
+      #root {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      /* Anti-distortion safety: preserve intrinsic aspect ratios */
+      img, video {
+        max-width: 100%;
+        height: auto;
+      }
+      img.object-cover {
+        object-fit: cover;
+        height: 100%;
+      }
+      img.object-contain {
+        object-fit: contain;
+        height: 100%;
+      }
       @media (max-width: 640px) { :root { --viewport-breakpoint: 'mobile'; } }
       @media (min-width: 641px) and (max-width: 1024px) { :root { --viewport-breakpoint: 'tablet'; } }
       @media (min-width: 1025px) { :root { --viewport-breakpoint: 'desktop'; } }
     </style>
 
-    <!-- Google Identity Services (GSI) script -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-    <!-- Google Analytics (GA4) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PLACEHOLDER"></script>
+    <!-- Non-blocking Google Analytics Initialization -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-PLACEHOLDER');
+      (function() {
+        var gaId = 'G-PLACEHOLDER';
+        if (gaId && gaId !== 'G-PLACEHOLDER') {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', gaId);
+
+          var loadGA = function() {
+            var s = document.createElement('script');
+            s.async = true;
+            s.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaId;
+            document.head.appendChild(s);
+          };
+
+          if ('requestIdleCallback' in window) {
+            requestIdleCallback(loadGA);
+          } else {
+            window.addEventListener('load', loadGA);
+          }
+        }
+      })();
     </script>
 
     <!-- JSON-LD Structured Data Schema -->
@@ -81,7 +132,7 @@
             "@type": "ContactPoint",
             "telephone": "+91-98432-70810",
             "contactType": "Customer Support",
-            "email": "info@aarions.in",
+            "url": "https://www.aarions.in/contact",
             "areaServed": "IN",
             "availableLanguage": ["English", "Tamil"]
           },

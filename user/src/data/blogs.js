@@ -22,7 +22,7 @@ export const blogs = [
     "readTime": "2 min read",
     "date": "June 07, 2026",
     "author": "Aarions Team",
-    "image": "https://images.pexels.com/photos/302163/pexels-photo-302163.jpeg?w=600",
+    "image": "/honey-cat.webp",
     "content": "\n      <p class=\"mb-6 leading-relaxed\">Aarions honey combines the sweetness of nature with a lot of health benefits. Rich in antioxidants, vitamins, and minerals, it supports immune function, provides natural energy, and works as an excellent substitute for refined sugar.</p>\n      <p class=\"mb-6 leading-relaxed\">Here are some of the popular ways you can incorporate Aarions pure honey into your diet:</p>\n      <ul class=\"list-disc pl-6 mb-6 leading-relaxed flex flex-col gap-2\">\n        <li><strong>Honey Lemon Tea:</strong> A refreshing wellness drink with Forest Honey, lemon, and ginger to boost your immunity.</li>\n        <li><strong>Honey Glazed Chicken:</strong> A perfect weeknight dinner glazed with our Forest Honey and a touch of chili.</li>\n        <li><strong>Morning Ritual:</strong> Mix a spoonful of Forest Honey with warm water and consume on an empty stomach to support digestion.</li>\n      </ul>\n      <p class=\"mb-6 leading-relaxed\">Our Small Bee (Stingless bee) honey is highly valued in Ayurveda for its exceptional medicinal properties. It is harvested from wild hives in deep forest areas and contains high amounts of organic acids and enzymes.</p>\n    "
   },
   {
@@ -35,7 +35,7 @@ export const blogs = [
     "readTime": "2 min read",
     "date": "June 05, 2026",
     "author": "Aarions Team",
-    "image": "https://images.pexels.com/photos/2679501/pexels-photo-2679501.jpeg?w=600",
+    "image": "/spices-hero.webp",
     "content": "\n      <p class=\"mb-6 leading-relaxed\">Aarions masala blends offer a fusion of aromatic spices that not only elevate the flavor of dishes but also provide numerous health benefits. Packed with antioxidants and essential vitamins, our stone-ground masalas are made following traditional heritage recipes.</p>\n      <p class=\"mb-6 leading-relaxed\">Spices are the heart of Indian cooking. From the warm, earthy notes of Cumin and Coriander to the fiery heat of Chilli Powder and Kashmiri Red Chilli, each spice plays a crucial role in creating the perfect dish.</p>\n      <p class=\"mb-6 leading-relaxed\">Our Lakadong Turmeric is sourced directly from Meghalaya and contains over 5% Curcumin, making it highly potent and rich in anti-inflammatory benefits.</p>\n      <p class=\"mb-6 leading-relaxed\">Try our Garam Masala, Chicken Masala, and Mutton Masala blends to bring authentic, rich flavors to your kitchen without any added artificial colors or preservatives.</p>\n    "
   }
 ];

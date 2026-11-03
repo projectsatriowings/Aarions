@@ -608,8 +608,10 @@ export default function ProductDetails() {
                     {/* Image Box */}
                     <div className="aspect-square w-full rounded-2xl overflow-hidden bg-brand-cream/10 border border-brand-gold/15 relative flex items-center justify-center">
                       <img
-                        src={p.image}
+                        src={getImageUrl(p.image)}
                         alt={p.name}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                       />
                       

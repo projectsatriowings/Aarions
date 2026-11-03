@@ -31,6 +31,20 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-playfair;
   }
+
+  /* Anti-distortion safety: prevent stretched or squashed images */
+  img, video {
+    max-width: 100%;
+    height: auto;
+  }
+  img.object-cover, .object-cover img {
+    object-fit: cover;
+    height: 100%;
+  }
+  img.object-contain, .object-contain img {
+    object-fit: contain;
+    height: 100%;
+  }
 }
 
 /* ══════════════════════════════════════════════════════════

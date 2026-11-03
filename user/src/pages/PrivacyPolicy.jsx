@@ -146,9 +146,9 @@ export default function PrivacyPolicy() {
                         </h2>
                         <p>
                             If you have any questions about this Privacy Policy, please contact us at{" "}
-                            <a href="mailto:info@aarions.in" className="text-brand-gold font-semibold">
-                                info@aarions.in
-                            </a>{" "}
+                            <Link to="/contact" className="text-brand-gold font-semibold">
+                                Customer Support Desk
+                            </Link>{" "}
                             or through our{" "}
                             <Link to="/contact" className="text-brand-gold font-semibold">
                                 Contact page

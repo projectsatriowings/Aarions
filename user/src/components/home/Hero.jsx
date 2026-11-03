@@ -184,7 +184,7 @@ export default function Hero() {
                   style={{ width: "8.5rem", height: "8.5rem", borderColor: "rgba(232, 163, 23, 0.2)", boxShadow: "0 10px 30px rgba(232,163,23,0.15)" }}
                 >
                   <img 
-                    src="/ghee-hero.webp" 
+                    src="/ghee-hero-sm.webp" 
                     alt="Gir Cow Ghee" 
                     width="136"
                     height="136"
@@ -209,7 +209,7 @@ export default function Hero() {
                   style={{ width: "10rem", height: "10rem", borderColor: "rgba(232, 163, 23, 0.2)", boxShadow: "0 10px 30px rgba(232,163,23,0.15)" }}
                 >
                   <img 
-                    src="/honey-hero.webp" 
+                    src="/honey-hero-sm.webp" 
                     alt="Forest Honey" 
                     width="160"
                     height="160"
@@ -235,7 +235,7 @@ export default function Hero() {
                   style={{ width: "7rem", height: "7rem", borderColor: "rgba(178,58,46,0.25)", boxShadow: "0 10px 30px rgba(178,58,46,0.15)" }}
                 >
                   <img 
-                    src="/spices-hero.webp" 
+                    src="/spices-hero-sm.webp" 
                     alt="Organic Spices" 
                     width="112"
                     height="112"

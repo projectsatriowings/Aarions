@@ -8,7 +8,7 @@ export default function Benefits() {
       step: "Step 1",
       title: "Farm & Source",
       desc: "We partner with verified organic farms and trusted beekeepers across India who follow sustainable practices.",
-      image: "https://images.pexels.com/photos/1435904/pexels-photo-1435904.jpeg?w=600",
+      image: "/bg-farm.webp",
       color: "#355E3B",
       icon: Trees
     },
@@ -16,7 +16,7 @@ export default function Benefits() {
       step: "Step 2",
       title: "Harvest & Collect",
       desc: "Honey is extracted using traditional cold-spinning methods. Spices are hand-harvested at peak potency.",
-      image: "https://images.pexels.com/photos/302163/pexels-photo-302163.jpeg?w=600",
+      image: "/pure_ingredients.webp",
       color: "#E8A317",
       icon: Leaf
     },
@@ -24,7 +24,7 @@ export default function Benefits() {
       step: "Step 3",
       title: "Lab Testing",
       desc: "Every batch undergoes rigorous quality testing. We check purity, potency, and compliance with FSSAI standards.",
-      image: "https://images.pexels.com/photos/2802527/pexels-photo-2802527.jpeg?w=600",
+      image: "/quality_tested.webp",
       color: "#B23A2E",
       icon: ShieldAlert
     },
@@ -32,7 +32,7 @@ export default function Benefits() {
       step: "Step 4",
       title: "Premium Packaging",
       desc: "Packed in premium, airtight containers designed to preserve freshness and reflect the quality within.",
-      image: "https://aarions.netlify.app/ghee.png",
+      image: "/premium_packaging.webp",
       color: "#C8870F",
       icon: Gift
     },
@@ -48,7 +48,7 @@ export default function Benefits() {
       step: "Step 6",
       title: "Happy Families",
       desc: "Pure, natural products that your family can trust — from our farm, directly to your kitchen.",
-      image: "https://images.pexels.com/photos/1638280/pexels-photo-1638280.jpeg?w=600",
+      image: "/happy_families.webp",
       color: "#355E3B",
       icon: Heart
     }

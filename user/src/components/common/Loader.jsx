@@ -15,8 +15,10 @@ export default function Loader({ fullPage = false }) {
           {/* Inner brand logo circle */}
           <div className="w-14 h-14 relative flex items-center justify-center animate-pulse p-1">
             <img 
-              src="/logo.webp?v=3" 
-              alt="Aarions" 
+              src="/logo-nav.webp" 
+              alt="Aarions"
+              width="56"
+              height="56" 
               className="w-full h-full object-contain"
             />
           </div>

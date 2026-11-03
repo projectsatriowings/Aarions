@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 
@@ -14,25 +14,29 @@ import Navbar from "./components/common/Navbar";
 import Footer from "./components/common/Footer";
 import ScrollToTop from "./components/common/ScrollToTop";
 import CustomCursor from "./components/common/CustomCursor";
+import Loader from "./components/common/Loader";
 
-// Pages
+// Direct (eager) load for primary landing page to maximize first paint speed
 import Home from "./pages/Home";
-import Shop from "./pages/Shop";
-import ProductDetails from "./pages/ProductDetails";
-import About from "./pages/About";
-import Blog from "./pages/Blog";
-import BlogDetails from "./pages/BlogDetails";
-import Contact from "./pages/Contact";
-import CartPage from "./pages/CartPage";
-import WishlistPage from "./pages/WishlistPage";
-import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
-import CheckoutPage from "./pages/CheckoutPage";
-import OrderHistory from "./pages/OrderHistory";
-import OrderDetails from "./pages/OrderDetails";
-import AccountSettings from "./pages/AccountSettings";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import NotFound from "./pages/NotFound";
+
+// Code-split all other pages to eliminate initial JS bloat & non-critical render delays
+const Shop = lazy(() => import("./pages/Shop"));
+const ProductDetails = lazy(() => import("./pages/ProductDetails"));
+const About = lazy(() => import("./pages/About"));
+const Blog = lazy(() => import("./pages/Blog"));
+const BlogDetails = lazy(() => import("./pages/BlogDetails"));
+const Contact = lazy(() => import("./pages/Contact"));
+const CartPage = lazy(() => import("./pages/CartPage"));
+const WishlistPage = lazy(() => import("./pages/WishlistPage"));
+const LoginPage = lazy(() => import("./pages/LoginPage"));
+const SignupPage = lazy(() => import("./pages/SignupPage"));
+const CheckoutPage = lazy(() => import("./pages/CheckoutPage"));
+const OrderHistory = lazy(() => import("./pages/OrderHistory"));
+const OrderDetails = lazy(() => import("./pages/OrderDetails"));
+const AccountSettings = lazy(() => import("./pages/AccountSettings"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+
 // Auth pages that should NOT show navbar/footer
 const AUTH_ROUTES = ["/login", "/signup"];
 
@@ -47,37 +51,41 @@ function AppShell() {
 
       {isAuthPage ? (
         /* Auth Layout – full screen, no header/footer */
-        <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-          </Routes>
-        </AnimatePresence>
+        <Suspense fallback={<Loader fullPage />}>
+          <AnimatePresence mode="wait">
+            <Routes location={location} key={location.pathname}>
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignupPage />} />
+            </Routes>
+          </AnimatePresence>
+        </Suspense>
       ) : (
         /* Main Layout – with header & footer */
         <div className="flex flex-col min-h-screen bg-transparent">
           <AnnouncementBar />
           <Navbar />
           <main className="flex-grow">
-            <AnimatePresence mode="wait">
-              <Routes location={location} key={location.pathname}>
-                <Route path="/" element={<Home />} />
-                <Route path="/shop" element={<Shop />} />
-                <Route path="/product/:id" element={<ProductDetails />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/blog/:id" element={<BlogDetails />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/cart" element={<CartPage />} />
-                <Route path="/wishlist" element={<WishlistPage />} />
-                <Route path="/checkout" element={<CheckoutPage />} />
-                <Route path="/orders" element={<OrderHistory />} />
-                <Route path="/orders/:id" element={<OrderDetails />} />
-                <Route path="/profile" element={<AccountSettings />} />
-                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </AnimatePresence>
+            <Suspense fallback={<Loader />}>
+              <AnimatePresence mode="wait">
+                <Routes location={location} key={location.pathname}>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/shop" element={<Shop />} />
+                  <Route path="/product/:id" element={<ProductDetails />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/blog/:id" element={<BlogDetails />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/cart" element={<CartPage />} />
+                  <Route path="/wishlist" element={<WishlistPage />} />
+                  <Route path="/checkout" element={<CheckoutPage />} />
+                  <Route path="/orders" element={<OrderHistory />} />
+                  <Route path="/orders/:id" element={<OrderDetails />} />
+                  <Route path="/profile" element={<AccountSettings />} />
+                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </AnimatePresence>
+            </Suspense>
           </main>
           <Footer />
         </div>
