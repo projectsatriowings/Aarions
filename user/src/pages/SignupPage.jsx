@@ -168,7 +168,7 @@ export default function SignupPage() {
           <img 
             src="/logo-nav.webp" 
             alt="Aarions Logo" 
-            className="h-12 w-auto object-contain brightness-0 invert" style={{ maxHeight: "48px" }}
+            className="h-14 w-auto object-contain brightness-0 invert" style={{ maxHeight: "56px" }}
           />
         </div>
 

@@ -91,13 +91,13 @@ export default function Navbar() {
               <Link to="/" className="flex items-center">
                 <img 
                   src="/logo-nav.webp"
-                  width="54"
-                  height="46" 
+                  width="68"
+                  height="58" 
                   alt="Aarions Logo" 
-                  className={`h-10 sm:h-11 md:h-12 w-auto object-contain transition-all duration-300 ${
+                  className={`h-11 sm:h-12 md:h-14 lg:h-[58px] w-auto object-contain transition-all duration-300 ${
                     showGlass ? "" : "brightness-0 invert"
                   }`}
-                  style={{ maxHeight: "46px" }}
+                  style={{ maxHeight: "58px" }}
                 />
               </Link>
             </div>
