@@ -72,7 +72,7 @@ export default function Contact() {
           <span className="text-xs tracking-widest uppercase font-semibold text-brand-gold">
             {settings?.contactHeroSubtitle || "Get In Touch"}
           </span>
-          <h1 className="text-4xl sm:text-5xl font-playfair font-semibold text-brand-brown">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-playfair font-semibold text-brand-brown">
             {settings?.contactHeroTitle || "Contact Aarions"}
           </h1>
           <motion.div 

@@ -42,7 +42,7 @@ export default function Blog() {
           <span className="text-xs tracking-widest uppercase font-semibold text-brand-gold">
             Aarions Chronicle
           </span>
-          <h1 className="text-4xl sm:text-5xl font-playfair font-semibold text-brand-brown">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-playfair font-semibold text-brand-brown">
             The Journal of Pure Living
           </h1>
           <div className="h-[1px] w-12 bg-brand-gold mx-auto mt-4" />

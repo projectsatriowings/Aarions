@@ -37,14 +37,6 @@
     max-width: 100%;
     height: auto;
   }
-  img.object-cover, .object-cover img {
-    object-fit: cover;
-    height: 100%;
-  }
-  img.object-contain, .object-contain img {
-    object-fit: contain;
-    height: 100%;
-  }
 }
 
 /* ══════════════════════════════════════════════════════════

@@ -213,7 +213,7 @@ export default function Shop() {
             <div className="h-[1px] w-8 bg-brand-gold/60" />
           </div>
           
-          <h1 className="font-display font-bold text-brand-brown text-4xl sm:text-5xl mb-4 leading-tight">
+          <h1 className="font-display font-bold text-brand-brown text-2xl sm:text-3xl md:text-4xl mb-3 leading-tight">
             Our Organic Harvest
           </h1>
           
