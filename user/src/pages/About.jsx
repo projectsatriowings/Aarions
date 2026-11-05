@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ShieldCheck, Calendar, Heart, Award, Mail, Download, Newspaper } from "lucide-react";
 import { useSettings } from "../context/SettingsContext";
