@@ -78,11 +78,9 @@
       }
       img.object-cover {
         object-fit: cover;
-        height: 100%;
       }
       img.object-contain {
         object-fit: contain;
-        height: 100%;
       }
       @media (max-width: 640px) { :root { --viewport-breakpoint: 'mobile'; } }
       @media (min-width: 641px) and (max-width: 1024px) { :root { --viewport-breakpoint: 'tablet'; } }
@@ -159,7 +157,95 @@
     </script>
   </head>
   <body class="bg-brand-cream text-brand-brown font-inter antialiased min-h-screen">
-    <div id="root"></div>
+        <div id="root">
+      <!-- Semantic Server-Side Static Shell for Search Crawlers & Instant First Paint -->
+      <header style="background: rgba(255, 248, 236, 0.95); border-bottom: 1px solid rgba(232, 163, 23, 0.2); padding: 14px 24px;">
+        <div style="max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+          <a href="/" aria-label="Aarions Homepage" style="display: flex; align-items: center; text-decoration: none;">
+            <img src="/logo-nav.webp" alt="Aarions Logo" width="68" height="58" style="height: 52px; width: auto; object-fit: contain;" />
+          </a>
+          <nav aria-label="Primary Navigation" style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap;">
+            <a href="/" style="color: #2D1F17; font-weight: 600; font-size: 14px; text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em;">Home</a>
+            <a href="/shop" style="color: #2D1F17; font-weight: 600; font-size: 14px; text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em;">Shop</a>
+            <a href="/about" style="color: #2D1F17; font-weight: 600; font-size: 14px; text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em;">About Us</a>
+            <a href="/blog" style="color: #2D1F17; font-weight: 600; font-size: 14px; text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em;">Blog</a>
+            <a href="/contact" style="color: #2D1F17; font-weight: 600; font-size: 14px; text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em;">Contact</a>
+          </nav>
+          <div style="display: flex; gap: 16px; align-items: center;">
+            <a href="/cart" style="color: #2D1F17; font-weight: 600; font-size: 13px; text-decoration: none;">Cart</a>
+            <a href="/wishlist" style="color: #2D1F17; font-weight: 600; font-size: 13px; text-decoration: none;">Wishlist</a>
+            <a href="/login" style="color: #8B1E1A; font-weight: 700; font-size: 13px; text-decoration: none;">Login</a>
+          </div>
+        </div>
+      </header>
+
+      <main style="max-width: 1280px; margin: 0 auto; padding: 48px 24px; text-align: center;">
+        <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #8B1E1A; display: block; margin-bottom: 12px;">100% Pure &amp; Farm-Fresh</span>
+        <h1 style="font-family: 'Playfair Display', Georgia, serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; color: #2D1F17; line-height: 1.2; margin: 0 0 16px 0;">
+          Pure Honey, Traditional A2 Ghee &amp; Organic Spices
+        </h1>
+        <p style="max-width: 680px; margin: 0 auto 32px auto; color: rgba(45, 31, 23, 0.75); font-size: 16px; line-height: 1.6;">
+          Handcrafted with ancient Vedic traditions and tested by modern food science. Experience natural wellness from Tamil Nadu's pristine tribal apiaries and native cow dairy farms.
+        </p>
+
+        <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 48px;">
+          <a href="/shop" style="background: linear-gradient(135deg, #8B1E1A 0%, #B82E28 100%); color: #ffffff; padding: 12px 28px; border-radius: 9999px; font-weight: 600; text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 4px 14px rgba(139, 30, 26, 0.25);">
+            Explore Our Harvest
+          </a>
+          <a href="/about" style="border: 1px solid rgba(232, 163, 23, 0.5); color: #2D1F17; padding: 12px 28px; border-radius: 9999px; font-weight: 600; text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; background: rgba(255, 248, 236, 0.6);">
+            Our Heritage Story
+          </a>
+        </div>
+
+        <!-- Essential Internal Category Links for Search Engine Discovery & Authority Flow -->
+        <section aria-label="Product Categories" style="margin-top: 36px; padding-top: 36px; border-top: 1px solid rgba(232, 163, 23, 0.2);">
+          <h2 style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.5rem; color: #2D1F17; margin-bottom: 24px;">Explore Certified Pure Categories</h2>
+          <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+            <a href="/shop?category=honey" style="padding: 10px 20px; background: #ffffff; border: 1px solid rgba(232, 163, 23, 0.3); border-radius: 12px; color: #2D1F17; text-decoration: none; font-weight: 600; font-size: 14px;">Raw Forest Honey</a>
+            <a href="/shop?category=ghee" style="padding: 10px 20px; background: #ffffff; border: 1px solid rgba(232, 163, 23, 0.3); border-radius: 12px; color: #2D1F17; text-decoration: none; font-weight: 600; font-size: 14px;">Bilona A2 Gir Cow Ghee</a>
+            <a href="/shop?category=masalas" style="padding: 10px 20px; background: #ffffff; border: 1px solid rgba(232, 163, 23, 0.3); border-radius: 12px; color: #2D1F17; text-decoration: none; font-weight: 600; font-size: 14px;">Traditional Masalas</a>
+            <a href="/shop?category=spices" style="padding: 10px 20px; background: #ffffff; border: 1px solid rgba(232, 163, 23, 0.3); border-radius: 12px; color: #2D1F17; text-decoration: none; font-weight: 600; font-size: 14px;">Pure Organic Spices</a>
+          </div>
+        </section>
+
+        <!-- Educational Resources & Deep Links -->
+        <section aria-label="Educational Resources" style="margin-top: 36px; padding-top: 24px;">
+          <h3 style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.15em; color: #E8A317; font-weight: 700; margin-bottom: 12px;">Ayurvedic Living &amp; Guides</h3>
+          <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+            <a href="/blog/ghee-benefits" style="color: #2D1F17; font-size: 13px; text-decoration: underline;">Benefits of Bilona A2 Ghee</a>
+            <a href="/blog/honey-recipes" style="color: #2D1F17; font-size: 13px; text-decoration: underline;">Raw Forest Honey Remedies</a>
+            <a href="/blog/spice-up-your-life" style="color: #2D1F17; font-size: 13px; text-decoration: underline;">Ancient Indian Spice Guide</a>
+          </div>
+        </section>
+      </main>
+
+      <footer style="margin-top: auto; background: #2D1F17; color: #FFF8EC; padding: 32px 24px; border-top: 1px solid rgba(232, 163, 23, 0.2);">
+        <div style="max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+          <p style="margin: 0; font-size: 13px; opacity: 0.8;">&copy; 2026 Aarions. All rights reserved. Nature's Finest, Delivered Pure.</p>
+          <nav aria-label="Footer Navigation" style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <a href="/about" style="color: #FFF8EC; font-size: 13px; text-decoration: none; opacity: 0.85;">About Us</a>
+            <a href="/shop" style="color: #FFF8EC; font-size: 13px; text-decoration: none; opacity: 0.85;">Shop</a>
+            <a href="/blog" style="color: #FFF8EC; font-size: 13px; text-decoration: none; opacity: 0.85;">Journal</a>
+            <a href="/contact" style="color: #FFF8EC; font-size: 13px; text-decoration: none; opacity: 0.85;">Contact</a>
+            <a href="/privacy-policy" style="color: #FFF8EC; font-size: 13px; text-decoration: none; opacity: 0.85;">Privacy Policy</a>
+            <a href="/orders" style="color: #FFF8EC; font-size: 13px; text-decoration: none; opacity: 0.85;">Track Order</a>
+          </nav>
+        </div>
+      </footer>
+    </div>
+    <noscript>
+      <div style="background: #FFF8EC; padding: 20px; text-align: center; border-bottom: 2px solid #8B1E1A;">
+        <p style="font-weight: 600; color: #2D1F17; margin-bottom: 10px;">Browse Aarions directly:</p>
+        <nav style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+          <a href="/" style="color: #8B1E1A; font-weight: 700;">Home</a>
+          <a href="/shop" style="color: #8B1E1A; font-weight: 700;">Shop</a>
+          <a href="/about" style="color: #8B1E1A; font-weight: 700;">About Us</a>
+          <a href="/blog" style="color: #8B1E1A; font-weight: 700;">Blog</a>
+          <a href="/contact" style="color: #8B1E1A; font-weight: 700;">Contact</a>
+          <a href="/privacy-policy" style="color: #8B1E1A; font-weight: 700;">Privacy Policy</a>
+        </nav>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
     <!-- Non-blocking Google Identity Services (GSI) script loaded at end of body -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
