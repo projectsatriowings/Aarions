@@ -31,7 +31,7 @@ const websiteSettingsSchema = new mongoose.Schema(
     },
     footerCopyright: {
       type: String,
-      default: "Designed & Developed by Yakobu Business Solutions",
+      default: "Aarions",
     },
     certifications: {
       type: String,
@@ -39,11 +39,11 @@ const websiteSettingsSchema = new mongoose.Schema(
     },
     developerName: {
       type: String,
-      default: "Yakobu Business Solutions",
+      default: "",
     },
     developerUrl: {
       type: String,
-      default: "https://www.myyakobu.com/",
+      default: "",
     },
     paymentMethods: {
       type: String,

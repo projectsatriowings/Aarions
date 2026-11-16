@@ -183,15 +183,20 @@ export default function Footer() {
         <div className="site-container-fluid">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-light text-white/40">
             <p className="text-center sm:text-left leading-6">
-              © {new Date().getFullYear()} {settings?.footerCopyright || settings?.brandName || "Aarions"}. All rights reserved. Designed & Developed by{" "}
-              <a
-                href={settings?.developerUrl || "https://www.myyakobu.com/"}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-brand-gold transition-colors font-semibold"
-              >
-                {settings?.developerName || "Yakobu Business Solutions"}
-              </a>
+              © {new Date().getFullYear()} {settings?.footerCopyright?.replace(/Designed & Developed by.*/i, '').trim() || settings?.brandName || "Aarions"}. All rights reserved.
+              {settings?.developerName && settings?.developerUrl && settings.developerUrl !== "https://www.myyakobu.com/" && (
+                <>
+                  {" "}• Designed &amp; Developed by{" "}
+                  <a
+                    href={settings.developerUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-brand-gold transition-colors font-semibold"
+                  >
+                    {settings.developerName}
+                  </a>
+                </>
+              )}
             </p>
 
             <div className="flex items-center gap-2 flex-wrap justify-center sm:justify-end">
