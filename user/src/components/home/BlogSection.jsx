@@ -59,7 +59,7 @@ export default function BlogSection() {
               Aarions Journal
             </span>
             <h2 className="font-display font-bold text-brand-brown text-3xl sm:text-4xl lg:text-5xl leading-tight">
-              Latest Articles
+              Latest Pure Living Articles &amp; Guides
             </h2>
             <p className="text-brand-brown/60 max-w-md font-light">
               Discover wellness benefits, traditional recipes, and the stories behind our products.

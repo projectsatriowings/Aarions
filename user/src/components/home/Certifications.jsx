@@ -41,6 +41,7 @@ export default function Certifications() {
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-brand-cream/40 rounded-full blur-3xl pointer-events-none" />
 
       <div className="site-container relative z-10">
+        <h2 className="sr-only">Aarions Purity Certifications and Quality Standards</h2>
         <motion.div
           variants={containerVariants}
           initial="hidden"

@@ -152,7 +152,7 @@ export default function FeaturedProducts({ onQuickView }) {
               Handpicked For You
             </div>
             <h2 className="text-4xl md:text-5xl font-playfair font-bold text-brand-brown tracking-tight leading-tight">
-              Featured Products
+              Featured Pure Organic Products
             </h2>
             <p className="text-sm md:text-base text-brand-brown/70 font-light leading-relaxed">
               Experience the pinnacle of natural craftsmanship. Pure, nutrient-dense products created in harmony with time-tested heritage and scientific purity.

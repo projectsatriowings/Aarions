@@ -137,7 +137,7 @@ export default function BestSellers({ onQuickView }) {
               <span>Most Popular</span>
             </div>
             <h2 className="font-display font-extrabold text-brand-brown text-3xl sm:text-4xl lg:text-5xl tracking-tight leading-none">
-              Best Sellers
+              Best Selling Organic Essentials
             </h2>
             <p className="text-brand-brown/60 text-sm sm:text-base font-light tracking-wide max-w-md">
               Loved by thousands of natural living enthusiasts
