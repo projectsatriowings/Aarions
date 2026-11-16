@@ -40,6 +40,21 @@ app.use(helmet({
     includeSubDomains: true,
     preload: true,
   },
+  referrerPolicy: { policy: "strict-origin-when-cross-origin" },
+  xContentTypeOptions: true,
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://www.googletagmanager.com", "https://accounts.google.com", "https://checkout.razorpay.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com", "data:"],
+      imgSrc: ["'self'", "data:", "blob:", "https:"],
+      connectSrc: ["'self'", "https://api.aarions.in", "https://www.google-analytics.com", "https://analytics.google.com", "https://*.razorpay.com", "https://accounts.google.com"],
+      frameSrc: ["'self'", "https://accounts.google.com", "https://api.razorpay.com"],
+      objectSrc: ["'none'"],
+      baseUri: ["'self'"],
+    },
+  },
 }));
 
 // CORS Configuration
