@@ -139,16 +139,16 @@ export default function Hero() {
               </span>
             </div>
 
-            {/* Heading */}
+            {/* Main Page Heading (H1) for SEO & Brand Identity */}
             <h1 
               className="font-display font-bold text-white leading-tight tracking-tight animate-fade-up"
               style={{ fontSize: "clamp(2.25rem, 5.2vw, 4.5rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }}
             >
-              {settings?.heroTitleLine1 || "Pure Organic Honey,"} <br />
-              <span className="text-gradient">{settings?.heroTitleLine2 || "A2 Ghee"}</span>
-              {settings?.heroTitleLine2Suffix || " & Authentic Spices."} <br />
+              {settings?.heroTitleLine1?.trim() || "Pure Organic Honey,"} <br />
+              <span className="text-gradient">{settings?.heroTitleLine2?.trim() || "A2 Ghee"}</span>
+              {settings?.heroTitleLine2Suffix?.trim() !== undefined && settings?.heroTitleLine2Suffix?.trim() !== "" ? settings.heroTitleLine2Suffix : " & Authentic Spices."} <br />
               <em className="not-italic" style={{ color: "rgba(255,248,236,0.88)", fontStyle: "italic" }}>
-                {settings?.heroTitleLine3 || "Healthy Living Products."}
+                {settings?.heroTitleLine3?.trim() || "Healthy Living Products."}
               </em>
             </h1>
 

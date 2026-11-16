@@ -93,8 +93,8 @@ export default function About() {
               }}
               className="text-4xl sm:text-5xl lg:text-6.5xl font-playfair font-bold text-brand-brown leading-[1.12]"
             >
-              {settings?.aboutHeroTitleLine1 || "Purity Sourced From"} <br />
-              <span className="text-gradient font-bold italic">{settings?.aboutHeroTitleLine2 || "Traditional Roots."}</span>
+              {settings?.aboutHeroTitleLine1?.trim() || "Purity Sourced From"} <br />
+              <span className="text-gradient font-bold italic">{settings?.aboutHeroTitleLine2?.trim() || "Traditional Roots."}</span>
             </motion.h1>
             
             {/* Stylized wheat separator decoration */}
